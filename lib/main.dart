@@ -1,3 +1,4 @@
+import 'package:bursary_inn/Screens/Details/AllDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
         '/aftersplash':(context) => Aftersplash(),
         '/login':(context) => Login(),
         '/signup':(context) => Signup(),
+
+        //Details routes
+        '/alldetails':(context) => AllDetails(),
+
       },
       title: 'Flutter Demo',
       theme: ThemeData(
