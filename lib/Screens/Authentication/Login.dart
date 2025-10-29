@@ -72,7 +72,9 @@ class _LoginState extends State<Login> {
                       SizedBox(
                         width: double.infinity,
                         height: 40,
-                        child: ElevatedButton(onPressed: (){}, child: Text("Login",
+                        child: ElevatedButton(onPressed: (){
+                          Navigator.pushNamed(context, "/otp");
+                        }, child: Text("Login",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
