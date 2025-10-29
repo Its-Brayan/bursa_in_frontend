@@ -105,21 +105,24 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 10),
                       SizedBox(
                         width: double.infinity,
-                        child: ListTile(
-                          onTap: (){
+                        child: Card(
+                          elevation: 4,
+                          child: ListTile(
+                            onTap: (){
 
-                          },
-                          tileColor: Colors.grey.shade200,
-                          leading: Image.asset("Assets/google_logo.png",
-                            width: 50,
-                            height: 50,
-                          ),
-                          title: Text("Continue with Google",
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)
+                            },
+                            tileColor: Colors.grey.shade200,
+                            leading: Image.asset("Assets/google_logo.png",
+                              width: 50,
+                              height: 50,
+                            ),
+                            title: Text("Continue with Google",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
                           ),
                         ),
                       ),

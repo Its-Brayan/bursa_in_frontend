@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
+import 'package:bursary_inn/Screens/Authentication/AfterSplash.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -13,8 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/aftersplash',
       routes: {
+        '/aftersplash':(context) => Aftersplash(),
         '/login':(context) => Login(),
         '/signup':(context) => Signup(),
       },
