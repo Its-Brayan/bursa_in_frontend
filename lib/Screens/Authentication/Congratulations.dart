@@ -33,7 +33,9 @@ class Congratulations extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(35.0),
-          child: ElevatedButton(onPressed: (){}, child: Text("Get Started",
+          child: ElevatedButton(onPressed: (){
+            Navigator.pushNamed(context, '/alldetails');
+          }, child: Text("Get Started",
           style: TextStyle(
             color: Colors.white,
           ),),
