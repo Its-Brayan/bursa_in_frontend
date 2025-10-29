@@ -104,7 +104,9 @@ class _OTPState extends State<OTP> {
 
              SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(onPressed: (){}, child: Text(
+                child: ElevatedButton(onPressed: (){
+                  Navigator.pushNamed(context, "/congrats");
+                }, child: Text(
                   "Verify",
                   style: TextStyle(
                     color: Colors.white

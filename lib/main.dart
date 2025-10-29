@@ -3,6 +3,7 @@ import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
 import 'package:bursary_inn/Screens/Authentication/AfterSplash.dart';
 import 'package:bursary_inn/Screens/Authentication/OTP.dart';
+import 'package:bursary_inn/Screens/Authentication/Congratulations.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/aftersplash',
       routes: {
         //Authentication routes
+        '/congrats':(context) => Congratulations(),
         '/otp':(context) => OTP(),
         '/aftersplash':(context) => Aftersplash(),
         '/login':(context) => Login(),
