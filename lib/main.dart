@@ -1,4 +1,5 @@
 import 'package:bursary_inn/Screens/Details/AllDetails.dart';
+import 'package:bursary_inn/Screens/Details/PersonalDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
 
         //Details routes
         '/alldetails':(context) => AllDetails(),
+        '/personaldetails':(context) => Personaldetails(),
 
       },
       title: 'Flutter Demo',
