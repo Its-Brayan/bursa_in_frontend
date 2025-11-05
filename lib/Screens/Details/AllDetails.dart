@@ -48,7 +48,7 @@ class _AllDetailsState extends State<AllDetails> {
                   ),
                   trailing: GestureDetector(
                     onTap: (){
-
+                   Navigator.pushNamed(context, "/personaldetails");
                     },
                       child: Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blue,)),
                   tileColor: Colors.blue.shade100,
