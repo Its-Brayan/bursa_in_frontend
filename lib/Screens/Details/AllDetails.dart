@@ -64,7 +64,7 @@ class _AllDetailsState extends State<AllDetails> {
                   ),
                   trailing: GestureDetector(
                       onTap: (){
-
+                       Navigator.pushNamed(context, "/familydetails");
                       },
                       child: Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blue,)),
                   tileColor: Colors.blue.shade100,
@@ -80,7 +80,7 @@ class _AllDetailsState extends State<AllDetails> {
                   ),
                   trailing: GestureDetector(
                       onTap: (){
-
+                       Navigator.pushNamed(context, '/educationdetails');
                       },
                       child: Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blue,)),
                   tileColor: Colors.blue.shade100,
@@ -96,7 +96,7 @@ class _AllDetailsState extends State<AllDetails> {
                   ),
                   trailing: GestureDetector(
                       onTap: (){
-
+                      Navigator.pushNamed(context, "/documentdetails");
                       },
                       child: Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blue,)),
                   tileColor: Colors.blue.shade100,
@@ -112,7 +112,7 @@ class _AllDetailsState extends State<AllDetails> {
                   ),
                   trailing: GestureDetector(
                       onTap: (){
-
+                      Navigator.pushNamed(context,"/bankdetails");
                       },
                       child: Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blue,)),
                   tileColor: Colors.blue.shade100,

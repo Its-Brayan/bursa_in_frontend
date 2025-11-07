@@ -1,4 +1,7 @@
 import 'package:bursary_inn/Screens/Details/AllDetails.dart';
+import 'package:bursary_inn/Screens/Details/BankDetails.dart';
+import 'package:bursary_inn/Screens/Details/DocumentDetails.dart';
+import 'package:bursary_inn/Screens/Details/EducationDetails.dart';
 import 'package:bursary_inn/Screens/Details/FamilyDetails.dart';
 import 'package:bursary_inn/Screens/Details/PersonalDetails.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +34,10 @@ class MyApp extends StatelessWidget {
         //Details routes
         '/alldetails':(context) => AllDetails(),
         '/personaldetails':(context) => Personaldetails(),
-         '/familydetails':(context) => Familydetails()
+         '/familydetails':(context) => Familydetails(),
+        '/educationdetails':(context) => Educationdetails(),
+        '/documentdetails':(context) => Documentdetails(),
+        '/bankdetails':(context) => Bankdetails(),
 
       },
       title: 'Flutter Demo',
