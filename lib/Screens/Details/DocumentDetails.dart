@@ -15,10 +15,18 @@ class _DocumentdetailsState extends State<Documentdetails> {
        centerTitle: true,
      ),
       body: SafeArea(child: SingleChildScrollView(
-        child: Column(
-          children: [
-            
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(13.0),
+          child: Column(
+            children: [
+              Text("Self Proof",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),),
+
+            ],
+          ),
         ),
       )),
     );
