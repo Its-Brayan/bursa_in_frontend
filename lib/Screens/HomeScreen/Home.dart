@@ -59,43 +59,61 @@ class _HomeState extends State<Home> {
                     ),
                  SizedBox(height: 20),
                   ListTile(
-                    leading: Icon(Icons.home_outlined),
-                    title: Text("Home",),
+                    leading: Icon(Icons.home_outlined,size: 18,),
+                    title: Text("Home",
+                      style: TextStyle(
+                        fontSize:14,
+                      ),),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.history),
-                    title: Text("My Applications"),
+                    leading: Icon(Icons.history,size: 18,),
+                    title: Text("My Applications",
+                      style: TextStyle(
+                      fontSize:14,
+                    ),),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.person_outline),
-                    title: Text("Profile",),
+                    leading: Icon(Icons.person_outline,size: 18,),
+                    title: Text("Profile",
+                      style: TextStyle(
+                        fontSize:14,
+                      ),),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.help_outline),
-                    title: Text("Help & Support",),
+                    leading: Icon(Icons.help_outline,size: 18,),
+                    title: Text("Help & Support",
+                      style: TextStyle(
+                        fontSize:14,
+                      ),),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("Settings",),
+                    leading: Icon(Icons.settings,size: 18,),
+                    title: Text("Settings",
+                      style: TextStyle(
+                        fontSize:14,
+                      ),),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.logout_outlined,color: Colors.red,),
-                    title: Text("Logout",),
+                    leading: Icon(Icons.logout_outlined,color: Colors.red,size: 18,),
+                    title: Text("Logout",
+                    style: TextStyle(
+                      fontSize:14,
+                    ),),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),

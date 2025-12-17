@@ -1,10 +1,13 @@
+import 'package:bursary_inn/Screens/Activity/ActivityPage.dart';
 import 'package:bursary_inn/Screens/Details/AllDetails.dart';
 import 'package:bursary_inn/Screens/Details/BankDetails.dart';
 import 'package:bursary_inn/Screens/Details/DocumentDetails.dart';
 import 'package:bursary_inn/Screens/Details/EducationDetails.dart';
 import 'package:bursary_inn/Screens/Details/FamilyDetails.dart';
 import 'package:bursary_inn/Screens/Details/PersonalDetails.dart';
+import 'package:bursary_inn/Screens/Explore/ExplorePage.dart';
 import 'package:bursary_inn/Screens/HomeScreen/Home.dart';
+import 'package:bursary_inn/Screens/Profile/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
         '/bankdetails':(context) => Bankdetails(),
 
         //Home routes
-        "/home":(context) => Home()
+        "/home":(context) => MyHomePage(),
 
       },
       title: 'Flutter Demo',
@@ -64,6 +67,51 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
+    );
+  }
+}
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _currentindex = 0;
+  final List<Widget> _screens = [
+    Home(),
+    Explorepage(),
+    Activitypage(),
+    Profilepage(),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+       body: _screens[_currentindex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.grey.shade500,
+        showUnselectedLabels: true,
+        unselectedLabelStyle: TextStyle(
+          color: Colors.grey.shade500,
+        ),
+        currentIndex: _currentindex,
+          onTap: (index){
+          setState(() {
+            _currentindex = index;
+          });
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home),
+
+            label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.explore),label: 'Explore'),
+            BottomNavigationBarItem(icon: Icon(Icons.timeline),label: 'Activity'),
+            BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile')
+          ]
+      ),
     );
   }
 }
