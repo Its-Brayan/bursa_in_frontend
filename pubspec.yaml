@@ -42,6 +42,7 @@ dependencies:
   easy_stepper: ^0.8.5+1
   universal_stepper: ^1.0.0+1
   file_selector: ^1.0.4
+  flutter_slider_drawer: ^3.0.2
 #  full_picker: ^2.1.5
 
 dev_dependencies:

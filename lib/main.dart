@@ -4,6 +4,7 @@ import 'package:bursary_inn/Screens/Details/DocumentDetails.dart';
 import 'package:bursary_inn/Screens/Details/EducationDetails.dart';
 import 'package:bursary_inn/Screens/Details/FamilyDetails.dart';
 import 'package:bursary_inn/Screens/Details/PersonalDetails.dart';
+import 'package:bursary_inn/Screens/HomeScreen/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         '/educationdetails':(context) => Educationdetails(),
         '/documentdetails':(context) => Documentdetails(),
         '/bankdetails':(context) => Bankdetails(),
+
+        //Home routes
+        "/home":(context) => Home()
 
       },
       title: 'Flutter Demo',

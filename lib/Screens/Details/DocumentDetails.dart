@@ -335,7 +335,58 @@ class _DocumentdetailsState extends State<Documentdetails> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-              )
+              ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
+                height:155,
+                width: 150,
+                child: Card(
+                  color: Colors.white70,
+                  elevation: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text("Approval\nLetter(chief)",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 15,
+                          ),),
+                        SizedBox(height: 10.0),
+                        SizedBox(
+                          width: 85,
+                          height: 30,
+                          child: Card(
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0)
+                            ),
+                            child: Text("1 uploaded",
+                              style: TextStyle(
+                                  color: Colors.grey
+                              ),),
+                          ),
+                        ),
+                        SizedBox(height: 1),
+                        ElevatedButton.icon(onPressed: (){
+                          _openImageFile(context);
+                        }, icon: Icon(Icons.add,
+                          color: Colors.white,),
+                          label: Text("Upload",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(50, 30),
+                              backgroundColor: Colors.blue.shade200,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0)
+                              )
+                          ),)
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

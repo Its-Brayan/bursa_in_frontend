@@ -102,23 +102,6 @@ class _AllDetailsState extends State<AllDetails> {
                   tileColor: Colors.blue.shade100,
 
                 ),
-                SizedBox(height: 15),
-                ListTile(
-                  minTileHeight: 50,
-                  title: Text("Bank details",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  trailing: GestureDetector(
-                      onTap: (){
-                      Navigator.pushNamed(context,"/bankdetails");
-                      },
-                      child: Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blue,)),
-                  tileColor: Colors.blue.shade100,
-
-                ),
-
               ],
             ),
           )
@@ -153,7 +136,9 @@ class _AllDetailsState extends State<AllDetails> {
             ),
             SizedBox(
               width: 150,
-              child: ElevatedButton(onPressed: (){}, child:Text("Submit",
+              child: ElevatedButton(onPressed: (){
+                Navigator.pushNamed(context, "/home");
+              }, child:Text("Submit",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
