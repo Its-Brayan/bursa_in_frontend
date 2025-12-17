@@ -91,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
        body: _screens[_currentindex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.grey.shade500,
         showUnselectedLabels: true,
@@ -105,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home),
-
             label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.explore),label: 'Explore'),
             BottomNavigationBarItem(icon: Icon(Icons.timeline),label: 'Activity'),
