@@ -21,7 +21,9 @@ class _HomeState extends State<Home> {
             appBar: SliderAppBar(
               config:SliderAppBarConfig(
                 title:Text(''),
-                trailing: IconButton(onPressed: (){}, icon:Icon(Icons.notifications_none_outlined)
+                trailing: IconButton(onPressed: (){
+                  Navigator.pushNamed(context, "/notification");
+                }, icon:Icon(Icons.notifications_none_outlined)
                 ),
               ),
             ),
