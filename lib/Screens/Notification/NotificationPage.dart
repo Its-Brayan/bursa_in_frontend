@@ -10,8 +10,254 @@ class Notificationpage extends StatefulWidget {
 class _NotificationpageState extends State<Notificationpage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+      appBar: AppBar(
+        title: Text("NOTIFICATION",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),),
+        centerTitle: true,
+        bottom: TabBar(tabs: [
+          Tab(text: "All",),
+          Tab(text: "Unread"),
+        ],
+          automaticIndicatorColorAdjustment: true,
+          labelColor: Colors.blueAccent,
+          unselectedLabelColor: Colors.grey.shade500,
 
+        ),
+
+      ),
+        body: TabBarView(
+            children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            color: Colors.white24,
+            child: Column(
+              children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Image.asset("Assets/need_of.jpeg"),
+                    title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),),
+                    subtitle: Text("6 Hours ago",
+                    style: TextStyle(
+                      color: Colors.grey.shade500,
+                    ),),
+                    trailing:Container(
+                      width: 5,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Image.asset("Assets/need_of.jpeg"),
+                    title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),),
+                    subtitle: Text("6 Hours ago",
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                      ),),
+                    trailing:Container(
+                      width: 5,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Image.asset("Assets/need_of.jpeg"),
+                    title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),),
+                    subtitle: Text("6 Hours ago",
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                      ),),
+                    trailing:Container(
+                      width: 5,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Image.asset("Assets/need_of.jpeg"),
+                    title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),),
+                    subtitle: Text("6 Hours ago",
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                      ),),
+                    trailing:Container(
+                      width: 5,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.white24,
+                  child: Column(
+                    children: [
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: Image.asset("Assets/need_of.jpeg"),
+                          title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          subtitle: Text("6 Hours ago",
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                            ),),
+                          trailing:Container(
+                            width: 5,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: Image.asset("Assets/need_of.jpeg"),
+                          title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          subtitle: Text("6 Hours ago",
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                            ),),
+                          trailing:Container(
+                            width: 5,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: Image.asset("Assets/need_of.jpeg"),
+                          title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          subtitle: Text("6 Hours ago",
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                            ),),
+                          trailing:Container(
+                            width: 5,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: Image.asset("Assets/need_of.jpeg"),
+                          title: Text("Your documents are verified for Kasarani NGCDF bursary",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          subtitle: Text("6 Hours ago",
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                            ),),
+                          trailing:Container(
+                            width: 5,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+          ]
+      ),
+      
+      ),
     );
   }
 }
