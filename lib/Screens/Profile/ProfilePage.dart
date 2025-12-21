@@ -256,7 +256,9 @@ class _ProfilepageState extends State<Profilepage> {
                              Icons.settings
                          ),
                          title: Text("Settings"),
-                         trailing:IconButton(onPressed: (){}, icon: Icon(Icons.keyboard_arrow_right_outlined,
+                         trailing:IconButton(onPressed: (){
+                           Navigator.pushNamed(context, "/settings");
+                         }, icon: Icon(Icons.keyboard_arrow_right_outlined,
                            size: 25,
                            color: Colors.blueAccent,)),
                        ),
@@ -265,7 +267,9 @@ class _ProfilepageState extends State<Profilepage> {
                              Icons.help_outline
                          ),
                          title: Text("Help & Support"),
-                         trailing:IconButton(onPressed: (){}, icon: Icon(Icons.keyboard_arrow_right_outlined,
+                         trailing:IconButton(onPressed: (){
+                           Navigator.pushNamed(context, "/help");
+                         }, icon: Icon(Icons.keyboard_arrow_right_outlined,
                            size: 25,
                            color: Colors.blueAccent,)),
                        )

@@ -8,7 +8,9 @@ import 'package:bursary_inn/Screens/Details/PersonalDetails.dart';
 import 'package:bursary_inn/Screens/Explore/ExplorePage.dart';
 import 'package:bursary_inn/Screens/HomeScreen/Home.dart';
 import 'package:bursary_inn/Screens/Notification/NotificationPage.dart';
+import 'package:bursary_inn/Screens/Profile/HelpPage.dart';
 import 'package:bursary_inn/Screens/Profile/ProfilePage.dart';
+import 'package:bursary_inn/Screens/Profile/SettingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
@@ -49,6 +51,12 @@ class MyApp extends StatelessWidget {
 
         //Notification route
         "/notification": (context) => Notificationpage(),
+
+        //Help & support route
+        "/help":(context) => Helppage(),
+
+        //Settings route
+        "/settings":(context) => Settingspage(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
