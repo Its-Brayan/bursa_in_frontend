@@ -26,6 +26,9 @@ class _SettingspageState extends State<Settingspage> {
             children: [
               Card(
                 color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
                 child: ListTile(
                   onTap: (){
                     Navigator.pushNamed(context, "/notification");
@@ -33,48 +36,45 @@ class _SettingspageState extends State<Settingspage> {
                   leading: Icon(Icons.notifications_none),
                   title: Text("Notifications"),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
               ),
               Card(
                 color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
                 child: ListTile(
                   leading: Icon(Icons.star_border_outlined),
                   title: Text("Rate The App"),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
               ),
               Card(
                 color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
                 child: ListTile(
                   leading: Icon(Icons.article_outlined),
                   title: Text("Terms & Conditions"),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
               ),
               Card(
                 color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
                 child: ListTile(
                   leading: Icon(Icons.lock_outline),
                   title: Text("Privacy Policy"),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
               ),
               Card(
                 color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
                 child: ListTile(
                   leading: Icon(Icons.phone_outlined),
                   title: Text("Contact Us"),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
                 ),
               )
             ],

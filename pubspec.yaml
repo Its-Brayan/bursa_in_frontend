@@ -43,6 +43,9 @@ dependencies:
   universal_stepper: ^1.0.0+1
   file_selector: ^1.0.4
   flutter_slider_drawer: ^3.0.2
+  provider: ^6.1.5+1
+  http: ^1.6.0
+  flutter_secure_storage: ^10.0.0
 #  full_picker: ^2.1.5
 
 dev_dependencies:

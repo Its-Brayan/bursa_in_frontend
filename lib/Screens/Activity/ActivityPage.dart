@@ -24,13 +24,15 @@ class _ActivitypageState extends State<Activitypage> {
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
                         child: Image.asset("Assets/need_of.jpeg",
                         width: 170,
                         height: 150,
                         fit: BoxFit.contain),
-                        borderRadius: BorderRadius.circular(30.0),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
@@ -59,8 +61,6 @@ class _ActivitypageState extends State<Activitypage> {
                         ),
                       )
                     ],
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
@@ -82,10 +82,7 @@ class _ActivitypageState extends State<Activitypage> {
                           ),
                         ),
 
-                        ElevatedButton(onPressed: (){}, child: Text("View Details",
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                        ),),
+                        ElevatedButton(onPressed: (){},
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
@@ -93,17 +90,20 @@ class _ActivitypageState extends State<Activitypage> {
                             ),
                             borderRadius: BorderRadiusGeometry.circular(5.0),
                           )
-                        ),),
-                        ElevatedButton(onPressed: (){}, child: Text("Check Status",
+                        ), child: Text("View Details",
                         style: TextStyle(
-                          color: Colors.white,
-                        ),),
+                          color: Colors.blueAccent,
+                        ),),),
+                        ElevatedButton(onPressed: (){},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueAccent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           )
-                        ),)
+                        ), child: Text("Check Status",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),),)
                       ],
                     ),
                   )
@@ -115,13 +115,15 @@ class _ActivitypageState extends State<Activitypage> {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
                           child: Image.asset("Assets/need_of.jpeg",
                               width: 170,
                               height: 150,
                               fit: BoxFit.contain),
-                          borderRadius: BorderRadius.circular(30.0),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
@@ -150,8 +152,6 @@ class _ActivitypageState extends State<Activitypage> {
                           ),
                         )
                       ],
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
@@ -173,10 +173,7 @@ class _ActivitypageState extends State<Activitypage> {
                             ),
                           ),
 
-                          ElevatedButton(onPressed: (){}, child: Text("View Details",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                            ),),
+                          ElevatedButton(onPressed: (){},
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
@@ -184,17 +181,20 @@ class _ActivitypageState extends State<Activitypage> {
                                   ),
                                   borderRadius: BorderRadiusGeometry.circular(5.0),
                                 )
-                            ),),
-                          ElevatedButton(onPressed: (){}, child: Text("Check Status",
+                            ), child: Text("View Details",
                             style: TextStyle(
-                              color: Colors.white,
-                            ),),
+                              color: Colors.blueAccent,
+                            ),),),
+                          ElevatedButton(onPressed: (){},
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blueAccent,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 )
-                            ),)
+                            ), child: Text("Check Status",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),)
                         ],
                       ),
                     )
@@ -206,13 +206,15 @@ class _ActivitypageState extends State<Activitypage> {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
                           child: Image.asset("Assets/need_of.jpeg",
                               width: 170,
                               height: 150,
                               fit: BoxFit.contain),
-                          borderRadius: BorderRadius.circular(30.0),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
@@ -241,8 +243,6 @@ class _ActivitypageState extends State<Activitypage> {
                           ),
                         )
                       ],
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
@@ -264,10 +264,7 @@ class _ActivitypageState extends State<Activitypage> {
                             ),
                           ),
 
-                          ElevatedButton(onPressed: (){}, child: Text("View Details",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                            ),),
+                          ElevatedButton(onPressed: (){},
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
@@ -275,17 +272,20 @@ class _ActivitypageState extends State<Activitypage> {
                                   ),
                                   borderRadius: BorderRadiusGeometry.circular(5.0),
                                 )
-                            ),),
-                          ElevatedButton(onPressed: (){}, child: Text("Check Status",
+                            ), child: Text("View Details",
                             style: TextStyle(
-                              color: Colors.white,
-                            ),),
+                              color: Colors.blueAccent,
+                            ),),),
+                          ElevatedButton(onPressed: (){},
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blueAccent,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 )
-                            ),)
+                            ), child: Text("Check Status",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),)
                         ],
                       ),
                     )
@@ -297,13 +297,15 @@ class _ActivitypageState extends State<Activitypage> {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
                           child: Image.asset("Assets/need_of.jpeg",
                               width: 170,
                               height: 150,
                               fit: BoxFit.contain),
-                          borderRadius: BorderRadius.circular(30.0),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
@@ -332,8 +334,6 @@ class _ActivitypageState extends State<Activitypage> {
                           ),
                         )
                       ],
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
@@ -355,10 +355,7 @@ class _ActivitypageState extends State<Activitypage> {
                             ),
                           ),
 
-                          ElevatedButton(onPressed: (){}, child: Text("View Details",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                            ),),
+                          ElevatedButton(onPressed: (){},
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
@@ -366,17 +363,20 @@ class _ActivitypageState extends State<Activitypage> {
                                   ),
                                   borderRadius: BorderRadiusGeometry.circular(5.0),
                                 )
-                            ),),
-                          ElevatedButton(onPressed: (){}, child: Text("Check Status",
+                            ), child: Text("View Details",
                             style: TextStyle(
-                              color: Colors.white,
-                            ),),
+                              color: Colors.blueAccent,
+                            ),),),
+                          ElevatedButton(onPressed: (){},
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blueAccent,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 )
-                            ),)
+                            ), child: Text("Check Status",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),)
                         ],
                       ),
                     )

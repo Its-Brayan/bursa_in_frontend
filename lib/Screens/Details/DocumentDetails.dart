@@ -396,11 +396,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
         padding: const EdgeInsets.all(22.0),
         child: ElevatedButton(onPressed: (){
           _openImageFile(context);
-        }, child: Text("Save as Draft",
-        style: TextStyle(
-          color: Colors.blue,
-        ),
-        ),
+        },
           style: ElevatedButton.styleFrom(
            side: BorderSide(
              color: Colors.blue.shade200,
@@ -408,7 +404,11 @@ class _DocumentdetailsState extends State<Documentdetails> {
             shape:RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(4.0)
             )
-          ),
+          ), child: Text("Save as Draft",
+        style: TextStyle(
+          color: Colors.blue,
+        ),
+        ),
         ),
       ),
     );

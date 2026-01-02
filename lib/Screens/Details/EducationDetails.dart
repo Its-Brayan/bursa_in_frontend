@@ -58,7 +58,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                         borderRadius: BorderRadius.circular(5.0),
                       )
                     ),
-                      value: chosencourse,
+                      initialValue: chosencourse,
                       items: courses.map((course){
                         return DropdownMenuItem(
                             value: course,
@@ -77,7 +77,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                             borderRadius: BorderRadius.circular(5.0),
                           )
                       ),
-                      value: chosen_year,
+                      initialValue: chosen_year,
                       items: years.map((year){
                         return DropdownMenuItem(
                             value: year,
@@ -96,7 +96,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                             borderRadius: BorderRadius.circular(5.0),
                           )
                       ),
-                      value: chosen_year_of_completion,
+                      initialValue: chosen_year_of_completion,
                       items: year_of_completion.map((completion){
                         return DropdownMenuItem(
                             value: completion,

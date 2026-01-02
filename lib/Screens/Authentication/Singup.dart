@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:bursary_inn/Models/UserModel.dart';
+import 'package:bursary_inn/Providers/providers.dart';
+import 'package:provider/provider.dart';
+
 class Signup extends StatefulWidget {
   const Signup({super.key});
 
@@ -9,8 +13,28 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   bool show_password = false;
   bool show_password_confirm = false;
+  final _formkey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  bool _passwordvisible = false;
+
+  @override
+  void dispose(){
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
+    final _userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -27,11 +51,14 @@ class _SignupState extends State<Signup> {
             Center(child: Text("Create an account of bursain to\n          access all features")
             ),
             SizedBox(height: 30),
-            Form(child: Padding(
+            Form(
+              key: _formkey,
+                child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
                   TextFormField(
+                    controller: _nameController,
                     decoration: InputDecoration(
                         labelText: "Name",
                         suffixIcon: Icon((Icons.person)),
@@ -42,6 +69,7 @@ class _SignupState extends State<Signup> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                         labelText: "Email",
                         suffixIcon: Icon((Icons.email_outlined)),
@@ -52,6 +80,7 @@ class _SignupState extends State<Signup> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: _phoneController,
                     decoration: InputDecoration(
                         labelText: "Phone Number",
                         suffixIcon: Icon((Icons.phone_android_rounded)),
@@ -62,6 +91,7 @@ class _SignupState extends State<Signup> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: _passwordController,
                     obscureText: !show_password,
                     decoration: InputDecoration(
                         labelText: "Password",
@@ -82,6 +112,7 @@ class _SignupState extends State<Signup> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: _confirmPasswordController,
                     obscureText: !show_password_confirm,
                     decoration: InputDecoration(
                         labelText: "Confirm Password",
@@ -103,18 +134,35 @@ class _SignupState extends State<Signup> {
                   SizedBox(height: 40),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(onPressed: (){}, child:Text("Create Account",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15
-                      ),
-                    ),
+                    child: ElevatedButton(onPressed: () async{
+                      final user = UserModel(
+                        full_name: _nameController.text,
+                        email: _emailController.text,
+                        phone_number: _phoneController.text,
+                        password: _passwordController.text,
+                        confirm_password: _confirmPasswordController.text,
+
+                      );
+                    final success =  await _userProvider.create_student(user);
+                      if(!success){
+                        print("Registration failed");
+                        return;
+                      }else{
+                        print("Registration Successful");
+                        Navigator.pushNamed(context, "/home");
+                      }
+                    },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           )
+                      ), child:Text("Create Account",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15
                       ),
+                    ),
                     ),
                   ),
                   SizedBox(height: 30),

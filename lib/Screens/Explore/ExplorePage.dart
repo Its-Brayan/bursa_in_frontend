@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 class Explorepage extends StatefulWidget {
   const Explorepage({super.key});
 
@@ -25,7 +24,7 @@ class _ExplorepageState extends State<Explorepage> {
           child: Column(
             children: [
               Card(
-                child: Container(
+                child: SizedBox(
                   width: 350,
                   child: Column(
                     children: [
@@ -81,23 +80,23 @@ class _ExplorepageState extends State<Explorepage> {
                       ),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),),
+                        child: ElevatedButton(onPressed: (){},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueAccent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           )
-                        ),),
+                        ), child: Text("Apply Now",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),),),
                       )
                     ],
                   ),
                 ),
               ),
               Card(
-                child: Container(
+                child: SizedBox(
                   width: 350,
                   child: Column(
                     children: [
@@ -153,23 +152,23 @@ class _ExplorepageState extends State<Explorepage> {
                       ),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),),
+                        child: ElevatedButton(onPressed: (){},
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blueAccent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                               )
-                          ),),
+                          ), child: Text("Apply Now",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),),),
                       )
                     ],
                   ),
                 ),
               ),
               Card(
-                child: Container(
+                child: SizedBox(
                   width: 350,
                   child: Column(
                     children: [
@@ -225,16 +224,16 @@ class _ExplorepageState extends State<Explorepage> {
                       ),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),),
+                        child: ElevatedButton(onPressed: (){},
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blueAccent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                               )
-                          ),),
+                          ), child: Text("Apply Now",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),),),
                       )
                     ],
                   ),
