@@ -84,7 +84,7 @@ class _FamilydetailsState extends State<Familydetails> {
                         borderRadius: BorderRadius.circular(5.0),
                       )
                     ),
-                    value: selectedanswer,
+                    initialValue: selectedanswer,
                       items: answers.map((answer){
                     return DropdownMenuItem(
                       value: answer,
@@ -105,7 +105,7 @@ class _FamilydetailsState extends State<Familydetails> {
                         borderRadius: BorderRadius.circular(5.0),
                       )
                     ),
-                    value: selectedfeespayer,
+                    initialValue: selectedfeespayer,
                       items:feespayer.map((payer){
                     return DropdownMenuItem(
                       value: payer,

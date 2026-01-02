@@ -8,7 +8,7 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
-  GlobalKey<SliderDrawerState> _sliderDrawerKey =
+  final GlobalKey<SliderDrawerState> _sliderDrawerKey =
   GlobalKey<SliderDrawerState>();
 
   @override
@@ -279,7 +279,13 @@ class _ProfilepageState extends State<Profilepage> {
                 SizedBox(height: 7),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(onPressed: (){}, child: Padding(
+                  child: ElevatedButton(onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      )
+                    ), child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text("Log Out",
                       style: TextStyle(
@@ -289,12 +295,6 @@ class _ProfilepageState extends State<Profilepage> {
                       ),
                     ),
                   ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      )
-                    ),
                   ),
                 )
               ],

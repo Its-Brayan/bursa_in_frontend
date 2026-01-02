@@ -106,18 +106,18 @@ class _OTPState extends State<OTP> {
                 width: double.infinity,
                 child: ElevatedButton(onPressed: (){
                   Navigator.pushNamed(context, "/congrats");
-                }, child: Text(
-                  "Verify",
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
-                ),
+                },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)
                     )
+                  ), child: Text(
+                  "Verify",
+                  style: TextStyle(
+                    color: Colors.white
                   ),
+                ),
                 ),
               ),
             Row(

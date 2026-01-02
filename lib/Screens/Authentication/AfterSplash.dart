@@ -31,18 +31,18 @@ class Aftersplash extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: ElevatedButton(onPressed:(){
                     Navigator.pushNamed(context, "/login");
-                  }, child: Text(
-                    "Login",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                  },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.circular(5.0),
                       )
+                    ), child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
+                  ),
                   ),
                 ),
             ),

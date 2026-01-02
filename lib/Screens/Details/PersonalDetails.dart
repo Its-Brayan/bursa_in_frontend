@@ -64,7 +64,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField(
-                    value: selectedCourse,
+                    initialValue: selectedCourse,
                     items: courses.map((course){
                       return DropdownMenuItem(
                         value: course,
@@ -92,7 +92,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField(
-                    value: selectedGender,
+                    initialValue: selectedGender,
                     items:Genders.map((gender){
                       return DropdownMenuItem(
                         value: gender,
@@ -140,10 +140,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
       )),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(30.0),
-          child: ElevatedButton(onPressed: (){}, child: Text("Save as Draft",
-          style: TextStyle(
-            color: Colors.blue.shade200
-          ),),
+          child: ElevatedButton(onPressed: (){},
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               side: BorderSide(
@@ -151,7 +148,10 @@ class _PersonaldetailsState extends State<Personaldetails> {
               ),
               borderRadius: BorderRadius.circular(5),
             )
-          ),),
+          ), child: Text("Save as Draft",
+          style: TextStyle(
+            color: Colors.blue.shade200
+          ),),),
         ),
     );
   }

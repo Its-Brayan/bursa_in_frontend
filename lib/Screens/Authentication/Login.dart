@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:bursary_inn/Providers/providers.dart';
+import 'package:bursary_inn/Models/UserModel.dart';
+import 'package:provider/provider.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -9,8 +11,19 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool show_password = false;
+  final _formkey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose(){
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
+    final _userprovider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -34,7 +47,9 @@ class _LoginState extends State<Login> {
                 ),
                 ),
                 SizedBox(height: 100),
-                Form(child: Padding(
+                Form(
+                  key: _formkey,
+                    child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
@@ -49,9 +64,11 @@ class _LoginState extends State<Login> {
                               borderRadius: BorderRadius.circular(5.0),
                             )
                         ),
+                        controller: _emailController,
                       ),
                       SizedBox(height: 30),
                       TextFormField(
+                        controller: _passwordController,
                         obscureText: !show_password,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -72,21 +89,33 @@ class _LoginState extends State<Login> {
                       SizedBox(
                         width: double.infinity,
                         height: 40,
-                        child: ElevatedButton(onPressed: (){
-                          Navigator.pushNamed(context, "/otp");
-                        }, child: Text("Login",
+                        child: ElevatedButton(onPressed: () async{
+                          final user = UserModel(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                          final success = await _userprovider.login_student(user);
+                          if(!success){
+                            print("Login failed");
+                            return;
+                          }
+                          else {
+                            print("Login Successful");
+                            Navigator.pushNamed(context, "/home");
+                          }
+                        },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              )
+                          ), child: Text("Login",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              )
-                          ),
                         ),
                       ),
                       Row(

@@ -8,7 +8,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  GlobalKey<SliderDrawerState> _sliderDrawerKey =
+  final GlobalKey<SliderDrawerState> _sliderDrawerKey =
   GlobalKey<SliderDrawerState>();
 
   @override
@@ -176,18 +176,18 @@ class _HomeState extends State<Home> {
                                    color: Colors.white70,
                                  ),),
                                  SizedBox(height: 15),
-                                 ElevatedButton(onPressed: (){}, child:Text("Check Eligibility",style: TextStyle(
-                                   color: Colors.blueAccent,
-                                 ),),
+                                 ElevatedButton(onPressed: (){},
                                  style: ElevatedButton.styleFrom(
                                    shape: RoundedRectangleBorder(
                                      borderRadius: BorderRadius.circular(10.0),
                                    )
-                                 ),)
+                                 ), child:Text("Check Eligibility",style: TextStyle(
+                                   color: Colors.blueAccent,
+                                 ),),)
                                ],
                              ),
                            ),
-                           Container(
+                           SizedBox(
                              height: 150,
                                width: 160,
                                child: Image.asset("Assets/paper4.png"))
@@ -215,18 +215,18 @@ class _HomeState extends State<Home> {
                                   color: Colors.white70,
                                 ),),
                               SizedBox(height: 15),
-                              ElevatedButton(onPressed: (){}, child:Text("Check Eligibility",style: TextStyle(
-                                color: Colors.blueAccent,
-                              ),),
+                              ElevatedButton(onPressed: (){},
                                 style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0),
                                     )
-                                ),)
+                                ), child:Text("Check Eligibility",style: TextStyle(
+                                color: Colors.blueAccent,
+                              ),),)
                             ],
                           ),
                         ),
-                        Container(
+                        SizedBox(
                             height: 160,
                             width: 160,
                             child: Image.asset("Assets/paper4.png"))
@@ -381,16 +381,16 @@ class _HomeState extends State<Home> {
                              SizedBox(height:5.0),
                              SizedBox(
                                width: double.infinity,
-                               child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                               style: TextStyle(
-                                 color: Colors.white,
-                               ),),
+                               child: ElevatedButton(onPressed: (){},
                                  style: ElevatedButton.styleFrom(
                                    backgroundColor: Colors.blueAccent,
                                    shape: RoundedRectangleBorder(
                                      borderRadius: BorderRadius.circular(3.0),
                                    )
-                                 ),
+                                 ), child: Text("Apply Now",
+                               style: TextStyle(
+                                 color: Colors.white,
+                               ),),
                                ),
                              )
                            ],
@@ -448,16 +448,16 @@ class _HomeState extends State<Home> {
                                 SizedBox(height:5.0),
                                 SizedBox(
                                   width: double.infinity,
-                                  child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),),
+                                  child: ElevatedButton(onPressed: (){},
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.blueAccent,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(3.0),
                                         )
-                                    ),
+                                    ), child: Text("Apply Now",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),),
                                   ),
                                 )
                               ],
@@ -515,16 +515,16 @@ class _HomeState extends State<Home> {
                                 SizedBox(height:5.0),
                                 SizedBox(
                                   width: double.infinity,
-                                  child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),),
+                                  child: ElevatedButton(onPressed: (){},
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.blueAccent,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(3.0),
                                         )
-                                    ),
+                                    ), child: Text("Apply Now",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),),
                                   ),
                                 )
                               ],
@@ -600,17 +600,17 @@ class _HomeState extends State<Home> {
                             SizedBox(height:10),
                             SizedBox(
                               width: double.infinity,
-                              child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              ),
+                              child: ElevatedButton(onPressed: (){},
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4.0),
                                   ),
                                   backgroundColor: Colors.blueAccent,
-                                ),
+                                ), child: Text("Apply Now",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              ),
                               ),
                             )
                           ],
@@ -668,17 +668,17 @@ class _HomeState extends State<Home> {
                                   SizedBox(height:10),
                                   SizedBox(
                                     width: double.infinity,
-                                    child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    child: ElevatedButton(onPressed: (){},
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(4.0),
                                         ),
                                         backgroundColor: Colors.blueAccent,
+                                      ), child: Text("Apply Now",
+                                      style: TextStyle(
+                                        color: Colors.white,
                                       ),
+                                    ),
                                     ),
                                   )
                                 ],
@@ -736,17 +736,17 @@ class _HomeState extends State<Home> {
                                   SizedBox(height:10),
                                   SizedBox(
                                     width: double.infinity,
-                                    child: ElevatedButton(onPressed: (){}, child: Text("Apply Now",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    child: ElevatedButton(onPressed: (){},
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(4.0),
                                         ),
                                         backgroundColor: Colors.blueAccent,
+                                      ), child: Text("Apply Now",
+                                      style: TextStyle(
+                                        color: Colors.white,
                                       ),
+                                    ),
                                     ),
                                   )
                                 ],

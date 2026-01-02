@@ -84,17 +84,17 @@ class _HelppageState extends State<Helppage> {
                     padding: const EdgeInsets.all(15.0),
                     child: SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(onPressed: (){}, child: Text("Send",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),),
+                      child: ElevatedButton(onPressed: (){},
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         backgroundColor: Colors.blueAccent,
-                      ),),
+                      ), child: Text("Send",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),),),
                     ),
                   ),
                 )

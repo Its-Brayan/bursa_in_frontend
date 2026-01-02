@@ -118,12 +118,7 @@ class _AllDetailsState extends State<AllDetails> {
           children: [
             SizedBox(
               width: 150,
-              child: ElevatedButton(onPressed: (){}, child:Text("Edit",
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.w700,
-              ),
-              ),
+              child: ElevatedButton(onPressed: (){},
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
@@ -131,25 +126,30 @@ class _AllDetailsState extends State<AllDetails> {
                       color: Colors.blue.shade200
                     )
                   )
-                ),
+                ), child:Text("Edit",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w700,
+              ),
+              ),
               ),
             ),
             SizedBox(
               width: 150,
               child: ElevatedButton(onPressed: (){
                 Navigator.pushNamed(context, "/home");
-              }, child:Text("Submit",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     )
+                ), child:Text("Submit",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
                 ),
+              ),
               ),
             ),
           ],
