@@ -46,6 +46,7 @@ dependencies:
   provider: ^6.1.5+1
   http: ^1.6.0
   flutter_secure_storage: ^10.0.0
+  elegant_notification: ^2.5.1
 #  full_picker: ^2.1.5
 
 dev_dependencies:

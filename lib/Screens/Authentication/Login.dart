@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:bursary_inn/Providers/providers.dart';
 import 'package:bursary_inn/Models/UserModel.dart';
 import 'package:provider/provider.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:elegant_notification/resources/stacked_options.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -10,6 +14,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool isLoading = false;
   bool show_password = false;
   final _formkey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
@@ -90,6 +95,7 @@ class _LoginState extends State<Login> {
                         width: double.infinity,
                         height: 40,
                         child: ElevatedButton(onPressed: () async{
+                          startload();
                           final user = UserModel(
                             email: _emailController.text,
                             password: _passwordController.text,
@@ -100,8 +106,18 @@ class _LoginState extends State<Login> {
                             return;
                           }
                           else {
+                            ElegantNotification.success(
+                              width: 360,
+                                height: 100,
+                                isDismissable: true,
+                                stackedOptions: StackedOptions(
+                                    key: 'top',
+                                type: StackedType.same,
+                                itemOffset:const Offset(-5, -5),),
+                                title: Text("Update"),
+                                description: Text("Login Successful")).show(context);
                             print("Login Successful");
-                            Navigator.pushNamed(context, "/home");
+                            Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route)=>false);
                           }
                         },
                           style: ElevatedButton.styleFrom(
@@ -109,7 +125,14 @@ class _LoginState extends State<Login> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               )
-                          ), child: Text("Login",
+                          ), child:isLoading ? SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: CircularProgressIndicator(
+                              color: Colors.blue.shade200,
+                            ),
+                          )
+                         :Text("Login",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -184,5 +207,14 @@ class _LoginState extends State<Login> {
             ),
           )),
     );
+  }
+  startload()async{
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {
+      isLoading = false;
+    });
   }
 }

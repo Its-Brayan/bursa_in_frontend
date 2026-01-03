@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:bursary_inn/Models/UserModel.dart';
 import 'package:bursary_inn/Providers/providers.dart';
 import 'package:provider/provider.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:elegant_notification/resources/stacked_options.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -20,7 +23,7 @@ class _SignupState extends State<Signup> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
-  bool _passwordvisible = false;
+  bool isLoading = false;
 
   @override
   void dispose(){
@@ -135,6 +138,7 @@ class _SignupState extends State<Signup> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(onPressed: () async{
+                      startload();
                       final user = UserModel(
                         full_name: _nameController.text,
                         email: _emailController.text,
@@ -148,16 +152,36 @@ class _SignupState extends State<Signup> {
                         print("Registration failed");
                         return;
                       }else{
+                        ElegantNotification.success(
+                          width: 360,
+                            height: 100,
+                            isDismissable: true,
+                            stackedOptions: StackedOptions(
+                                key: 'top',
+                              type: StackedType.same,
+                              itemOffset: const Offset(-5, -5)
+                            ),
+                            description:Text("Registration Successful"),
+                          title: Text("update"),
+                        ).show(context);
                         print("Registration Successful");
-                        Navigator.pushNamed(context, "/home");
+                        Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic>route) => false);
                       }
+
                     },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           )
-                      ), child:Text("Create Account",
+                      ), child:isLoading ? SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator(
+                          color: Colors.blue.shade200,
+                        ),
+                      )
+                      :Text("Create Account",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 15
@@ -190,5 +214,14 @@ class _SignupState extends State<Signup> {
         ),
       )),
     );
+  }
+  startload() async{
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {
+      isLoading = false;
+    });
   }
 }
