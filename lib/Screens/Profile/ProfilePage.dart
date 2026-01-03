@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:bursary_inn/Models/UserModel.dart';
+import 'package:bursary_inn/Services/UserService.dart';
 class Profilepage extends StatefulWidget {
   const Profilepage({super.key});
 
@@ -10,7 +12,18 @@ class Profilepage extends StatefulWidget {
 class _ProfilepageState extends State<Profilepage> {
   final GlobalKey<SliderDrawerState> _sliderDrawerKey =
   GlobalKey<SliderDrawerState>();
-
+Map<String,dynamic>? _student_data;
+Future<void> loaduser() async{
+  final userdata = await UserService().get_student_profile();
+  setState(() {
+    _student_data = userdata;
+  });
+}
+@override
+void initState(){
+  super.initState();
+  loaduser();
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,12 +59,12 @@ class _ProfilepageState extends State<Profilepage> {
                           ),
                         ),
                         SizedBox(height: 10.0),
-                        Text("Ritik Merha",
+                        Text("${_student_data?['full_name']}",
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),),
-                        Text("Ritikmesh123@gmail.com",
+                        Text("${_student_data?['email']}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black,
@@ -135,12 +148,12 @@ class _ProfilepageState extends State<Profilepage> {
                   height: 100,),
                 ),
                 SizedBox(height: 10),
-                Text("Ritik Metrha",
+                Text("${_student_data?['full_name']}",
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 20,
                 ),),
-                Text("ritikmehra123@gmail.com",
+                Text("${_student_data?['email']}",
                 style: TextStyle(
                   color: Colors.grey.shade500,
                 ),

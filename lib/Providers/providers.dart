@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:bursary_inn/Services/UserService.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
@@ -56,4 +57,10 @@ class UserProvider with ChangeNotifier{
       return false;
     }
   }
+  Future<void> logout_user()async{
+    final _storage = FlutterSecureStorage();
+    await _storage.deleteAll();
+    notifyListeners();
+  }
+
 }
