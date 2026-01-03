@@ -61,4 +61,27 @@ class UserService {
       };
     }
   }
+  Future <Map<String,dynamic>?> get_student_profile() async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.get(
+          Uri.parse("$baseURL/me/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          }
+        )
+    );
+    if(response.statusCode == 200){
+      print("Student details fetched successfully");
+      final data = jsonDecode(response.body);
+      print(data);
+      return data;
+    }else{
+      return null;
+    }
+  }
+  // Future<bool> logout_student() async{
+  //   await _storage.deleteAll();
+  //   return true;
+  // }
 }
