@@ -98,7 +98,7 @@ Future<bool> create_personal_details(PersonalDetails person) async{
   }
 
 }
-Future<bool> create_education_details(Educationdetails education) async{
+Future<bool> create_education_details(EducationDetails education) async{
   _errorMessage = null;
   notifyListeners();
   try{
