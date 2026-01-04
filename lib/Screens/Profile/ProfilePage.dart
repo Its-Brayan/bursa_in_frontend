@@ -1,7 +1,6 @@
 import 'package:bursary_inn/Providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
-import 'package:bursary_inn/Models/UserModel.dart';
 import 'package:provider/provider.dart';
 import 'package:bursary_inn/Services/UserService.dart';
 class Profilepage extends StatefulWidget {

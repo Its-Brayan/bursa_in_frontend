@@ -149,7 +149,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
-                    value: SelectedCounty,
+                    initialValue: SelectedCounty,
                     items: counties.map((county){
                       return DropdownMenuItem(
                         value: county,
@@ -175,7 +175,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
-                    value: SelectedConstituency,
+                    initialValue: SelectedConstituency,
                     items: constituencies.map((c){
                       return DropdownMenuItem(
                           value: c,
@@ -198,7 +198,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
-                    value: SelectedWard,
+                    initialValue: SelectedWard,
                     items: wards.map((w){
                       return DropdownMenuItem(
                         value: w,
