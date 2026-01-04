@@ -5,9 +5,9 @@ import 'package:bursary_inn/Models/DetailsPage/EducationDetails.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
 
 class Educationdetailsservice {
-  final baseUrl = "http://10.33.27.1:8000/api/v1/applications/";
+  final baseUrl = "http://10.33.27.1:8000/api/v1/applications";
 
-  Future<Map<String,dynamic>> create_education_details(Educationdetails education)async{
+  Future<Map<String,dynamic>> create_education_details(EducationDetails education)async{
     final response = await ApiService.AuthorizedRequest(
         (token) => http.post(
           Uri.parse("$baseUrl/education-details/"),
@@ -20,11 +20,13 @@ class Educationdetailsservice {
     );
     final responsedata = jsonDecode(response.body);
     if(response.statusCode == 201){
+      print(responsedata);
       return{
         "success":true,
         "data":responsedata
       };
     }else{
+      print(responsedata);
       return{
         "success":false,
         "error":responsedata
