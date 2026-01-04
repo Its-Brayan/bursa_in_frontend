@@ -1,9 +1,17 @@
+import 'package:bursary_inn/Models/DetailsPage/DocumentDetails.dart';
+import 'package:bursary_inn/Models/DetailsPage/EducationDetails.dart';
+import 'package:bursary_inn/Models/DetailsPage/FamilyDetails.dart';
+import 'package:bursary_inn/Models/DetailsPage/PersonalDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:bursary_inn/Services/UserService.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
 import 'package:bursary_inn/Models/UserModel.dart';
+import 'package:bursary_inn/Services/DetailsServices/PersonalDetailsService.dart';
+import 'package:bursary_inn/Services/DetailsServices/FamilyDetailsService.dart';
+import 'package:bursary_inn/Services/DetailsServices/EducationDetailsService.dart';
+import 'package:bursary_inn/Services/DetailsServices/DocumentDetailsService.dart';
 
 class UserProvider with ChangeNotifier{
   final UserService _userService = UserService();
@@ -64,4 +72,94 @@ class UserProvider with ChangeNotifier{
     notifyListeners();
   }
 
+}
+
+class DetailsPageProvider with ChangeNotifier{
+String? _errorMessage;
+String? get errorMessage => _errorMessage;
+
+Future<bool> create_personal_details(PersonalDetails person) async{
+  _errorMessage = null;
+  notifyListeners();
+  try {
+    final success = await Personaldetailsservice().create_personal_details(person);
+    final Map<String,dynamic>responsedata = success;
+    if(responsedata['success']==true){
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      final error = responsedata['error'];
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    notifyListeners();
+    return false;
+  }
+
+}
+Future<bool> create_education_details(Educationdetails education) async{
+  _errorMessage = null;
+  notifyListeners();
+  try{
+    final success = await Educationdetailsservice().create_education_details(education);
+    final Map<String,dynamic> responsedata = success;
+    if(responsedata['success'] == true){
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      final error = responsedata['error'];
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    notifyListeners();
+    return false;
+  }
+}
+Future<bool> create_family_details(Familydetails family) async{
+  _errorMessage = null;
+  notifyListeners();
+  try{
+    final success = await Familydetailsservice().create_family_details(family);
+    final Map<String,dynamic> responsedata=success;
+    if(responsedata['success']==true){
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      final error = responsedata['error'];
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    notifyListeners();
+    return false;
+  }
+}
+Future<bool> create_documents_details(Documentdetails documents) async{
+  _errorMessage = null;
+  try{
+    final success = await Documentdetailsservice().create_document_details(documents);
+    final Map<String,dynamic> responsedata = success;
+    if(responsedata['success']==true){
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      final error = responsedata['error'];
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    notifyListeners();
+    return false;
+  }
+}
 }
