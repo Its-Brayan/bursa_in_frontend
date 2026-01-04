@@ -32,14 +32,14 @@ class ApiService{
     );
     if(response.statusCode==200){
       final data = jsonDecode(response.body);
-      final _newAccessToken = data['access'];
-      final _newRefreshToken = data['refresh'];
-      await _storage.write(key: "AccessToken", value: _newAccessToken);
+      final newAccessToken = data['access'];
+      final newRefreshToken = data['refresh'];
+      await _storage.write(key: "AccessToken", value: newAccessToken);
       print("access token refreshed");
-      if(_newRefreshToken != null){
-        await _storage.write(key: "RefreshToken", value: _newRefreshToken);
+      if(newRefreshToken != null){
+        await _storage.write(key: "RefreshToken", value: newRefreshToken);
       }
-      return _newAccessToken;
+      return newAccessToken;
     }else{
       print("failed to refresh access tokens");
       await clearTokens();

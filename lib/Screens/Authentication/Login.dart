@@ -3,7 +3,6 @@ import 'package:bursary_inn/Providers/providers.dart';
 import 'package:bursary_inn/Models/UserModel.dart';
 import 'package:provider/provider.dart';
 import 'package:elegant_notification/elegant_notification.dart';
-import 'package:elegant_notification/resources/arrays.dart';
 import 'package:elegant_notification/resources/stacked_options.dart';
 
 class Login extends StatefulWidget {
@@ -17,8 +16,8 @@ class _LoginState extends State<Login> {
   bool isLoading = false;
   bool show_password = false;
   final _formkey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose(){
@@ -28,7 +27,7 @@ class _LoginState extends State<Login> {
   }
   @override
   Widget build(BuildContext context) {
-    final _userprovider = Provider.of<UserProvider>(context);
+    final userprovider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -100,7 +99,7 @@ class _LoginState extends State<Login> {
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
-                          final success = await _userprovider.login_student(user);
+                          final success = await userprovider.login_student(user);
                           if(!success){
                             print("Login failed");
                             return;

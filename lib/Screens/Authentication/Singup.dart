@@ -3,7 +3,6 @@ import 'package:bursary_inn/Models/UserModel.dart';
 import 'package:bursary_inn/Providers/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:elegant_notification/elegant_notification.dart';
-import 'package:elegant_notification/resources/arrays.dart';
 import 'package:elegant_notification/resources/stacked_options.dart';
 
 class Signup extends StatefulWidget {
@@ -37,7 +36,7 @@ class _SignupState extends State<Signup> {
   }
   @override
   Widget build(BuildContext context) {
-    final _userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -147,7 +146,7 @@ class _SignupState extends State<Signup> {
                         confirm_password: _confirmPasswordController.text,
 
                       );
-                    final success =  await _userProvider.create_student(user);
+                    final success =  await userProvider.create_student(user);
                       if(!success){
                         print("Registration failed");
                         return;

@@ -4,9 +4,7 @@ import 'package:bursary_inn/Models/DetailsPage/FamilyDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/PersonalDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:provider/provider.dart';
 import 'package:bursary_inn/Services/UserService.dart';
-import 'package:bursary_inn/Services/ApiService.dart';
 import 'package:bursary_inn/Models/UserModel.dart';
 import 'package:bursary_inn/Services/DetailsServices/PersonalDetailsService.dart';
 import 'package:bursary_inn/Services/DetailsServices/FamilyDetailsService.dart';
@@ -66,8 +64,8 @@ class UserProvider with ChangeNotifier{
     }
   }
   Future<void> logout_user()async{
-    final _storage = FlutterSecureStorage();
-    await _storage.deleteAll();
+    final storage = FlutterSecureStorage();
+    await storage.deleteAll();
     print("User logged out successfully");
     notifyListeners();
   }
@@ -121,7 +119,7 @@ Future<bool> create_education_details(Educationdetails education) async{
     return false;
   }
 }
-Future<bool> create_family_details(Familydetails family) async{
+Future<bool> create_family_details(FamilyDetails family) async{
   _errorMessage = null;
   notifyListeners();
   try{

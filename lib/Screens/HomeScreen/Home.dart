@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final _userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: SliderDrawer(
@@ -110,7 +110,7 @@ class _HomeState extends State<Home> {
                   ),
                   ListTile(
                     onTap: ()async{
-                      await _userProvider.logout_user();
+                      await userProvider.logout_user();
                       Navigator.pushNamed(context, '/login');
                     },
                     leading: Icon(Icons.logout_outlined,color: Colors.red,size: 18,),

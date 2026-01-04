@@ -1,4 +1,4 @@
-class Familydetails {
+class FamilyDetails {
   String? fathers_name;
   String? fathers_occupation;
   String? mothers_name;
@@ -15,7 +15,7 @@ class Familydetails {
   String? other_income_sources;
   String? amount_spent_on_fees;
 
-  Familydetails({this.fathers_name,this.fathers_occupation,this.mothers_name,this.mothers_occupation,this.parents_alive,this.number_of_siblings,
+  FamilyDetails({this.fathers_name,this.fathers_occupation,this.mothers_name,this.mothers_occupation,this.parents_alive,this.paying_fees, this.number_of_siblings,
   this.number_of_siblings_working,this.number_of_siblings_in_business,this.number_of_siblings_in_college,
   this.number_of_siblings_in_highschool,this.annual_family_income,this.source_of_income,this.other_income_sources,this.amount_spent_on_fees});
 
