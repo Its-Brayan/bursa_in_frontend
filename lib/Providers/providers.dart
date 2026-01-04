@@ -60,6 +60,7 @@ class UserProvider with ChangeNotifier{
   Future<void> logout_user()async{
     final _storage = FlutterSecureStorage();
     await _storage.deleteAll();
+    print("User logged out successfully");
     notifyListeners();
   }
 

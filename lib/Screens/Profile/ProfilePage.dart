@@ -1,6 +1,8 @@
+import 'package:bursary_inn/Providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:bursary_inn/Models/UserModel.dart';
+import 'package:provider/provider.dart';
 import 'package:bursary_inn/Services/UserService.dart';
 class Profilepage extends StatefulWidget {
   const Profilepage({super.key});
@@ -26,6 +28,7 @@ void initState(){
 }
   @override
   Widget build(BuildContext context) {
+  final userprovider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: SliderDrawer(
@@ -124,6 +127,10 @@ void initState(){
                     ),
                   ),
                   ListTile(
+                    onTap: ()async{
+                      await userprovider.logout_user();
+                      Navigator.pushNamed(context, '/login');
+                    },
                     leading: Icon(Icons.logout_outlined,color: Colors.red,size: 18,),
                     title: Text("Logout",
                       style: TextStyle(
@@ -292,7 +299,10 @@ void initState(){
                 SizedBox(height: 7),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(onPressed: (){},
+                  child: ElevatedButton(onPressed: ()async{
+                    await userprovider.logout_user();
+                    Navigator.pushNamed(context, '/login');
+                  },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(

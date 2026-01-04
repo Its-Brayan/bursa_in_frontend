@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bursary_inn/Services/AreaApiService.dart';
 class Personaldetails extends StatefulWidget {
   const Personaldetails({super.key});
 
@@ -19,6 +20,24 @@ class _PersonaldetailsState extends State<Personaldetails> {
   String? selectedGender;
   String? selectedCourse;
 
+  Map<String,dynamic>? Areadata;
+  List<String> counties = [];
+  List<String> constituencies = [];
+  List<String> wards = [];
+  String? SelectedCounty;
+  String? SelectedConstituency;
+  String? SelectedWard;
+
+  @override
+  void initState(){
+    super.initState();
+    Areaapiservice().fetch_kenyan_areas().then((data){
+      setState(() {
+        Areadata = data;
+        counties = data.keys.toList();
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +131,46 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  TextFormField(
+                  DropdownButtonFormField<String>(
+                    value: SelectedCounty,
+                    items: counties.map((county){
+                      return DropdownMenuItem(
+                        value: county,
+                          child: Text(county)
+                      );
+                    }).toList(),
+                    onChanged: (value){
+                      setState(() {
+                        SelectedCounty = value;
+                        SelectedConstituency = null;
+                        SelectedWard = null;
+                        constituencies = Areadata![value]!.keys.toList();
+                        wards = [];
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: "County",
+                      hintText: "Nairobi City",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  DropdownButtonFormField<String>(
+                    value: SelectedConstituency,
+                    items: constituencies.map((c){
+                      return DropdownMenuItem(
+                          value: c,
+                          child: Text(c));
+                    }).toList(),
+                    onChanged: (value){
+                      setState(() {
+                        SelectedConstituency = value;
+                        SelectedWard = null;
+                        wards = List<String>.from(Areadata![SelectedCounty]![value]!);
+                      });
+                    },
                     decoration: InputDecoration(
                       labelText: "Constituency",
                       hintText: "Kasarani",
@@ -122,7 +180,18 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  TextFormField(
+                  DropdownButtonFormField<String>(
+                    value: SelectedWard,
+                    items: wards.map((w){
+                      return DropdownMenuItem(
+                        value: w,
+                          child: Text(w));
+                    }).toList(),
+                    onChanged: (value){
+                      setState(() {
+                        SelectedWard = value;
+                      });
+                    },
                     decoration: InputDecoration(
                       labelText: "Ward",
                       hintText: "Clay City",
