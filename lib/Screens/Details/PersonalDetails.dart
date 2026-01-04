@@ -1,5 +1,10 @@
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/stacked_options.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Services/AreaApiService.dart';
+import 'package:bursary_inn/Models/DetailsPage/PersonalDetails.dart';
+import 'package:bursary_inn/Providers/providers.dart';
+import 'package:provider/provider.dart';
 class Personaldetails extends StatefulWidget {
   const Personaldetails({super.key});
 
@@ -8,10 +13,6 @@ class Personaldetails extends StatefulWidget {
 }
 
 class _PersonaldetailsState extends State<Personaldetails> {
-  List<String> courses = [
-    "Computer Science",
-    "Internation Relation"
-  ];
   List<String> Genders = [
     "Male",
     "Female",
@@ -19,7 +20,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
   ];
   String? selectedGender;
   String? selectedCourse;
-
+  bool isLoading = false;
   Map<String,dynamic>? Areadata;
   List<String> counties = [];
   List<String> constituencies = [];
@@ -27,7 +28,28 @@ class _PersonaldetailsState extends State<Personaldetails> {
   String? SelectedCounty;
   String? SelectedConstituency;
   String? SelectedWard;
+   final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController registrationController = TextEditingController();
+  TextEditingController idController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController courseController = TextEditingController();
+  TextEditingController countyController = TextEditingController();
+  TextEditingController constituencyController = TextEditingController();
+  TextEditingController wardController = TextEditingController();
 
+  @override
+  void dispose(){
+    super.dispose();
+    nameController.dispose();
+    registrationController.dispose();
+    idController.dispose();
+    genderController.dispose();
+    countyController.dispose();
+    countyController.dispose();
+    constituencyController.dispose();
+    wardController.dispose();
+  }
   @override
   void initState(){
     super.initState();
@@ -40,6 +62,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
   }
   @override
   Widget build(BuildContext context) {
+    final detailprovider = Provider.of<DetailsPageProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Personal Details"),
@@ -50,7 +73,9 @@ class _PersonaldetailsState extends State<Personaldetails> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Form(child: Column(
+              Form(
+                key: _formKey,
+                  child: Column(
                 children: [
                   TextFormField(
                      decoration: InputDecoration(
@@ -60,9 +85,11 @@ class _PersonaldetailsState extends State<Personaldetails> {
                          borderRadius: BorderRadius.circular(5),
                        ),
                      ),
+                    controller: nameController,
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: registrationController,
                     decoration: InputDecoration(
                       labelText: "Registration Number",
                       hintText: "112223344",
@@ -73,6 +100,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: idController,
                     decoration: InputDecoration(
                       labelText: "ID Number",
                       hintText: "112223344",
@@ -82,19 +110,8 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  DropdownButtonFormField(
-                    initialValue: selectedCourse,
-                    items: courses.map((course){
-                      return DropdownMenuItem(
-                        value: course,
-                          child: Text(course)
-                      );
-                    }).toList(),
-                    onChanged: (newValue){
-                      setState(() {
-                        selectedCourse = newValue;
-                      });
-                    },
+                  TextFormField(
+                    controller: courseController,
                     validator: (value){
                       if(value == null || value.isEmpty){
                         return 'Please select a course';
@@ -209,7 +226,38 @@ class _PersonaldetailsState extends State<Personaldetails> {
       )),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(30.0),
-          child: ElevatedButton(onPressed: (){},
+          child: ElevatedButton(onPressed: ()async{
+            startload();
+            final person = PersonalDetails(
+              full_name: nameController.text,
+              registration_number: registrationController.text,
+              national_id_number: idController.text,
+              course_of_study: courseController.text,
+              student_gender: selectedGender,
+              county: SelectedCounty,
+              constituency:SelectedConstituency,
+              ward: SelectedWard,
+            );
+            final success = await detailprovider.create_personal_details(person);
+            if(!success){
+              print("Failed registering personal details");
+              return;
+            }else{
+              ElegantNotification.success(
+                width: 360,
+                  height: 100,
+                  isDismissable: true,
+                  stackedOptions: StackedOptions(
+                      key: 'top',
+                      type: StackedType.same,
+                      itemOffset: const Offset(-5, -5)
+                  ),
+                  description: Text("Personal Details Saved!"),
+                title: Text("Update"),
+              ).show(context);
+              Navigator.pop(context);
+            }
+          },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               side: BorderSide(
@@ -217,11 +265,28 @@ class _PersonaldetailsState extends State<Personaldetails> {
               ),
               borderRadius: BorderRadius.circular(5),
             )
-          ), child: Text("Save as Draft",
+          ), child: isLoading ?
+                SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: CircularProgressIndicator(
+                    color: Colors.blue.shade200,
+                  ),
+                )
+           : Text("Save as Draft",
           style: TextStyle(
             color: Colors.blue.shade200
           ),),),
         ),
     );
+  }
+  startload() async{
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {
+      isLoading = false;
+    });
   }
 }

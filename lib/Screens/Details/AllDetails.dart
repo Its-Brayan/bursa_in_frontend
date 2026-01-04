@@ -113,46 +113,23 @@ class _AllDetailsState extends State<AllDetails> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(25.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: 150,
-              child: ElevatedButton(onPressed: (){},
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    side: BorderSide(
-                      color: Colors.blue.shade200
-                    )
-                  )
-                ), child:Text("Edit",
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.w700,
-              ),
-              ),
-              ),
+        child: SizedBox(
+          width: 150,
+          child: ElevatedButton(onPressed: (){
+            Navigator.pushNamed(context, "/home");
+          },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                )
+            ), child:Text("Submit",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
             ),
-            SizedBox(
-              width: 150,
-              child: ElevatedButton(onPressed: (){
-                Navigator.pushNamed(context, "/home");
-              },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    )
-                ), child:Text("Submit",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              ),
-            ),
-          ],
+          ),
+          ),
         ),
       ),
     );
