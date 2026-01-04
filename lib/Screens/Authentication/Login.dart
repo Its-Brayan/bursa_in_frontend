@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                                 title: Text("Update"),
                                 description: Text("Login Successful")).show(context);
                             print("Login Successful");
-                            Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route)=>false);
+                            Navigator.pushNamedAndRemoveUntil(context, '/alldetails', (Route<dynamic> route)=>false);
                           }
                         },
                           style: ElevatedButton.styleFrom(

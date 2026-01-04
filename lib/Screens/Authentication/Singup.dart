@@ -165,7 +165,7 @@ class _SignupState extends State<Signup> {
                           title: Text("update"),
                         ).show(context);
                         print("Registration Successful");
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic>route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/alldetails', (Route<dynamic>route) => false);
                       }
 
                     },
