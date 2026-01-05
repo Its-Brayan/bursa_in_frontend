@@ -1,7 +1,13 @@
+import 'package:bursary_inn/Providers/providers.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:file_selector/file_selector.dart';
+import 'package:provider/provider.dart';
+import 'package:bursary_inn/Models/DetailsPage/DocumentDetails.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/stacked_options.dart';
 class Documentdetails extends StatefulWidget {
   const Documentdetails({super.key});
 
@@ -10,7 +16,7 @@ class Documentdetails extends StatefulWidget {
 }
 
 class _DocumentdetailsState extends State<Documentdetails> {
-  Future<void> _openImageFile(BuildContext context) async {
+  Future<File?> _openImageFile() async {
     // #docregion SingleOpen
     const jpgsTypeGroup = XTypeGroup(
       label: 'JPEGs',
@@ -28,18 +34,47 @@ class _DocumentdetailsState extends State<Documentdetails> {
     // #enddocregion MultiOpen
     if (files.isEmpty) {
       // Operation was canceled by the user.
-      return;
+      return null;
     }
-    if (context.mounted) {
-      await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) => MultipleImagesDisplay(files),
-      );
-    }
-  }
 
+    // // if (context.mounted) {
+    // //   await showDialog<void>(
+    // //     context: context,
+    // //     builder: (BuildContext context) => MultipleImagesDisplay(files),
+    // //   );
+    // }
+    return File(files.first.path);
+
+  }
+  FileImage? selected_id_document;
+  FileImage? selected_school_id;
+  FileImage? selected_student_transcript;
+  FileImage? selected_admission_letter;
+  FileImage? selected_fee_structure;
+  FileImage? selected_approval_letter;
+  bool isLoading = false;
+
+  void _previewimage(FileImage image){
+    showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: Column(
+            children: [
+              Image(image: image,fit: BoxFit.contain,
+              ),
+              TextButton(onPressed: (){
+                Navigator.pop(context);
+              }, child: Text("Close",
+              style: TextStyle(
+                color: Colors.blue.shade200,
+              ),))
+            ],
+          ),
+        ));
+  }
   @override
   Widget build(BuildContext context) {
+    final _documentprovider = Provider.of<DetailsPageProvider>(context);
     return Scaffold(
      appBar: AppBar(
        title: Text("Document Details"),
@@ -84,15 +119,21 @@ class _DocumentdetailsState extends State<Documentdetails> {
                                shape: OutlineInputBorder(
                                  borderRadius: BorderRadius.circular(4.0)
                                ),
-                                child: Text("1 uploaded",
-                                style: TextStyle(
-                                  color: Colors.grey
-                                ),),
+                                child: selected_id_document != null ?
+                                    GestureDetector(
+                                      onTap:()=>_previewimage(selected_id_document!),
+                                        child: Image(image: selected_id_document!,fit: BoxFit.cover,))
+                                    :Icon(Icons.image,size: 50, color: Colors.grey,)
                              ),
                            ),
                            SizedBox(height: 1),
-                           ElevatedButton.icon(onPressed: (){
-                            _openImageFile(context);
+                           ElevatedButton.icon(onPressed: ()async{
+                           File? picked= await _openImageFile();
+                           if(picked != null){
+                             setState(() {
+                               selected_id_document = FileImage(picked);
+                             });
+                           }
                            }, icon: Icon(Icons.add,
                            color: Colors.white,),
                              label: Text("Upload",
@@ -135,15 +176,22 @@ class _DocumentdetailsState extends State<Documentdetails> {
                                 shape: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(4.0)
                                 ),
-                                child: Text("1 uploaded",
-                                  style: TextStyle(
-                                      color: Colors.grey
-                                  ),),
+                                child: selected_school_id != null ?
+                                    GestureDetector(
+                                      onTap: ()=>_previewimage(selected_school_id!),
+                                        child: Image(image: selected_school_id!,fit: BoxFit.cover,))
+                                    :Icon(Icons.image,size: 50,color: Colors.grey),
                               ),
                             ),
                             SizedBox(height: 1),
-                            ElevatedButton.icon(onPressed: (){
-                                  _openImageFile(context);
+                            ElevatedButton.icon(onPressed: ()async{
+                              File? picked =await _openImageFile();
+                              if(picked!= null){
+                                setState(() {
+                                  selected_school_id = FileImage(picked);
+                                });
+
+                              }
                             }, icon: Icon(Icons.add,
                               color: Colors.white,),
                               label: Text("Upload",
@@ -198,15 +246,24 @@ class _DocumentdetailsState extends State<Documentdetails> {
                                   shape: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(4.0)
                                   ),
-                                  child: Text("1 uploaded",
-                                    style: TextStyle(
-                                        color: Colors.grey
-                                    ),),
+                                  child: selected_student_transcript != null ?
+                                      GestureDetector(
+                                        onTap:(){
+                                          _previewimage(selected_student_transcript!);
+                                        },
+                                          child: Image(image: selected_student_transcript!,fit: BoxFit.cover,))
+                                      :Icon(Icons.image,size:50,color: Colors.grey,)
                                 ),
                               ),
                               SizedBox(height: 1),
-                              ElevatedButton.icon(onPressed: (){
-                                _openImageFile(context);
+                              ElevatedButton.icon(onPressed: ()async{
+                               File? picked =await _openImageFile();
+                               if(picked != null){
+                                 setState(() {
+                                   selected_student_transcript = FileImage(picked);
+                                 });
+
+                               }
                               }, icon: Icon(Icons.add,
                                 color: Colors.white,),
                                 label: Text("Upload",
@@ -249,15 +306,24 @@ class _DocumentdetailsState extends State<Documentdetails> {
                                   shape: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(4.0)
                                   ),
-                                  child: Text("1 uploaded",
-                                    style: TextStyle(
-                                        color: Colors.grey
-                                    ),),
+                                  child: selected_admission_letter != null ?
+                                      GestureDetector(
+                                        onTap: (){
+                                          _previewimage(selected_admission_letter!);
+                                        },
+                                          child: Image(image: selected_admission_letter!,fit: BoxFit.cover,))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey),
                                 ),
                               ),
                               SizedBox(height: 1),
-                              ElevatedButton.icon(onPressed: (){
-                                 _openImageFile(context);
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked =await _openImageFile();
+                                if(picked != null) {
+                                  setState(() {
+                                    selected_admission_letter =
+                                        FileImage(picked);
+                                  });
+                                }
                               }, icon: Icon(Icons.add,
                                 color: Colors.white,),
                                 label: Text("Upload",
@@ -300,15 +366,23 @@ class _DocumentdetailsState extends State<Documentdetails> {
                                   shape: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(4.0)
                                   ),
-                                  child: Text("1 uploaded",
-                                    style: TextStyle(
-                                        color: Colors.grey
-                                    ),),
+                                  child: selected_fee_structure != null ?
+                                      GestureDetector(
+                                        onTap:(){
+                                          _previewimage(selected_fee_structure!);
+                                        },
+                                          child: Image(image: selected_fee_structure!,fit: BoxFit.cover))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey)
                                 ),
                               ),
                               SizedBox(height: 1),
-                              ElevatedButton.icon(onPressed: (){
-                                 _openImageFile(context);
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked = await _openImageFile();
+                                if(picked != null) {
+                                  setState(() {
+                                    selected_fee_structure = FileImage(picked);
+                                  });
+                                }
                               }, icon: Icon(Icons.add,
                                 color: Colors.white,),
                                 label: Text("Upload",
@@ -361,15 +435,21 @@ class _DocumentdetailsState extends State<Documentdetails> {
                             shape: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(4.0)
                             ),
-                            child: Text("1 uploaded",
-                              style: TextStyle(
-                                  color: Colors.grey
-                              ),),
+                            child: selected_approval_letter != null ?
+                                GestureDetector(
+                                  onTap: ()=>_previewimage(selected_approval_letter!),
+                                    child: Image(image: selected_approval_letter!,fit: BoxFit.cover))
+                                :Icon(Icons.image,size: 50,color: Colors.grey),
                           ),
                         ),
                         SizedBox(height: 1),
-                        ElevatedButton.icon(onPressed: (){
-                          _openImageFile(context);
+                        ElevatedButton.icon(onPressed: ()async{
+                          File? picked = await _openImageFile();
+                          if(picked != null) {
+                            setState(() {
+                              selected_approval_letter = FileImage(picked);
+                            });
+                          }
                         }, icon: Icon(Icons.add,
                           color: Colors.white,),
                           label: Text("Upload",
@@ -394,8 +474,35 @@ class _DocumentdetailsState extends State<Documentdetails> {
       )),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(22.0),
-        child: ElevatedButton(onPressed: (){
-          _openImageFile(context);
+        child: ElevatedButton(onPressed: ()async{
+          startload();
+        final documents = DocumentDetails(
+          id_document: File(selected_id_document!.file.path),
+          school_id: File(selected_school_id!.file.path),
+          student_transcript:File(selected_student_transcript!.file.path),
+          admission_letter:File(selected_admission_letter!.file.path),
+          fee_structure: File(selected_fee_structure!.file.path),
+          approval_letter:File(selected_approval_letter!.file.path),
+        );
+        final success = await _documentprovider.create_documents_details(documents);
+        if(!success){
+          print("failed to upload document details");
+          return;
+        }else{
+          ElegantNotification.success(
+            width: 360,
+            height: 100,
+            isDismissable: true,
+            stackedOptions: StackedOptions(
+                key: 'top',
+                type: StackedType.same,
+                itemOffset: const Offset(-5, -5)
+            ),
+            description: Text("Document details Saved!"),
+            title: Text("Update"),
+          ).show(context);
+          Navigator.pop(context);
+        }
         },
           style: ElevatedButton.styleFrom(
            side: BorderSide(
@@ -412,6 +519,15 @@ class _DocumentdetailsState extends State<Documentdetails> {
         ),
       ),
     );
+  }
+  startload()async{
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {
+      isLoading = false;
+    });
   }
 }
 /// Widget that displays a text file in a dialog
@@ -451,4 +567,5 @@ class MultipleImagesDisplay extends StatelessWidget {
       ],
     );
   }
+
 }

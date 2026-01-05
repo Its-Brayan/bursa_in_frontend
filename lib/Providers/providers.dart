@@ -140,7 +140,7 @@ Future<bool> create_family_details(FamilyDetails family) async{
     return false;
   }
 }
-Future<bool> create_documents_details(Documentdetails documents) async{
+Future<bool> create_documents_details(DocumentDetails documents) async{
   _errorMessage = null;
   try{
     final success = await Documentdetailsservice().create_document_details(documents);
