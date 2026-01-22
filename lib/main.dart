@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => DetailsPageProvider()),
+        ChangeNotifierProvider(create: (context) => BursaryProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
 
           //Home routes
           "/home":(context) => MyHomePage(),
+          "/explore":(context) => Explorepage(),
 
           //Notification route
           "/notification": (context) => Notificationpage(),
@@ -64,6 +66,7 @@ class MyApp extends StatelessWidget {
 
           //Settings route
           "/settings":(context) => Settingspage(),
+
         },
         title: 'Flutter Demo',
         theme: ThemeData(

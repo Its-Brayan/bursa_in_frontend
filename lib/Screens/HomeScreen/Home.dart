@@ -14,6 +14,13 @@ class _HomeState extends State<Home> {
   GlobalKey<SliderDrawerState>();
 
   @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      Provider.of<BursaryProvider>(context,listen: false).get_all_bursaries();
+    }
+    );
+  }
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
@@ -159,7 +166,7 @@ class _HomeState extends State<Home> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-              
+
                     children: [
                       Card(
                         color: Colors.blueAccent,
@@ -244,7 +251,7 @@ class _HomeState extends State<Home> {
                 ),
                   SizedBox(height: 5),
                  Card(
-              
+
                    child: ListTile(
                      leading: Text("Upcoming Deadlines",
                      style: TextStyle(
@@ -326,220 +333,104 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w900,
                       fontSize: 18,
                     ),),
-                    trailing: TextButton(onPressed: (){}, child:Text("View All",
+                    trailing: TextButton(onPressed: (){
+                      Navigator.pushNamed(context, "/explore");
+                    }, child:Text("View All",
                     style: TextStyle(
                       color: Colors.blueAccent,
                     ),) ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Card(
-                          child:Container(
-                            color: Colors.white,
-                            width: 200,
-                         child: Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             Image.asset("Assets/need_of.jpeg",
-                             fit: BoxFit.cover,),
-                             Padding(
-                               padding: const EdgeInsets.all(3.0),
-                               child: Row(
-                                 mainAxisSize: MainAxisSize.max,
-                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                 children: [
-                                   Text("Award",
-                                   style: TextStyle(
-                                     fontWeight: FontWeight.w900,
-                                   ),),
-                                   IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border_outlined,color: Colors.grey.shade400,))
-                                 ],
-                               ),
-                             ),
-                             Text("Ksh 5000 - Ksh 7000",
-                             style: TextStyle(
-                               color: Colors.grey.shade500,
-                             ),),
-                             SizedBox(height: 9.0),
-                             Text("Eligibility",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                              ),),
-                             Text("Kenyan Students with ID",style: TextStyle(
-                               color: Colors.grey.shade500,
-                             ),),
-                             SizedBox(height:9),
-                             Wrap(
-                               spacing: 5,
-                               children: [
-                                 Text("Due Date:",style:TextStyle(
-                                   fontWeight: FontWeight.w900,
-                                 ),),
-                                 Text("06/08/23",style: TextStyle(
-                                   color: Colors.grey.shade500,
-                                 ),),
-                               ],
-                             ),
-                             SizedBox(height:5.0),
-                             SizedBox(
-                               width: double.infinity,
-                               child: ElevatedButton(onPressed: (){},
-                                 style: ElevatedButton.styleFrom(
-                                   backgroundColor: Colors.blueAccent,
-                                   shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(3.0),
-                                   )
-                                 ), child: Text("Apply Now",
-                               style: TextStyle(
-                                 color: Colors.white,
-                               ),),
-                               ),
-                             )
-                           ],
-
-                         ),
-                          ),
-                        ),
-                        Card(
-                          child:Container(
-                            color: Colors.white,
-                            width: 200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset("Assets/need_of.jpeg",
-                                  fit: BoxFit.cover,),
-                                Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Award",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                        ),),
-                                      IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border_outlined,color: Colors.grey.shade400,))
-                                    ],
-                                  ),
-                                ),
-                                Text("Ksh 5000 - Ksh 7000",
-                                  style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                  ),),
-                                SizedBox(height: 9.0),
-                                Text("Eligibility",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                  ),),
-                                Text("Kenyan Students with ID",style: TextStyle(
-                                  color: Colors.grey.shade500,
-                                ),),
-                                SizedBox(height:9),
-                                Wrap(
-                                  spacing: 5,
-                                  children: [
-                                    Text("Due Date:",style:TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                    ),),
-                                    Text("06/08/23",style: TextStyle(
-                                      color: Colors.grey.shade500,
-                                    ),),
-                                  ],
-                                ),
-                                SizedBox(height:5.0),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(onPressed: (){},
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.blueAccent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(3.0),
+                  Consumer<BursaryProvider>(
+                    builder: (context,BursaryProvider,child) {
+                      final bursaries = BursaryProvider.all_bursaries;
+                      return SizedBox(
+                        height: 340,
+                        child: ListView.builder(
+                          itemCount: bursaries.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context,index) {
+                            final bursary = bursaries[index];
+                            return
+                              Card(
+                                  child: Container(
+                                    color: Colors.white,
+                                    width: 200,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                        Image.asset("Assets/need_of.jpeg",
+                                          fit: BoxFit.cover,),
+                                        Padding(
+                                          padding: const EdgeInsets.all(3.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
+                                            children: [
+                                              Text("Award",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w900,
+                                                ),),
+                                              IconButton(onPressed: () {},
+                                                  icon: Icon(
+                                                    Icons
+                                                        .favorite_border_outlined,
+                                                    color: Colors.grey.shade400,))
+                                            ],
+                                          ),
+                                        ),
+                                        Text("${bursary.bursary_amount}",
+                                          style: TextStyle(
+                                            color: Colors.grey.shade500,
+                                          ),),
+                                        SizedBox(height: 9.0),
+                                        Text("Eligibility",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                          ),),
+                                        Text("Kenyan Students with ID",
+                                          style: TextStyle(
+                                            color: Colors.grey.shade500,
+                                          ),),
+                                        SizedBox(height: 9),
+                                        Wrap(
+                                          spacing: 5,
+                                          children: [
+                                            Text("Due Date:", style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                            ),),
+                                            Text("${bursary.bursary_deadline}", style: TextStyle(
+                                              color: Colors.grey.shade500,
+                                            ),),
+                                          ],
+                                        ),
+                                        SizedBox(height: 5.0),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: ElevatedButton(onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors
+                                                    .blueAccent,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius
+                                                      .circular(3.0),
+                                                )
+                                            ), child: Text("Apply Now",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),),
+                                          ),
                                         )
-                                    ), child: Text("Apply Now",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),),
-                                  ),
-                                )
-                              ],
+                                      ],
 
-                            ),
-                          ),
+                                    ),
+                                  ),
+                                );
+                          }
                         ),
-                        Card(
-                          child:Container(
-                            color: Colors.white,
-                            width: 200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset("Assets/need_of.jpeg",
-                                  fit: BoxFit.cover,),
-                                Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Award",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                        ),),
-                                      IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border_outlined,color: Colors.grey.shade400,))
-                                    ],
-                                  ),
-                                ),
-                                Text("Ksh 5000 - Ksh 7000",
-                                  style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                  ),),
-                                SizedBox(height: 9.0),
-                                Text("Eligibility",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                  ),),
-                                Text("Kenyan Students with ID",style: TextStyle(
-                                  color: Colors.grey.shade500,
-                                ),),
-                                SizedBox(height:9),
-                                Wrap(
-                                  spacing: 5,
-                                  children: [
-                                    Text("Due Date:",style:TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                    ),),
-                                    Text("06/08/23",style: TextStyle(
-                                      color: Colors.grey.shade500,
-                                    ),),
-                                  ],
-                                ),
-                                SizedBox(height:5.0),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(onPressed: (){},
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.blueAccent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(3.0),
-                                        )
-                                    ), child: Text("Apply Now",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),),
-                                  ),
-                                )
-                              ],
-
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                      );
+                    }
                   ),
                 ListTile(
                   leading: Text("Recommended Bursaries",
