@@ -10,6 +10,8 @@ import 'package:bursary_inn/Services/DetailsServices/PersonalDetailsService.dart
 import 'package:bursary_inn/Services/DetailsServices/FamilyDetailsService.dart';
 import 'package:bursary_inn/Services/DetailsServices/EducationDetailsService.dart';
 import 'package:bursary_inn/Services/DetailsServices/DocumentDetailsService.dart';
+import 'package:bursary_inn/Models/BursaryModel/BursaryDetail.dart';
+import 'package:bursary_inn/Services/BursaryService/AllAvailableService.dart';
 
 class UserProvider with ChangeNotifier{
   final UserService _userService = UserService();
@@ -160,4 +162,14 @@ Future<bool> create_documents_details(DocumentDetails documents) async{
     return false;
   }
 }
+
+}
+class BursaryProvider with ChangeNotifier{
+  List<BursaryDetail> _all_bursaries = [];
+  List<BursaryDetail> get all_bursaries => _all_bursaries;
+  Future<List<BursaryDetail>> get_all_bursaries() async{
+    _all_bursaries = await AllavailableService().get_all_bursaries();
+    notifyListeners();
+    return _all_bursaries;
+  }
 }
