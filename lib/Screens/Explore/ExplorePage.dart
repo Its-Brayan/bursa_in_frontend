@@ -1,4 +1,5 @@
 import 'package:bursary_inn/Providers/providers.dart';
+import 'package:bursary_inn/Services/BursaryService/BursaryApplicationService.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Models/BursaryModel/BursaryDetail.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class _ExplorepageState extends State<Explorepage> {
     final provider = Provider.of<BursaryProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         title: Text("Explore Bursaries",
         style: TextStyle(
           fontWeight: FontWeight.bold,
@@ -102,7 +103,14 @@ class _ExplorepageState extends State<Explorepage> {
                       ),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(onPressed: () {},
+                        child: ElevatedButton(onPressed: () async{
+                          final success = await BursaryApplicationService().apply_for_bursary(bursary.id!);
+                           if(success){
+                             ScaffoldMessenger.of(context).showSnackBar(
+                               SnackBar(content: Text(success ? '${bursary.bursary_name} applied successfully': 'Failed to apply bursary'))
+                             );
+                           }
+                        },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blueAccent,
                               shape: RoundedRectangleBorder(
