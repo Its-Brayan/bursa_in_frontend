@@ -1,7 +1,11 @@
 import 'package:bursary_inn/Providers/providers.dart';
+import 'package:bursary_inn/Screens/Explore/BursaryDetailsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:bursary_inn/Services/BursaryService/BursaryApplicationService.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -20,6 +24,14 @@ class _HomeState extends State<Home> {
       Provider.of<BursaryProvider>(context,listen: false).get_all_bursaries();
     }
     );
+  }
+  String format_date(String datestring){
+    try{
+      final date = DateTime.parse(datestring);
+      return DateFormat('MMM d').format(date);
+    }catch(e){
+       return datestring;
+    }
   }
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
@@ -271,61 +283,59 @@ class _HomeState extends State<Home> {
                    ),
                  ),
                   SizedBox(height: 3),
-                  Card(
-                    child: ListTile(
-                      leading: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Colors.blue.shade100,
+                  Consumer<BursaryProvider>(
+                    builder: (context,BursaryProvider,child) {
+                      final bursaries = BursaryProvider.all_bursaries;
+
+                      return SizedBox(
+                        height: 200,
+                        child: ListView.builder(
+                          itemCount: bursaries.length,
+                          itemBuilder: (context,index) {
+                            final bursary = bursaries[index];
+                            return Card(
+                              child: ListTile(
+                                leading: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.blue.shade100,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${format_date(bursary.bursary_deadline!)}",
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.blue.shade400,
+                                        fontWeight: FontWeight.w900,
+                                      ),),
+                                  ),
+                                ),
+                                title: Text("${bursary.bursary_name}"),
+                                subtitle: Text("${bursary.bursary_amount}"),
+                                trailing: IconButton(onPressed: () {
+                                Navigator.push(
+                                    context,
+                                MaterialPageRoute(
+                                    builder:(context) => Bursarydetailspage(bursaryId: bursary.id!),
+                                ),
+                                );
+                                },
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_right_outlined,
+                                      color: Colors.blueAccent,)
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(2.0),
+                                ),
+                                tileColor: Colors.white,
+                              ),
+                            );
+                          }
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("AUG\n23",
-                            style: TextStyle(
-                              fontSize:13,
-                              color: Colors.blue.shade400,
-                              fontWeight: FontWeight.w900,
-                            ),),
-                        ),
-                      ),
-                      title: Text("Bursary of Kasarani Constituency"),
-                      subtitle: Text("Ksh 5000 - ksh 7000"),
-                      trailing: IconButton(onPressed: (){}, icon:Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blueAccent,)
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0),
-                      ),
-                      tileColor:Colors.white,
-                    ),
+                      );
+                    }
                   ),
-                  SizedBox(height:3),
-                  Card(
-                    child: ListTile(
-                      leading: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Colors.blue.shade100,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("AUG\n29",
-                            style: TextStyle(
-                              fontSize:13,
-                              color: Colors.blue.shade400,
-                              fontWeight: FontWeight.w900,
-                            ),),
-                        ),
-                      ),
-                      title: Text("Bursary of Zima Constituency"),
-                      subtitle: Text("Ksh 5000 - ksh 7000"),
-                      trailing: IconButton(onPressed: (){}, icon:Icon(Icons.keyboard_arrow_right_outlined,color: Colors.blueAccent,)
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0),
-                      ),
-                      tileColor:Colors.white,
-                    ),
-                  ),
+
                   SizedBox(height: 15),
                   ListTile(
                     leading: Text("Trending Bursaries",
@@ -380,7 +390,7 @@ class _HomeState extends State<Home> {
                                             ],
                                           ),
                                         ),
-                                        Text("${bursary.bursary_amount}",
+                                        Text("${bursary.bursary_name} - ${bursary.bursary_amount}",
                                           style: TextStyle(
                                             color: Colors.grey.shade500,
                                           ),),
@@ -408,7 +418,17 @@ class _HomeState extends State<Home> {
                                         SizedBox(height: 5.0),
                                         SizedBox(
                                           width: double.infinity,
-                                          child: ElevatedButton(onPressed: () {},
+                                          child: ElevatedButton(onPressed: ()async{
+                                            final success = await BursaryApplicationService().apply_for_bursary(bursary.id!);
+                                            if(success){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                content:Text(success ? 'application submitted successfully':'Failed to apply. Try again')
+                                                )
+                                              );
+                                            }
+
+                                          },
                                             style: ElevatedButton.styleFrom(
                                                 backgroundColor: Colors
                                                     .blueAccent,
