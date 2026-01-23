@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:bursary_inn/Services/ApiService.dart';
+import 'package:toastification/toastification.dart';
 class Bursarydetailspage extends StatefulWidget {
   final int bursaryId;
   const Bursarydetailspage({super.key,required this.bursaryId});
@@ -184,11 +185,109 @@ Future<void> fetch_bursary_details() async{
 
           final success = await BursaryApplicationService().apply_for_bursary(Bursary!.id!);
           if(success){
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(success ? "${Bursary?.bursary_name} Bursary applied successfully" : "Failed to apply for the bursary")
-              )
+            toastification.show(
+              context: context, // optional if you use ToastificationWrapper
+              type: ToastificationType.success,
+              style: ToastificationStyle.flat,
+              autoCloseDuration: const Duration(seconds: 5),
+              title: Text('Success',
+                style: TextStyle(
+                  color: Colors.green,
+                ),),
+              // you can also use RichText widget for title and description parameters
+              description: RichText(text: TextSpan(text: "You have successfully applied for ${Bursary?.bursary_name} bursary",
+                  style:TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  )
+              )),
+              alignment: Alignment.topRight,
+
+              animationDuration: const Duration(milliseconds: 200),
+              icon: const Icon(Icons.check),
+              showIcon: true, // show or hide the icon
+              primaryColor: Colors.green,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x07000000),
+                  blurRadius: 16,
+                  offset: Offset(0, 16),
+                  spreadRadius: 0,
+                )
+              ],
+              showProgressBar: true,
+              closeButton: ToastCloseButton(
+                showType: CloseButtonShowType.onHover,
+                buttonBuilder: (context, onClose) {
+                  return OutlinedButton.icon(
+                    onPressed: onClose,
+                    icon: const Icon(Icons.close, size: 20),
+                    label: const Text('Close'),
+                  );
+                },
+              ),
+              closeOnClick: false,
+              pauseOnHover: true,
+              dragToClose: true,
+              applyBlurEffect: true,
             );
             Navigator.pop(context);
+          }else{
+            toastification.show(
+              context: context, // optional if you use ToastificationWrapper
+              type: ToastificationType.success,
+              style: ToastificationStyle.flat,
+              autoCloseDuration: const Duration(seconds: 5),
+              title: Text('Failed',
+                style: TextStyle(
+                  color: Colors.red,
+                ),),
+              // you can also use RichText widget for title and description parameters
+              description: RichText(text: TextSpan(text: 'You have already applied for ${Bursary?.bursary_name} bursary',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ))),
+              alignment: Alignment.topRight,
+
+              animationDuration: const Duration(milliseconds: 200),
+              icon: const Icon(Icons.error_outline),
+              showIcon: true, // show or hide the icon
+              primaryColor: Colors.red,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x07000000),
+                  blurRadius: 16,
+                  offset: Offset(0, 16),
+                  spreadRadius: 0,
+                )
+              ],
+              showProgressBar: true,
+              closeButton: ToastCloseButton(
+                showType: CloseButtonShowType.onHover,
+                buttonBuilder: (context, onClose) {
+                  return OutlinedButton.icon(
+                    onPressed: onClose,
+                    icon: const Icon(Icons.close, size: 20),
+                    label: const Text('Close'),
+                  );
+                },
+              ),
+              closeOnClick: true,
+              pauseOnHover: true,
+              dragToClose: true,
+              applyBlurEffect: true,
+            );
           }
         }, child: Text("Apply Now",
         style: TextStyle(
