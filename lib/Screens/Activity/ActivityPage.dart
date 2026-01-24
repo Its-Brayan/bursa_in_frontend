@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bursary_inn/Providers/providers.dart';
+import 'package:provider/provider.dart';
 class Activitypage extends StatefulWidget {
   const Activitypage({super.key});
 
@@ -8,6 +10,14 @@ class Activitypage extends StatefulWidget {
 
 class _ActivitypageState extends State<Activitypage> {
   @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+    Provider.of<BursaryProvider>(context,listen: false).get_applied_bursaries();
+    }
+    );
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
@@ -15,12 +25,19 @@ class _ActivitypageState extends State<Activitypage> {
        title: Text("APPLIED BURSARIES"),
        centerTitle: true,
      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Card(
+      body: Consumer<BursaryProvider>(
+        builder: (context,BursaryProvider,child){
+          final applied_bursaries = BursaryProvider.applied_bursaries;
+          if(applied_bursaries.isEmpty){
+            return Center(
+              child: Text("No applied bursaries yet"),
+            );
+          }
+        return ListView.builder(
+          itemCount: applied_bursaries.length,
+          itemBuilder: (context,index) {
+            final applied_bursary = applied_bursaries[index];
+            return Card(
               child: Column(
                 children: [
                   Row(
@@ -30,30 +47,30 @@ class _ActivitypageState extends State<Activitypage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(30.0),
                         child: Image.asset("Assets/need_of.jpeg",
-                        width: 170,
-                        height: 150,
-                        fit: BoxFit.contain),
+                            width: 170,
+                            height: 150,
+                            fit: BoxFit.contain),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
+                        padding: const EdgeInsets.fromLTRB(5, 40, 5, 0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Kasarani NGCDF\n 2025 - 2026",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),),
+                            Text("${applied_bursary['bursary_name']}\n 2025 - 2026",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),),
                             Wrap(
                               spacing: 3,
                               children: [
-                                Text("Award",style: TextStyle(
+                                Text("Award:", style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),),
-                                Text("Ksh 9000 - Ksh 12000",
-                                style: TextStyle(
-                                  color: Colors.grey.shade500,
-                                ),),
+                                Text("${applied_bursary['bursary_amount']}",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                  ),),
                               ],
                             )
 
@@ -67,327 +84,59 @@ class _ActivitypageState extends State<Activitypage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete_outline_outlined,color: Colors.red,),
+                        ElevatedButton.icon(onPressed: () {},
+                          icon: Icon(
+                            Icons.delete_outline_outlined, color: Colors.red,),
                           label: Text("Delete",
-                          style: TextStyle(
-                            color: Colors.red
-                          ),),
+                            style: TextStyle(
+                                color: Colors.red
+                            ),),
                           style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                color: Colors.red,
-                              ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            )
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Colors.red,
+                                ),
+                                borderRadius: BorderRadius.circular(5.0),
+                              )
                           ),
                         ),
 
-                        ElevatedButton(onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Colors.blue.shade200,
-                            ),
-                            borderRadius: BorderRadiusGeometry.circular(5.0),
-                          )
-                        ), child: Text("View Details",
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                        ),),),
-                        ElevatedButton(onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          )
-                        ), child: Text("Check Status",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),),)
+                        ElevatedButton(onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Colors.blue.shade200,
+                                ),
+                                borderRadius: BorderRadiusGeometry.circular(
+                                    5.0),
+                              )
+                          ), child: Text("View Details",
+                            style: TextStyle(
+                              color: Colors.blueAccent,
+                            ),),),
+                        ElevatedButton(onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              )
+                          ), child: Text("Check Status",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),)
                       ],
                     ),
                   )
+
+
                 ],
-
               ),
-              ),
-              Card(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: Image.asset("Assets/need_of.jpeg",
-                              width: 170,
-                              height: 150,
-                              fit: BoxFit.contain),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Kasarani NGCDF\n 2025 - 2026",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),),
-                              Wrap(
-                                spacing: 3,
-                                children: [
-                                  Text("Award",style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),),
-                                  Text("Ksh 9000 - Ksh 12000",
-                                    style: TextStyle(
-                                      color: Colors.grey.shade500,
-                                    ),),
-                                ],
-                              )
+            );
+          }
+          );
 
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete_outline_outlined,color: Colors.red,),
-                            label: Text("Delete",
-                              style: TextStyle(
-                                  color: Colors.red
-                              ),),
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Colors.red,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                )
-                            ),
-                          ),
-
-                          ElevatedButton(onPressed: (){},
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Colors.blue.shade200,
-                                  ),
-                                  borderRadius: BorderRadiusGeometry.circular(5.0),
-                                )
-                            ), child: Text("View Details",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                            ),),),
-                          ElevatedButton(onPressed: (){},
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blueAccent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                )
-                            ), child: Text("Check Status",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),),)
-                        ],
-                      ),
-                    )
-                  ],
-
-                ),
-              ),
-              Card(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: Image.asset("Assets/need_of.jpeg",
-                              width: 170,
-                              height: 150,
-                              fit: BoxFit.contain),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Kasarani NGCDF\n 2025 - 2026",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),),
-                              Wrap(
-                                spacing: 3,
-                                children: [
-                                  Text("Award",style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),),
-                                  Text("Ksh 9000 - Ksh 12000",
-                                    style: TextStyle(
-                                      color: Colors.grey.shade500,
-                                    ),),
-                                ],
-                              )
-
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete_outline_outlined,color: Colors.red,),
-                            label: Text("Delete",
-                              style: TextStyle(
-                                  color: Colors.red
-                              ),),
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Colors.red,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                )
-                            ),
-                          ),
-
-                          ElevatedButton(onPressed: (){},
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Colors.blue.shade200,
-                                  ),
-                                  borderRadius: BorderRadiusGeometry.circular(5.0),
-                                )
-                            ), child: Text("View Details",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                            ),),),
-                          ElevatedButton(onPressed: (){},
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blueAccent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                )
-                            ), child: Text("Check Status",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),),)
-                        ],
-                      ),
-                    )
-                  ],
-
-                ),
-              ),
-              Card(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: Image.asset("Assets/need_of.jpeg",
-                              width: 170,
-                              height: 150,
-                              fit: BoxFit.contain),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 40, 5,0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Kasarani NGCDF\n 2025 - 2026",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),),
-                              Wrap(
-                                spacing: 3,
-                                children: [
-                                  Text("Award",style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),),
-                                  Text("Ksh 9000 - Ksh 12000",
-                                    style: TextStyle(
-                                      color: Colors.grey.shade500,
-                                    ),),
-                                ],
-                              )
-
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete_outline_outlined,color: Colors.red,),
-                            label: Text("Delete",
-                              style: TextStyle(
-                                  color: Colors.red
-                              ),),
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Colors.red,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                )
-                            ),
-                          ),
-
-                          ElevatedButton(onPressed: (){},
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Colors.blue.shade200,
-                                  ),
-                                  borderRadius: BorderRadiusGeometry.circular(5.0),
-                                )
-                            ), child: Text("View Details",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                            ),),),
-                          ElevatedButton(onPressed: (){},
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blueAccent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                )
-                            ), child: Text("Check Status",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),),)
-                        ],
-                      ),
-                    )
-                  ],
-
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+          }
+          )
+            );
   }
 }
