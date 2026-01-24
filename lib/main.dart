@@ -59,7 +59,8 @@ class MyApp extends StatelessWidget {
           "/home":(context) => MyHomePage(),
           "/explore":(context) => Explorepage(),
 
-
+           //Activity page route
+          '/activity_page':(context) => Activitypage(),
 
           //Notification route
           "/notification": (context) => Notificationpage(),
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
 
           //Settings route
           "/settings":(context) => Settingspage(),
+          "/profile":(context) => Profilepage(),
 
         },
         title: 'Flutter Demo',

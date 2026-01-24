@@ -77,6 +77,9 @@ void initState(){
                   ),
                   SizedBox(height: 20),
                   ListTile(
+                    onTap: (){
+                      Navigator.pushNamed(context,'/home');
+                    },
                     leading: Icon(Icons.home_outlined,size: 18,),
                     title: Text("Home",
                       style: TextStyle(
@@ -87,6 +90,9 @@ void initState(){
                     ),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/activity_page');
+                    },
                     leading: Icon(Icons.history,size: 18,),
                     title: Text("My Applications",
                       style: TextStyle(
@@ -97,6 +103,9 @@ void initState(){
                     ),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/profile');
+                    },
                     leading: Icon(Icons.person_outline,size: 18,),
                     title: Text("Profile",
                       style: TextStyle(
@@ -107,6 +116,9 @@ void initState(){
                     ),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/help');
+                    },
                     leading: Icon(Icons.help_outline,size: 18,),
                     title: Text("Help & Support",
                       style: TextStyle(
@@ -117,6 +129,9 @@ void initState(){
                     ),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/settings');
+                    },
                     leading: Icon(Icons.settings,size: 18,),
                     title: Text("Settings",
                       style: TextStyle(
