@@ -1,6 +1,9 @@
+import 'package:bursary_inn/Screens/Explore/BursaryDetailsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Providers/providers.dart';
 import 'package:provider/provider.dart';
+import 'package:bursary_inn/Services/BursaryService/FetchAppliedBursaries.dart';
+import 'package:toastification/toastification.dart';
 class Activitypage extends StatefulWidget {
   const Activitypage({super.key});
 
@@ -72,6 +75,18 @@ class _ActivitypageState extends State<Activitypage> {
                                     color: Colors.grey.shade500,
                                   ),),
                               ],
+                            ),
+
+                            Chip(
+                              backgroundColor: Colors.orange.shade300,
+                              visualDensity: VisualDensity.compact,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              label: Text("${applied_bursary['status_choices']}",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),),
                             )
 
                           ],
@@ -82,9 +97,115 @@ class _ActivitypageState extends State<Activitypage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ElevatedButton.icon(onPressed: () {},
+                        ElevatedButton.icon(onPressed: () async{
+                          final success = await FetchAppliedBursaries().delete_applied_bursary();
+                          if(success) {
+                            toastification.show(
+                              context: context, // optional if you use ToastificationWrapper
+                              type: ToastificationType.success,
+                              style: ToastificationStyle.flat,
+                              autoCloseDuration: const Duration(seconds: 5),
+                              title: Text('Success',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                ),),
+                              // you can also use RichText widget for title and description parameters
+                              description: RichText(text: TextSpan(text: "You have successfully deleted ${applied_bursary['bursary_name']} bursary",
+                                  style:TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              )),
+                              alignment: Alignment.topRight,
+
+                              animationDuration: const Duration(milliseconds: 200),
+                              icon: const Icon(Icons.check),
+                              showIcon: true, // show or hide the icon
+                              primaryColor: Colors.green,
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x07000000),
+                                  blurRadius: 16,
+                                  offset: Offset(0, 16),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                              showProgressBar: true,
+                              closeButton: ToastCloseButton(
+                                showType: CloseButtonShowType.onHover,
+                                buttonBuilder: (context, onClose) {
+                                  return OutlinedButton.icon(
+                                    onPressed: onClose,
+                                    icon: const Icon(Icons.close, size: 20),
+                                    label: const Text('Close'),
+                                  );
+                                },
+                              ),
+                              closeOnClick: false,
+                              pauseOnHover: true,
+                              dragToClose: true,
+                              applyBlurEffect: true,
+                            );
+                          }else{
+                            toastification.show(
+                              context: context, // optional if you use ToastificationWrapper
+                              type: ToastificationType.success,
+                              style: ToastificationStyle.flat,
+                              autoCloseDuration: const Duration(seconds: 5),
+                              title: Text('Failed',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),),
+                              // you can also use RichText widget for title and description parameters
+                              description: RichText(text: TextSpan(text: 'Failed to delete ${applied_bursary['bursary_name']} bursary',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ))),
+                              alignment: Alignment.topRight,
+
+                              animationDuration: const Duration(milliseconds: 200),
+                              icon: const Icon(Icons.error_outline),
+                              showIcon: true, // show or hide the icon
+                              primaryColor: Colors.red,
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x07000000),
+                                  blurRadius: 16,
+                                  offset: Offset(0, 16),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                              showProgressBar: true,
+                              closeButton: ToastCloseButton(
+                                showType: CloseButtonShowType.onHover,
+                                buttonBuilder: (context, onClose) {
+                                  return OutlinedButton.icon(
+                                    onPressed: onClose,
+                                    icon: const Icon(Icons.close, size: 20),
+                                    label: const Text('Close'),
+                                  );
+                                },
+                              ),
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              dragToClose: true,
+                              applyBlurEffect: true,
+                            );
+                          }
+                        },
                           icon: Icon(
                             Icons.delete_outline_outlined, color: Colors.red,),
                           label: Text("Delete",
@@ -101,7 +222,13 @@ class _ActivitypageState extends State<Activitypage> {
                           ),
                         ),
 
-                        ElevatedButton(onPressed: () {},
+                        ElevatedButton(onPressed: () {
+                          Navigator.push(context,
+                            MaterialPageRoute(
+                              builder:(context) => Bursarydetailspage(bursaryId: applied_bursary['bursary']),
+                            ),
+                          );
+                        },
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 side: BorderSide(
@@ -114,16 +241,7 @@ class _ActivitypageState extends State<Activitypage> {
                             style: TextStyle(
                               color: Colors.blueAccent,
                             ),),),
-                        ElevatedButton(onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blueAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              )
-                          ), child: Text("Check Status",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),),)
+                     
                       ],
                     ),
                   )
