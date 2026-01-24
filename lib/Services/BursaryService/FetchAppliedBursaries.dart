@@ -24,4 +24,22 @@ class FetchAppliedBursaries {
       return [];
     }
   }
+  Future<bool> delete_applied_bursary()async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.delete(
+          Uri.parse("$baseURL/my_applications/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          }
+        )
+    );
+    if(response.statusCode == 204){
+      print("bursary deleted successfully $response.body");
+      return true;
+    }else{
+      print(response.body);
+      return false;
+    }
+  }
 }
