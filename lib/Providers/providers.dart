@@ -76,9 +76,17 @@ class UserProvider with ChangeNotifier{
 }
 
 class DetailsPageProvider with ChangeNotifier{
+  Map<String,bool> _filled_sections = {
+    "personal_filled":false,
+    "family_filled":false,
+    "education_filled":false,
+    "documents_filled":false,
+  };
+   Map<String,bool> get filled_sections => _filled_sections;
 String? _errorMessage;
 String? get errorMessage => _errorMessage;
-
+bool? _filled;
+bool? get filled => _filled;
 Future<bool> create_personal_details(PersonalDetails person) async{
   _errorMessage = null;
   notifyListeners();
@@ -161,6 +169,22 @@ Future<bool> create_documents_details(DocumentDetails documents) async{
     _errorMessage = e.toString();
     notifyListeners();
     return false;
+  }
+}
+Future<void> check_completed_student_detail(BuildContext context) async{
+  try{
+  final status = await UserService().get_student_completion_status();
+  _filled_sections = {
+    "personal_filled":status['personal_filled'] ?? false,
+    "education_filled":status['education_filled'] ?? false,
+    "family_filled":status['family_filled'] ?? false,
+    "documents_filled":status['documents_uploaded']  ?? false,
+  };
+  notifyListeners();
+  }catch(e){
+    _filled = false;
+    notifyListeners();
+    print(e);
   }
 }
 

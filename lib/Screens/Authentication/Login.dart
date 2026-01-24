@@ -1,3 +1,4 @@
+import 'package:bursary_inn/Services/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Providers/providers.dart';
 import 'package:bursary_inn/Models/UserModel.dart';
@@ -116,7 +117,7 @@ class _LoginState extends State<Login> {
                                 title: Text("Update"),
                                 description: Text("Login Successful")).show(context);
                             print("Login Successful");
-                            Navigator.pushNamedAndRemoveUntil(context, '/alldetails', (Route<dynamic> route)=>false);
+                            await UserService().check_student_details_completion_navigate(context);
                           }
                         },
                           style: ElevatedButton.styleFrom(
