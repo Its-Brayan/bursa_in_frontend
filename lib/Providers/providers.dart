@@ -2,6 +2,7 @@ import 'package:bursary_inn/Models/DetailsPage/DocumentDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/EducationDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/FamilyDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/PersonalDetails.dart';
+import 'package:bursary_inn/Services/BursaryService/FetchAppliedBursaries.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:bursary_inn/Services/UserService.dart';
@@ -166,10 +167,17 @@ Future<bool> create_documents_details(DocumentDetails documents) async{
 }
 class BursaryProvider with ChangeNotifier{
   List<BursaryDetail> _all_bursaries = [];
+  List<dynamic> _applied_bursaries = [];
   List<BursaryDetail> get all_bursaries => _all_bursaries;
+  List<dynamic> get applied_bursaries => _applied_bursaries;
   Future<List<BursaryDetail>> get_all_bursaries() async{
     _all_bursaries = await AllavailableService().get_all_bursaries();
     notifyListeners();
     return _all_bursaries;
+  }
+  Future<List<dynamic>> get_applied_bursaries() async{
+    _applied_bursaries = await FetchAppliedBursaries().fetch_applied_bursaries();
+    notifyListeners();
+    return _applied_bursaries;
   }
 }
