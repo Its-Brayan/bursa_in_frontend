@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:bursary_inn/Models/UserModel.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {
   final _storage = FlutterSecureStorage();
   final baseURL = "http://10.33.27.1:8000/api/v1/users";
+  final baseURl2 = "http://10.33.27.1:8000/api/v1/applications";
 
   Future<Map<String,dynamic>> register_user(UserModel user) async{
     final response = await http.post(
@@ -80,8 +82,49 @@ class UserService {
       return null;
     }
   }
-  // Future<bool> logout_student() async{
-  //   await _storage.deleteAll();
-  //   return true;
-  // }
+  Future<void> check_student_details_completion_navigate(BuildContext context)async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.get(
+          Uri.parse("$baseURl2/check_student_details/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          }
+        )
+    );
+    if(response.statusCode == 200){
+      final data = jsonDecode(response.body);
+      final status = data['status'];
+      if(status == 'complete'){
+      Navigator.pushReplacementNamed(context, '/home');
+      print("Navigating to home");
+      }else if(status == 'partial'){
+        Navigator.pushReplacementNamed(context, '/alldetails');
+      }else if(status == 'empty'){
+        Navigator.pushReplacementNamed(context, '/alldetails');
+      }
+    }else{
+      print('Erorr checking profile:${response.body}');
+    }
+  }
+
+  Future<Map<String,dynamic>> get_student_completion_status()async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.get(
+          Uri.parse("$baseURl2/check_student_details/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          }
+        )
+    );
+    if(response.statusCode == 200){
+      final data = jsonDecode(response.body);
+      return data;
+    }else{
+      print("Error checking student details ${response.body}");
+      return {};
+    }
+  }
+
 }

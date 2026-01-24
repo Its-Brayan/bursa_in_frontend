@@ -1,4 +1,5 @@
 import 'package:bursary_inn/Providers/providers.dart';
+import 'package:bursary_inn/Screens/Activity/ActivityPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:provider/provider.dart';
@@ -265,7 +266,13 @@ void initState(){
                            Icons.article_outlined
                          ),
                          title: Text("My Applications"),
-                         trailing:IconButton(onPressed: (){}, icon: Icon(Icons.keyboard_arrow_right_outlined,
+                         trailing:IconButton(onPressed: (){
+                           Navigator.push(context,
+                             MaterialPageRoute(
+                               builder:(context) => Activitypage(),
+                             ),
+                           );
+                         }, icon: Icon(Icons.keyboard_arrow_right_outlined,
                          size: 25,
                          color: Colors.blueAccent,)),
                        ),
