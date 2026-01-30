@@ -150,14 +150,18 @@ class _AllDetailsState extends State<AllDetails> {
         child: SizedBox(
           width: 150,
           child: ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, "/home");
+            if((sections['personal_filled'] ?? false) || (sections['family_filled'] ?? false) || (sections['education_filled'] ?? false) || (sections['documents_filled'] ?? false) == false){
+              return;
+            }else {
+              Navigator.pushNamed(context, "/home");
+            }
           },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
+              backgroundColor: (sections['personal_filled'] ?? false) && (sections['family_filled'] ?? false) && (sections['education_filled'] ?? false) && (sections['documents_filled'] ?? false) ? Colors.blue : Colors.grey.shade400,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 )
-            ), child:Text("Submit",
+            ), child:Text("Continue",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w700,
