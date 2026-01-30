@@ -208,7 +208,7 @@ class _EducationdetailsState extends State<Educationdetails> {
             color: Colors.white,
           ),
         )
-        : Text("Save as Draft",
+        : Text("Submit",
         style: TextStyle(
           color: Colors.blue.shade200,
         ),)),

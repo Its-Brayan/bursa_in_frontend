@@ -511,7 +511,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
             shape:RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(4.0)
             )
-          ), child: Text("Save as Draft",
+          ), child: Text("Submit",
         style: TextStyle(
           color: Colors.blue,
         ),

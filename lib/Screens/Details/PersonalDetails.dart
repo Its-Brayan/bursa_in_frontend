@@ -273,7 +273,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     color: Colors.blue.shade200,
                   ),
                 )
-           : Text("Save as Draft",
+           : Text("Submit",
           style: TextStyle(
             color: Colors.blue.shade200
           ),),),
