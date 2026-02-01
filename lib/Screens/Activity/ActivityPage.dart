@@ -78,7 +78,7 @@ class _ActivitypageState extends State<Activitypage> {
                             ),
 
                             Chip(
-                              backgroundColor: Colors.orange.shade300,
+                              backgroundColor: applied_bursary['status_choices'] == 'Approved' ? Colors.green : applied_bursary['status_choices'] == 'Rejected' ? Colors.red : Colors.orange ,
                               visualDensity: VisualDensity.compact,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),

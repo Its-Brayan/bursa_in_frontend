@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:bursary_inn/Models/DetailsPage/EducationDetails.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
@@ -33,5 +32,21 @@ class Educationdetailsservice {
       };
     }
     
+  }
+  Future<EducationDetails?> get_education_details(int student_id) async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.get(
+          Uri.parse("$baseUrl/get/education-details/${student_id}/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          }
+        )
+    );
+    if(response.statusCode == 200){
+      final Map<String,dynamic> data = jsonDecode(response.body);
+      print(data);
+      return EducationDetails.fromJson(data);
+    }
   }
 }

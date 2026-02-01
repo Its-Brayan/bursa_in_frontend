@@ -13,6 +13,7 @@ import 'package:bursary_inn/Screens/Notification/NotificationPage.dart';
 import 'package:bursary_inn/Screens/Profile/HelpPage.dart';
 import 'package:bursary_inn/Screens/Profile/ProfilePage.dart';
 import 'package:bursary_inn/Screens/Profile/SettingsPage.dart';
+import 'package:bursary_inn/Screens/Profile/UpdateDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
           //Settings route
           "/settings":(context) => Settingspage(),
           "/profile":(context) => Profilepage(),
+          "/studentdetails":(context) => UpdateDetails(),
 
         },
         title: 'Flutter Demo',
