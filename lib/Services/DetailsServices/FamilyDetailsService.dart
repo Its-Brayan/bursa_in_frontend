@@ -32,4 +32,20 @@ class Familydetailsservice {
       };
     }
   }
+  Future<FamilyDetails?> get_family_details(int student_id) async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.get(
+          Uri.parse("$baseUrl/get/family-details/${student_id}/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          }
+        )
+    );
+    if(response.statusCode == 200){
+      final Map<String,dynamic> data = jsonDecode(response.body);
+      print(data);
+      return FamilyDetails.fromJson(data);
+    }
+  }
 }

@@ -21,4 +21,16 @@ class PersonalDetails{
       "ward":ward
     };
   }
+  factory PersonalDetails.fromJson(Map<String,dynamic>json){
+    return PersonalDetails(
+      full_name: json['full_name'],
+      registration_number: json['registration_number'],
+      national_id_number: json['national_id_number'],
+      course_of_study: json['course_of_study'],
+      student_gender: json['student_gender'],
+      county: json['county'],
+      constituency: json['constituency'],
+      ward: json['ward']
+    );
+  }
 }

@@ -25,4 +25,14 @@ class EducationDetails {
       "institution_tel_number": institution_tel_number,
     };
   }
+  factory EducationDetails.fromJson(Map<String,dynamic>json){
+    return EducationDetails(
+      name_of_institution: json['name_of_institution'],
+      course_level: json['course_level'],
+      year_of_study: json['year_of_study'],
+      year_of_completion: json['year_of_completion'],
+      institution_postal_address: json['institution_postal_address'],
+      institution_tel_number: json['institution_tel_number']
+    );
+  }
 }

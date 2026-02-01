@@ -244,7 +244,9 @@ void initState(){
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton.icon(onPressed: (){}, label: Text("Check Eligibility",
+                    ElevatedButton.icon(onPressed: (){
+                     Navigator.pushNamed(context, '/studentdetails');
+                    }, label: Text("Check Details",
                     style: TextStyle(
                       color: Colors.white,
                     ),

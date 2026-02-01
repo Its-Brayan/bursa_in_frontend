@@ -150,11 +150,16 @@ class _AllDetailsState extends State<AllDetails> {
         child: SizedBox(
           width: 150,
           child: ElevatedButton(onPressed: (){
-            if((sections['personal_filled'] ?? false) || (sections['family_filled'] ?? false) || (sections['education_filled'] ?? false) || (sections['documents_filled'] ?? false) == false){
-              return;
-            }else {
-              Navigator.pushNamed(context, "/home");
-            }
+            setState(() {
+              if((sections['personal_filled'] ?? false) && (sections['family_filled'] ?? false) && (sections['education_filled'] ?? false) && (sections['documents_filled'] ?? false) == true) {
+                Navigator.pushNamed(context, "/home");
+                print("Navigating");
+
+              }else {
+                print("error navigating");
+                return;
+              }
+            });
           },
             style: ElevatedButton.styleFrom(
               backgroundColor: (sections['personal_filled'] ?? false) && (sections['family_filled'] ?? false) && (sections['education_filled'] ?? false) && (sections['documents_filled'] ?? false) ? Colors.blue : Colors.grey.shade400,
