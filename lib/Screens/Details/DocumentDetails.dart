@@ -46,15 +46,15 @@ class _DocumentdetailsState extends State<Documentdetails> {
     return File(files.first.path);
 
   }
-  FileImage? selected_id_document;
-  FileImage? selected_school_id;
-  FileImage? selected_student_transcript;
-  FileImage? selected_admission_letter;
-  FileImage? selected_fee_structure;
-  FileImage? selected_approval_letter;
+  ImageProvider? selected_id_document;
+  ImageProvider? selected_school_id;
+  ImageProvider? selected_student_transcript;
+  ImageProvider? selected_admission_letter;
+  ImageProvider? selected_fee_structure;
+  ImageProvider? selected_approval_letter;
   bool isLoading = false;
 
-  void _previewimage(FileImage image){
+  void _previewimage(ImageProvider image){
     showDialog(
         context: context,
         builder: (context) => Dialog(
@@ -71,6 +71,23 @@ class _DocumentdetailsState extends State<Documentdetails> {
             ],
           ),
         ));
+  }
+  @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_)async {
+      final documents = Provider.of<DetailsPageProvider>(context,listen: false);
+      await documents.get_student_document_uploads();
+      final documentprovider = documents.current_document_details;
+      if(documentprovider != null){
+        selected_id_document = documentprovider.idDocumentUrl != null ? NetworkImage(documentprovider.idDocumentUrl!) : null;
+        selected_school_id = documentprovider.schoolIdUrl != null  ? NetworkImage(documentprovider.schoolIdUrl!) : null;
+        selected_admission_letter = documentprovider.admissionLetterUrl != null ? NetworkImage(documentprovider.admissionLetterUrl!) : null;
+        selected_student_transcript = documentprovider.studentTranscriptUrl != null ? NetworkImage(documentprovider.studentTranscriptUrl!) : null;
+        selected_fee_structure = documentprovider.feeStructureUrl != null ? NetworkImage(documentprovider.feeStructureUrl!) : null;
+        selected_approval_letter = documentprovider.approvalLetterUrl != null ? NetworkImage(documentprovider.approvalLetterUrl!) : null;
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -477,12 +494,24 @@ class _DocumentdetailsState extends State<Documentdetails> {
         child: ElevatedButton(onPressed: ()async{
           startload();
         final documents = DocumentDetails(
-          id_document: File(selected_id_document!.file.path),
-          school_id: File(selected_school_id!.file.path),
-          student_transcript:File(selected_student_transcript!.file.path),
-          admission_letter:File(selected_admission_letter!.file.path),
-          fee_structure: File(selected_fee_structure!.file.path),
-          approval_letter:File(selected_approval_letter!.file.path),
+          id_document:  selected_id_document is FileImage
+              ? File((selected_id_document! as FileImage).file.path)
+              : null,
+          school_id: selected_school_id is FileImage
+              ? File((selected_school_id! as FileImage).file.path)
+              : null,
+          student_transcript:selected_student_transcript is FileImage
+              ? File((selected_student_transcript! as FileImage).file.path)
+              : null,
+          admission_letter:selected_admission_letter is FileImage
+              ? File((selected_admission_letter! as FileImage).file.path)
+              : null,
+          fee_structure: selected_fee_structure is FileImage
+              ? File((selected_fee_structure! as FileImage).file.path)
+              : null,
+          approval_letter:selected_approval_letter is FileImage
+              ? File((selected_approval_letter! as FileImage).file.path)
+              : null,
         );
         final success = await _documentprovider.create_documents_details(documents);
         if(!success){
@@ -511,7 +540,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
             shape:RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(4.0)
             )
-          ), child: Text("Submit",
+          ), child: Text(_documentprovider.current_document_details != null ? 'Update' :'Submit',
         style: TextStyle(
           color: Colors.blue,
         ),

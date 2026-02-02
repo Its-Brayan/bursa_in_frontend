@@ -32,10 +32,10 @@ class Familydetailsservice {
       };
     }
   }
-  Future<FamilyDetails?> get_family_details(int student_id) async{
+  Future<FamilyDetails?> get_family_details() async{
     final response = await ApiService.AuthorizedRequest(
         (token) => http.get(
-          Uri.parse("$baseUrl/get/family-details/${student_id}/"),
+          Uri.parse("$baseUrl/get/family-details/"),
           headers: {
             "Content-Type":"application/json",
             "Authorization":"Bearer $token"

@@ -82,6 +82,14 @@ class DetailsPageProvider with ChangeNotifier{
     "education_filled":false,
     "documents_filled":false,
   };
+  PersonalDetails? _current_personal_details;
+  PersonalDetails? get current_personal_details => _current_personal_details;
+  EducationDetails? _current_education_details;
+  EducationDetails? get current_education_details => _current_education_details;
+  FamilyDetails? _current_family_details;
+  FamilyDetails? get current_family_details => _current_family_details;
+  DocumentDetails? _current_document_details;
+  DocumentDetails? get current_document_details => _current_document_details;
    Map<String,bool> get filled_sections => _filled_sections;
 String? _errorMessage;
 String? get errorMessage => _errorMessage;
@@ -187,7 +195,40 @@ Future<void> check_completed_student_detail(BuildContext context) async{
     print(e);
   }
 }
-
+Future<void> get_student_personal_details()async{
+  try {
+    _current_personal_details =
+    await Personaldetailsservice().fetch_personal_details();
+    print("Successfully fetched personal details");
+    notifyListeners();
+  }catch(e){
+    print("Failed to fetch personal details ${e}");
+  }
+}
+Future<void> get_student_education_details()async{
+  try{
+    _current_education_details = await Educationdetailsservice().get_education_details();
+    notifyListeners();
+  }catch(e){
+    print("Failed to fetch education details ${e}");
+  }
+}
+Future<void> get_student_family_details()async{
+  try{
+    _current_family_details = await Familydetailsservice().get_family_details();
+    notifyListeners();
+  }catch(e){
+    print("Failed to fetch family details ${e}");
+  }
+}
+Future<void> get_student_document_uploads() async{
+  try{
+    _current_document_details = await Documentdetailsservice().fetch_document_uploads();
+    notifyListeners();
+  }catch(e){
+    print("Failed to fetch family details $e");
+  }
+}
 }
 class BursaryProvider with ChangeNotifier{
   List<BursaryDetail> _all_bursaries = [];

@@ -38,7 +38,7 @@ class FamilyDetails {
      'amount_spent_on_fees':amount_spent_on_fees
   };
   }
-  factory FamilyDetails.fromJson(Map<String,dynamic>json){
+  factory FamilyDetails.fromJson(Map<dynamic,dynamic>json){
     return FamilyDetails(
       fathers_name: json['fathers_name'],
       fathers_occupation: json['fathers_occupation'],
@@ -46,15 +46,15 @@ class FamilyDetails {
       mothers_occupation: json['mothers_occupation'],
       parents_alive: json['parents_alive'],
       paying_fees: json['paying_fees'],
-      number_of_siblings: json['number_of_siblings'],
-      number_of_siblings_working: json['number_of_siblings_working'],
-      number_of_siblings_in_business: json['number_of_siblings_working'],
-      number_of_siblings_in_college: json['number_of_siblings_in_college'],
-      number_of_siblings_in_highschool: json['number_of_siblings_in_highschool'],
-      annual_family_income: json['annual_family_income'],
+      number_of_siblings: json['number_of_siblings'].toString(),
+      number_of_siblings_working: json['number_of_siblings_working'].toString(),
+      number_of_siblings_in_business: json['number_of_siblings_working'].toString(),
+      number_of_siblings_in_college: json['number_of_siblings_in_college'].toString(),
+      number_of_siblings_in_highschool: json['number_of_siblings_in_highschool'].toString(),
+      annual_family_income: json['annual_family_income'].toString(),
       source_of_income: json['source_of_income'],
       other_income_sources: json['other_income_sources'],
-      amount_spent_on_fees: json['amount_spent_on_fees']
+      amount_spent_on_fees: json['amount_spent_on_fees'].toString(),
     );
   }
 }

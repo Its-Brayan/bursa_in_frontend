@@ -41,6 +41,28 @@ class _EducationdetailsState extends State<Educationdetails> {
   TextEditingController institution_tel_number_controller = TextEditingController();
 
   @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_)async {
+      final education = Provider.of<DetailsPageProvider>(
+          context, listen: false);
+      await education.get_student_education_details();
+      final educationprovider = education.current_education_details;
+      if (educationprovider != null) {
+        name_of_institution_controller.text =
+            educationprovider.name_of_institution ?? "";
+        chosencourse = educationprovider.course_level ?? "";
+        chosen_year = educationprovider.year_of_study ?? "";
+        chosen_year_of_completion = educationprovider.year_of_completion ?? "";
+        institution_postal_address_controller.text =
+            educationprovider.institution_postal_address ?? "";
+        institution_tel_number_controller.text =
+            educationprovider.institution_tel_number ?? "";
+      }
+    });
+
+  }
+  @override
   void dispose(){
     super.dispose();
     name_of_institution_controller.dispose();
@@ -208,7 +230,7 @@ class _EducationdetailsState extends State<Educationdetails> {
             color: Colors.white,
           ),
         )
-        : Text("Submit",
+        : Text(_educationprovider.current_education_details != null ? 'Update' : 'Submit',
         style: TextStyle(
           color: Colors.blue.shade200,
         ),)),
