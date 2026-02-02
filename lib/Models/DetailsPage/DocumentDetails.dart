@@ -8,8 +8,18 @@ class DocumentDetails {
  final File? fee_structure;
   final File? approval_letter;
 
-  DocumentDetails({this.id_document,this.school_id,this.student_transcript,this.admission_letter,
-  this.fee_structure,this.approval_letter});
+ // Backend URLs (used when fetching)
+ String? idDocumentUrl;
+ String? schoolIdUrl;
+ String? studentTranscriptUrl;
+ String? admissionLetterUrl;
+ String? feeStructureUrl;
+ String? approvalLetterUrl;
+
+ DocumentDetails({this.id_document,this.school_id,this.student_transcript,this.admission_letter,
+  this.fee_structure,this.approval_letter,this.idDocumentUrl,this.schoolIdUrl,this.studentTranscriptUrl,
+ this.admissionLetterUrl,this.feeStructureUrl,this.approvalLetterUrl});
+static const String baseUrl = "http://10.33.27.1:8000/";
 
   // Map<String,dynamic> toJson(){
   //   return{
@@ -21,4 +31,14 @@ class DocumentDetails {
   //     "approval_letter":approval_letter
   //   };
   // }
+factory DocumentDetails.fromJson(Map<String,dynamic>json){
+  return DocumentDetails(
+    idDocumentUrl: json['id_document'] != null ? baseUrl + json['id_document'] : null,
+    schoolIdUrl: json['school_id'] != null ? baseUrl + json['school_id'] : null,
+    studentTranscriptUrl: json['student_transcript'] != null ? baseUrl + json['student_transcript'] : null,
+    admissionLetterUrl: json['admission_letter'] != null ? baseUrl + json['admission_letter'] : null,
+    feeStructureUrl: json['fee_structure'] != null ? baseUrl + json['fee_structure'] : null,
+    approvalLetterUrl: json['approval_letter'] != null ? baseUrl + json['approval_letter'] : null,
+  );
+}
 }

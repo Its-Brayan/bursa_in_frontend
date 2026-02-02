@@ -45,7 +45,55 @@ class _FamilydetailsState extends State<Familydetails> {
 
   final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
+@override
+void initState(){
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_)async{
+    final family = Provider.of<DetailsPageProvider>(context,listen: false);
+    await family.get_student_family_details();
+    final familyprovider = family.current_family_details;
+    if(familyprovider != null){
+      fathers_name_Controller.text = familyprovider.fathers_name ?? "";
+      fathers_occupation_Controller.text = familyprovider.fathers_occupation ?? "";
+      mothers_name_Controller.text = familyprovider.mothers_name ?? "";
+      mothers_occupation_Controller.text = familyprovider.mothers_occupation ?? "";
+      selectedanswer = familyprovider.parents_alive ?? "";
+      selectedfeespayer = familyprovider.paying_fees ?? "";
+      number_of_siblings_Controller.text = familyprovider.number_of_siblings ?? "";
+      number_of_siblings_in_business_Controller.text = familyprovider.number_of_siblings_in_business ?? "";
+      number_of_siblings_working_Controller.text = familyprovider.number_of_siblings_working ?? "";
+      number_o_fsiblings_in_college_Controller.text = familyprovider.number_of_siblings_in_college ?? "";
+      number_of_siblings_in_secondary_Controller.text = familyprovider.number_of_siblings_in_highschool ?? "";
+      estimated_annual_family_income_Controller.text = familyprovider.annual_family_income ?? "";
+      principal_source_Controller.text = familyprovider.source_of_income ?? "";
+      other_sources_Controller.text = familyprovider.other_income_sources ?? "";
+      amount_spent_education_fees_Controller.text = familyprovider.amount_spent_on_fees ?? "";
+    }
+  });
+}
 
+  @override
+  void dispose(){
+    //Personal parent details
+ fathers_name_Controller.dispose();
+ fathers_occupation_Controller.dispose();
+ mothers_name_Controller.dispose();
+ mothers_occupation_Controller.dispose();
+
+    //siblings information
+ number_of_siblings_Controller.dispose();
+ number_of_siblings_working_Controller.dispose();
+number_of_siblings_in_business_Controller.dispose();
+number_o_fsiblings_in_college_Controller.dispose();
+ number_of_siblings_in_secondary_Controller.dispose();
+
+    //Income Information
+ estimated_annual_family_income_Controller.dispose();
+ principal_source_Controller.dispose();
+ other_sources_Controller.dispose();
+amount_spent_education_fees_Controller.dispose();
+super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final familyprovider = Provider.of<DetailsPageProvider>(context);
@@ -312,7 +360,7 @@ class _FamilydetailsState extends State<Familydetails> {
             color: Colors.white,
           ),
         )
-        :Text("Submit",
+        :Text(familyprovider.current_family_details != null ? 'Update':'Submit',
           style: TextStyle(
             color: Colors.blue.shade200,
           ),)),

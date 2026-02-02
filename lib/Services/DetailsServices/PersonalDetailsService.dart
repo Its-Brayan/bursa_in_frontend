@@ -32,10 +32,10 @@ class Personaldetailsservice {
       };
     }
   }
-  Future<PersonalDetails?> fetch_personal_details(int student_id)async{
+  Future<PersonalDetails?> fetch_personal_details()async{
     final response = await ApiService.AuthorizedRequest(
         (token) => http.get(
-          Uri.parse("$baseURL/get/student-personal-details/$student_id/"),
+          Uri.parse("$baseURL/get/student-personal-details/"),
           headers: {
             "Content-Type":"application/json",
             "Authorization":"Bearer $token"
@@ -46,6 +46,8 @@ class Personaldetailsservice {
       final Map<String,dynamic> data = jsonDecode(response.body);
       print(data);
       return PersonalDetails.fromJson(data);
+    }else{
+      print("Failed to fetch student personal details");
     }
   }
 }

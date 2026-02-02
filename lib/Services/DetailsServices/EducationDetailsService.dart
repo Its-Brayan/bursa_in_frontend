@@ -33,10 +33,10 @@ class Educationdetailsservice {
     }
     
   }
-  Future<EducationDetails?> get_education_details(int student_id) async{
+  Future<EducationDetails?> get_education_details() async{
     final response = await ApiService.AuthorizedRequest(
         (token) => http.get(
-          Uri.parse("$baseUrl/get/education-details/${student_id}/"),
+          Uri.parse("$baseUrl/get/education-details/"),
           headers: {
             "Content-Type":"application/json",
             "Authorization":"Bearer $token"

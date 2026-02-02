@@ -65,4 +65,22 @@ class Documentdetailsservice {
 
 
   }
-}
+  Future<DocumentDetails?> fetch_document_uploads()async {
+    final response = await ApiService.AuthorizedRequest(
+            (token) =>
+            http.get(
+                Uri.parse("$baseUrl/get/document-uploads/"),
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer $token"
+                }
+            )
+    );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      print(data);
+      return DocumentDetails.fromJson(data);
+
+    }
+  }
+  }

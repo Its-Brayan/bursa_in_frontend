@@ -38,18 +38,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
   TextEditingController constituencyController = TextEditingController();
   TextEditingController wardController = TextEditingController();
 
-  @override
-  void dispose(){
-    super.dispose();
-    nameController.dispose();
-    registrationController.dispose();
-    idController.dispose();
-    genderController.dispose();
-    countyController.dispose();
-    countyController.dispose();
-    constituencyController.dispose();
-    wardController.dispose();
-  }
+
   @override
   void initState(){
     super.initState();
@@ -59,6 +48,38 @@ class _PersonaldetailsState extends State<Personaldetails> {
         counties = data.keys.toList();
       });
     });
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
+      if(!mounted){
+        return;
+      }
+      final personal = Provider.of<DetailsPageProvider>(context,listen: false);
+      await personal.get_student_personal_details();
+      final personalprovider = personal.current_personal_details;
+      if(personalprovider != null){
+        setState(() {
+          nameController.text = personalprovider.full_name ?? "";
+          registrationController.text = personalprovider.registration_number ?? "";
+          idController.text = personalprovider.national_id_number ?? "";
+          genderController.text = personalprovider.student_gender ?? "";
+          courseController.text =  personalprovider.course_of_study ?? "";
+          SelectedCounty = personalprovider.county ?? "";
+          SelectedConstituency = personalprovider.constituency ?? "";
+          SelectedWard = personalprovider.ward ?? "";
+        });
+      }
+    });
+  }
+  @override
+  void dispose(){
+    nameController.dispose();
+    registrationController.dispose();
+    idController.dispose();
+    genderController.dispose();
+    countyController.dispose();
+    countyController.dispose();
+    constituencyController.dispose();
+    wardController.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -273,7 +294,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     color: Colors.blue.shade200,
                   ),
                 )
-           : Text("Submit",
+           : Text(detailprovider.current_personal_details != null ? 'Update' : "Submit",
           style: TextStyle(
             color: Colors.blue.shade200
           ),),),
