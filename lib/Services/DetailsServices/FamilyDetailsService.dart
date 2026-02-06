@@ -48,4 +48,29 @@ class Familydetailsservice {
       return FamilyDetails.fromJson(data);
     }
   }
+  Future<Map<String,dynamic>> update_family_details(FamilyDetails family)async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.put(
+          Uri.parse("$baseUrl/update/family-details/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          },
+          body:jsonEncode(family.toJson())
+        )
+    );
+    if(response.statusCode == 200){
+      final Map<String,dynamic> data = jsonDecode(response.body);
+      print("Successfully updated student family details");
+      return {
+        'success':true,
+        'data':data,
+      };
+    }else{
+      return {
+        'success':false,
+        'error':response.body
+      };
+    }
+  }
 }

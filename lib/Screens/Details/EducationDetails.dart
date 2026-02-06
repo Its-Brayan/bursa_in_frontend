@@ -204,7 +204,9 @@ class _EducationdetailsState extends State<Educationdetails> {
               institution_postal_address: institution_postal_address_controller.text,
               institution_tel_number: institution_tel_number_controller.text,
             );
-            final success = await _educationprovider.create_education_details(education);
+            final success = _educationprovider.current_education_details != null ?
+                await _educationprovider.update_education_details(education) :
+            await _educationprovider.create_education_details(education);
             if(!success){
               print("Failed creating education details");
               return;
