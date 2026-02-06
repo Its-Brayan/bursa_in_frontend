@@ -21,14 +21,37 @@ Future<void> loaduser() async{
     _student_data = userdata;
   });
 }
+int approved_status = 0;
+int pending_status = 0;
 @override
 void initState(){
   super.initState();
   loaduser();
+  WidgetsBinding.instance.addPostFrameCallback((_)async {
+    final provider = Provider.of<BursaryProvider>(context, listen: false);
+    await provider.get_applied_bursaries();
+  for(var i in provider.applied_bursaries){
+    setState(() {
+      if(i['status_choices'] == "Approved") {
+        approved_status++;
+      }
+      else if(i['status_choices'] == "Pending"){
+        pending_status++;
+      }
+    });
+
+
+
+  }
+  });
+
+
 }
+
   @override
   Widget build(BuildContext context) {
   final userprovider = Provider.of<UserProvider>(context);
+  final bursaryprovider = Provider.of<BursaryProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: SliderDrawer(
@@ -219,17 +242,17 @@ void initState(){
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text("23",
+                            Text(bursaryprovider.applied_bursaries.length.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 20,
                             ),),
-                            Text("12",
+                            Text(approved_status.toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 fontSize: 20,
                               ),),
-                            Text("13",
+                            Text(pending_status.toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 fontSize: 20,
