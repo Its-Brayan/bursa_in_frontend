@@ -79,14 +79,31 @@ class _DocumentdetailsState extends State<Documentdetails> {
       final documents = Provider.of<DetailsPageProvider>(context,listen: false);
       await documents.get_student_document_uploads();
       final documentprovider = documents.current_document_details;
-      if(documentprovider != null){
-        selected_id_document = documentprovider.idDocumentUrl != null ? NetworkImage(documentprovider.idDocumentUrl!) : null;
-        selected_school_id = documentprovider.schoolIdUrl != null  ? NetworkImage(documentprovider.schoolIdUrl!) : null;
-        selected_admission_letter = documentprovider.admissionLetterUrl != null ? NetworkImage(documentprovider.admissionLetterUrl!) : null;
-        selected_student_transcript = documentprovider.studentTranscriptUrl != null ? NetworkImage(documentprovider.studentTranscriptUrl!) : null;
-        selected_fee_structure = documentprovider.feeStructureUrl != null ? NetworkImage(documentprovider.feeStructureUrl!) : null;
-        selected_approval_letter = documentprovider.approvalLetterUrl != null ? NetworkImage(documentprovider.approvalLetterUrl!) : null;
-      }
+
+        setState(() {
+          if(documentprovider != null) {
+            selected_id_document =
+            documentprovider.idDocumentUrl != null ? NetworkImage(
+                documentprovider.idDocumentUrl!) : null;
+            selected_school_id =
+            documentprovider.schoolIdUrl != null ? NetworkImage(
+                documentprovider.schoolIdUrl!) : null;
+            selected_admission_letter =
+            documentprovider.admissionLetterUrl != null ? NetworkImage(
+                documentprovider.admissionLetterUrl!) : null;
+            selected_student_transcript =
+            documentprovider.studentTranscriptUrl != null ? NetworkImage(
+                documentprovider.studentTranscriptUrl!) : null;
+            selected_fee_structure =
+            documentprovider.feeStructureUrl != null ? NetworkImage(
+                documentprovider.feeStructureUrl!) : null;
+            selected_approval_letter =
+            documentprovider.approvalLetterUrl != null ? NetworkImage(
+                documentprovider.approvalLetterUrl!) : null;
+          }
+        });
+
+
     });
   }
   @override
@@ -513,7 +530,9 @@ class _DocumentdetailsState extends State<Documentdetails> {
               ? File((selected_approval_letter! as FileImage).file.path)
               : null,
         );
-        final success = await _documentprovider.create_documents_details(documents);
+        final success = _documentprovider.current_document_details != null ?
+            await _documentprovider.update_document_details(documents) :
+        await _documentprovider.create_documents_details(documents);
         if(!success){
           print("failed to upload document details");
           return;

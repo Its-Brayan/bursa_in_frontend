@@ -49,4 +49,30 @@ class Educationdetailsservice {
       return EducationDetails.fromJson(data);
     }
   }
+  Future<Map<String,dynamic>> update_education_details(EducationDetails education) async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.put(
+          Uri.parse("$baseUrl/update/education-details/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          },
+          body:jsonEncode(education.toJson())
+        )
+    );
+    if(response.statusCode == 200){
+      final Map<String,dynamic> data = jsonDecode(response.body);
+      print("Successfully updated student edcuation details");
+      return{
+        'success':true,
+        'data':data
+      };
+    }else{
+      print("failed to update student eduction details");
+      return {
+        'success':false,
+        'error':response.body
+      };
+    }
+  }
 }

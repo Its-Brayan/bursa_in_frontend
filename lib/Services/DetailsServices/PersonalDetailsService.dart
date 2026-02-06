@@ -50,4 +50,30 @@ class Personaldetailsservice {
       print("Failed to fetch student personal details");
     }
   }
+  Future<Map<String,dynamic>> update_personal_details(PersonalDetails student) async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.put(
+          Uri.parse("$baseURL/update/personal-details/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          },
+          body: jsonEncode(student.toJson())
+        )
+    );
+    if(response.statusCode == 200){
+      final Map<String,dynamic> data = jsonDecode(response.body);
+      print(data);
+      return {
+        'success':true,
+        'data':data,
+      };
+    }else{
+      print("Failed to update student details");
+       return {
+         'success':false,
+         'error':response.body
+       };
+    }
+  }
 }

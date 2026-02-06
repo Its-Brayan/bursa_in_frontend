@@ -334,7 +334,8 @@ super.dispose();
                 other_income_sources: other_sources_Controller.text,
                 amount_spent_on_fees: amount_spent_education_fees_Controller.text,
               );
-              final success = await familyprovider.create_family_details(family);
+              final success = familyprovider.current_family_details != null ?
+                  await familyprovider.update_family_details(family) : await familyprovider.create_family_details(family);
               if(!success){
                 print("Failed registering family details");
                 return;

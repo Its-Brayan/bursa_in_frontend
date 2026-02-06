@@ -60,7 +60,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
           nameController.text = personalprovider.full_name ?? "";
           registrationController.text = personalprovider.registration_number ?? "";
           idController.text = personalprovider.national_id_number ?? "";
-          genderController.text = personalprovider.student_gender ?? "";
+          selectedGender = personalprovider.student_gender ?? "";
           courseController.text =  personalprovider.course_of_study ?? "";
           SelectedCounty = personalprovider.county ?? "";
           SelectedConstituency = personalprovider.constituency ?? "";
@@ -259,7 +259,9 @@ class _PersonaldetailsState extends State<Personaldetails> {
               constituency:SelectedConstituency,
               ward: SelectedWard,
             );
-            final success = await detailprovider.create_personal_details(person);
+            final success = detailprovider.current_personal_details != null ?
+                await DetailsPageProvider().update_student_personal_details(person) :
+            await detailprovider.create_personal_details(person);
             if(!success){
               print("Failed registering personal details");
               return;

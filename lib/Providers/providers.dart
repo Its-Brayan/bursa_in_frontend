@@ -2,6 +2,7 @@ import 'package:bursary_inn/Models/DetailsPage/DocumentDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/EducationDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/FamilyDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/PersonalDetails.dart';
+import 'package:bursary_inn/Services/ApiService.dart';
 import 'package:bursary_inn/Services/BursaryService/FetchAppliedBursaries.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -227,6 +228,86 @@ Future<void> get_student_document_uploads() async{
     notifyListeners();
   }catch(e){
     print("Failed to fetch family details $e");
+  }
+}
+Future<bool> update_student_personal_details(PersonalDetails student) async{
+  _errorMessage = null;
+  try {
+    final success = await Personaldetailsservice().update_personal_details(
+        student);
+    final Map<String, dynamic> responsedata = success;
+    if (responsedata['success'] == true) {
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    print(_errorMessage);
+    return false;
+  }
+}
+Future<bool> update_family_details(FamilyDetails family) async {
+  _errorMessage = null;
+  try {
+    final success = await Familydetailsservice().update_family_details(family);
+    final Map<String, dynamic> responsedata = success;
+    if (responsedata['success'] == true) {
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    print(errorMessage);
+    notifyListeners();
+    return false;
+  }
+}
+Future<bool> update_education_details(EducationDetails education)async{
+  _errorMessage = null;
+  try{
+    final success = await Educationdetailsservice().update_education_details(education);
+    final Map<String,dynamic> responsedata = success;
+    if(responsedata['success'] == true){
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    print(_errorMessage);
+    return false;
+  }
+}
+Future<bool> update_document_details(DocumentDetails document) async{
+  _errorMessage =null;
+  try{
+    final success = await Documentdetailsservice().update_document_details(document);
+    final Map<String,dynamic> responsedata = success;
+    if(responsedata['success']){
+      print(responsedata['data']);
+      notifyListeners();
+      return true;
+    }else{
+      print(responsedata['error']);
+      notifyListeners();
+      return false;
+    }
+  }catch(e){
+    _errorMessage = e.toString();
+    notifyListeners();
+    print(_errorMessage);
+    return false;
   }
 }
 }
