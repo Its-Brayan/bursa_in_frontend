@@ -34,6 +34,7 @@ class _SignupState extends State<Signup> {
 
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
@@ -62,12 +63,19 @@ class _SignupState extends State<Signup> {
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
-                        labelText: "Name",
+                        labelText: "Full Name",
                         suffixIcon: Icon((Icons.person)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         )
                     ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUnfocus,
                   ),
                   SizedBox(height: 20),
                   TextFormField(
@@ -79,9 +87,21 @@ class _SignupState extends State<Signup> {
                           borderRadius: BorderRadius.circular(5.0),
                         )
                     ),
+                    autovalidateMode: AutovalidateMode.onUnfocus,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                        return "Enter a valid email";
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    maxLength: 10,
+                     keyboardType: TextInputType.number,
                     controller: _phoneController,
                     decoration: InputDecoration(
                         labelText: "Phone Number",
@@ -90,8 +110,19 @@ class _SignupState extends State<Signup> {
                           borderRadius: BorderRadius.circular(5.0),
                         )
                     ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      if(value.length < 10){
+                        return "Phone number must have 10 digits";
+                      }
+                      return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUnfocus,
+
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   TextFormField(
                     controller: _passwordController,
                     obscureText: !show_password,
@@ -111,6 +142,16 @@ class _SignupState extends State<Signup> {
                           borderRadius: BorderRadius.circular(5.0),
                         )
                     ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return"This field is required";
+                      }
+                      if(value.length < 8){
+                        return "Minimum 8 characters";
+                      }
+                      return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUnfocus,
                   ),
                   SizedBox(height: 20),
                   TextFormField(
@@ -132,6 +173,19 @@ class _SignupState extends State<Signup> {
                           borderRadius: BorderRadius.circular(5.0),
                         )
                     ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return"This field is required";
+                      }
+                      if(value.length < 8){
+                        return "Minimum 8 characters";
+                      }
+                      if(value != _passwordController.text){
+                        return "passwords do not match";
+                      }
+                      return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUnfocus,
                   ),
                   SizedBox(height: 40),
                   SizedBox(
@@ -148,8 +202,16 @@ class _SignupState extends State<Signup> {
                       );
                     final success =  await userProvider.create_student(user);
                       if(!success){
-                        print("Registration failed");
-                        return;
+                        ElegantNotification.error(
+                            width: 360,
+                            height: 100,
+                            isDismissable: true,
+                            stackedOptions: StackedOptions(
+                              key: 'top',
+                              type: StackedType.same,
+                              itemOffset:const Offset(-5, -5),),
+                            title: Text("Error"),
+                            description: Text(userProvider.errorMessage?.toString() ?? "an unkown error occurred")).show(context);
                       }else{
                         ElegantNotification.success(
                           width: 360,
@@ -218,7 +280,7 @@ class _SignupState extends State<Signup> {
     setState(() {
       isLoading = true;
     });
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 5));
     setState(() {
       isLoading = false;
     });

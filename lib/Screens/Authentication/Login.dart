@@ -70,6 +70,16 @@ class _LoginState extends State<Login> {
                             )
                         ),
                         controller: _emailController,
+                        autovalidateMode:AutovalidateMode.onUnfocus,
+                        validator:(value){
+                          if(value == null || value.isEmpty){
+                            return "Email is required";
+                          }
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return "Enter a valid email";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 30),
                       TextFormField(
@@ -89,6 +99,16 @@ class _LoginState extends State<Login> {
                           label: Text("Password"),
 
                         ),
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return "Password is required";
+                          }
+                          if(value.length < 8){
+                            return "Minimum 8 characters";
+                          }
+                          return null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUnfocus,
                       ),
                       SizedBox(height: 50),
                       SizedBox(
@@ -102,8 +122,16 @@ class _LoginState extends State<Login> {
                           );
                           final success = await userprovider.login_student(user);
                           if(!success){
-                            print("Login failed");
-                            return;
+                            ElegantNotification.error(
+                                width: 360,
+                                height: 100,
+                                isDismissable: true,
+                                stackedOptions: StackedOptions(
+                                  key: 'top',
+                                  type: StackedType.same,
+                                  itemOffset:const Offset(-5, -5),),
+                                title: Text("Error"),
+                                description: Text(userprovider.errorMessage!.toString())).show(context);
                           }
                           else {
                             ElegantNotification.success(
@@ -212,7 +240,7 @@ class _LoginState extends State<Login> {
     setState(() {
       isLoading = true;
     });
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 5));
     setState(() {
       isLoading = false;
     });

@@ -35,7 +35,8 @@ class UserProvider with ChangeNotifier{
         notifyListeners();
         return true;
       } else {
-       final error = responsedata['error'];
+       final _error = responsedata['error'];
+       _errorMessage = _error['detail'];
        notifyListeners();
        return false;
       }
@@ -57,7 +58,8 @@ class UserProvider with ChangeNotifier{
         return true;
       }
       else{
-        final error = responsedata['error'];
+        final _error = responsedata['error'];
+        _errorMessage = _error['detail'];
         notifyListeners();
         return false;
       }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bursary_inn/Models/BursaryModel/BursaryDetail.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
+import 'package:bursary_inn/Services/BursaryService/FavoriteService.dart';
 class Explorepage extends StatefulWidget {
   const Explorepage({super.key});
 
@@ -58,10 +59,12 @@ class _ExplorepageState extends State<Explorepage> {
                             padding: const EdgeInsets.all(5.0),
                             child: CircleAvatar(
                                 backgroundColor: Colors.white,
-                                child: IconButton(onPressed: () {},
+                                child: IconButton(onPressed: () {
+                                  Favoriteservice().toggle_favorite(bursary);
+                                },
                                     icon: Icon(
                                       Icons.favorite_border_outlined,
-                                      color: Colors.grey.shade500,))),
+                                      color: bursary.isFavorite ? Colors.red : Colors.grey.shade400))),
                           )
                         ],
                       ),
