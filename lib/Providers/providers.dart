@@ -17,14 +17,16 @@ import 'package:bursary_inn/Services/BursaryService/AllAvailableService.dart';
 
 class UserProvider with ChangeNotifier{
   final UserService _userService = UserService();
-  String? _errorMessage;
+  String? _phoneError;
   String? _emailError;
-
+  String? _errorMessage;
   String? get emailError => _emailError;
   String? get errorMessage => _errorMessage;
+  String? get phoneError => _phoneError;
 
   Future<bool> create_student(UserModel user) async{
-    _errorMessage = null;
+
+    _phoneError = null;
     _emailError = null;
     notifyListeners();
     try {
@@ -36,10 +38,26 @@ class UserProvider with ChangeNotifier{
         return true;
       } else {
        final _error = responsedata['error'];
-       _errorMessage = _error['detail'];
-       notifyListeners();
-       return false;
+       // if(_error is Map && _error.isNotEmpty) {
+       // final messages = _error.entries.map((entries){
+       //   final value = entries.value;
+       //   if(value is List && value.isNotEmpty){
+       //     return value.first.toString();
+       //   }else{
+       //     return value.toString();
+       //   }
+       // }).join('\n');
+       // _errorMessage = messages;
+       if(_error is Map && _error.containsKey('email')){
+         _emailError = _error['email'][0].toString();
+       }
+       if(_error is Map && _error.containsKey('phone_number')){
+
+         _phoneError = _error['phone_number'][0].toString();
+       }
       }
+      notifyListeners();
+      return false;
     }
       catch(e){
       _errorMessage = e.toString();
@@ -47,6 +65,11 @@ class UserProvider with ChangeNotifier{
       return false;
     }
   }
+  void clear_errors(){
+    _phoneError = null;
+    _emailError = null;
+    notifyListeners();
+}
   Future<bool> login_student(UserModel user) async{
     _errorMessage = null;
     final success = await _userService.login_user(user);

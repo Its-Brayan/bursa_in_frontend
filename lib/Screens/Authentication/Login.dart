@@ -19,6 +19,13 @@ class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  @override
+  void initState(){
+    super.initState();
+    void refresh() => setState((){});
+    _emailController.addListener(refresh);
+    _passwordController.addListener(refresh);
+  }
 
   @override
   void dispose(){
@@ -106,6 +113,18 @@ class _LoginState extends State<Login> {
                           if(value.length < 8){
                             return "Minimum 8 characters";
                           }
+                          if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                            return 'Include at least one uppercase letter';
+                          }
+                          if (!RegExp(r'[a-z]').hasMatch(value)) {
+                            return 'Include at least one lowercase letter';
+                          }
+                          if (!RegExp(r'[0-9]').hasMatch(value)) {
+                            return 'Include at least one number';
+                          }
+                          if (!RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                            return 'Include at least one special character';
+                          }
                           return null;
                         },
                         autovalidateMode: AutovalidateMode.onUnfocus,
@@ -115,6 +134,9 @@ class _LoginState extends State<Login> {
                         width: double.infinity,
                         height: 40,
                         child: ElevatedButton(onPressed: () async{
+                          if(_emailController.text.isEmpty || _passwordController.text.isEmpty){
+                            return;
+                          }
                           startload();
                           final user = UserModel(
                             email: _emailController.text,
@@ -132,7 +154,8 @@ class _LoginState extends State<Login> {
                                   itemOffset:const Offset(-5, -5),),
                                 title: Text("Error"),
                                 description: Text(userprovider.errorMessage!.toString())).show(context);
-                          }
+
+                            }
                           else {
                             ElegantNotification.success(
                               width: 360,
@@ -149,7 +172,7 @@ class _LoginState extends State<Login> {
                           }
                         },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
+                              backgroundColor: _emailController.text.isEmpty || _passwordController.text.isEmpty ?Colors.grey : Colors.blue,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               )

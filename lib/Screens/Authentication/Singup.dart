@@ -34,6 +34,22 @@ class _SignupState extends State<Signup> {
 
     super.dispose();
   }
+  @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      Provider.of<UserProvider>(context,listen: false).clear_errors();
+
+    }
+    );
+    void refresh() => setState(() {});
+    _nameController.addListener(refresh);
+    _emailController.addListener(refresh);
+    _phoneController.addListener(refresh);
+    _passwordController.addListener(refresh);
+    _confirmPasswordController.addListener(refresh);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +97,7 @@ class _SignupState extends State<Signup> {
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
+                      errorText: userProvider.emailError,
                         labelText: "Email",
                         suffixIcon: Icon((Icons.email_outlined)),
                         border: OutlineInputBorder(
@@ -97,6 +114,7 @@ class _SignupState extends State<Signup> {
                       }
                       return null;
                     },
+
                   ),
                   SizedBox(height: 20),
                   TextFormField(
@@ -104,6 +122,7 @@ class _SignupState extends State<Signup> {
                      keyboardType: TextInputType.number,
                     controller: _phoneController,
                     decoration: InputDecoration(
+                      errorText: userProvider.phoneError,
                         labelText: "Phone Number",
                         suffixIcon: Icon((Icons.phone_android_rounded)),
                         border: OutlineInputBorder(
@@ -149,6 +168,18 @@ class _SignupState extends State<Signup> {
                       if(value.length < 8){
                         return "Minimum 8 characters";
                       }
+                      if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                        return 'Include at least one uppercase letter';
+                      }
+                      if (!RegExp(r'[a-z]').hasMatch(value)) {
+                        return 'Include at least one lowercase letter';
+                      }
+                      if (!RegExp(r'[0-9]').hasMatch(value)) {
+                        return 'Include at least one number';
+                      }
+                      if (!RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                        return 'Include at least one special character';
+                      }
                       return null;
                     },
                     autovalidateMode: AutovalidateMode.onUnfocus,
@@ -191,6 +222,9 @@ class _SignupState extends State<Signup> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(onPressed: () async{
+                     if(_nameController.text.isEmpty || _emailController.text.isEmpty || _phoneController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty){
+                       return;
+                     }
                       startload();
                       final user = UserModel(
                         full_name: _nameController.text,
@@ -202,16 +236,16 @@ class _SignupState extends State<Signup> {
                       );
                     final success =  await userProvider.create_student(user);
                       if(!success){
-                        ElegantNotification.error(
-                            width: 360,
-                            height: 100,
-                            isDismissable: true,
-                            stackedOptions: StackedOptions(
-                              key: 'top',
-                              type: StackedType.same,
-                              itemOffset:const Offset(-5, -5),),
-                            title: Text("Error"),
-                            description: Text(userProvider.errorMessage?.toString() ?? "an unkown error occurred")).show(context);
+                        // ElegantNotification.error(
+                        //     width: 360,
+                        //     height: 100,
+                        //     isDismissable: true,
+                        //     stackedOptions: StackedOptions(
+                        //       key: 'top',
+                        //       type: StackedType.same,
+                        //       itemOffset:const Offset(-5, -5),),
+                        //     title: Text("Error"),
+                        //     description: Text(userProvider.emailError!)).show(context);
                       }else{
                         ElegantNotification.success(
                           width: 360,
@@ -231,7 +265,7 @@ class _SignupState extends State<Signup> {
 
                     },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: _nameController.text.isEmpty || _emailController.text.isEmpty || _phoneController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty ? Colors.grey : Colors.blue,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           )
@@ -280,7 +314,7 @@ class _SignupState extends State<Signup> {
     setState(() {
       isLoading = true;
     });
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 3));
     setState(() {
       isLoading = false;
     });
