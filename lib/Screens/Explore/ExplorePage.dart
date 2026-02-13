@@ -18,6 +18,7 @@ class _ExplorepageState extends State<Explorepage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
       Provider.of<BursaryProvider>(context,listen: false).get_all_bursaries();
+
     }
     );
   }
@@ -59,8 +60,9 @@ class _ExplorepageState extends State<Explorepage> {
                             padding: const EdgeInsets.all(5.0),
                             child: CircleAvatar(
                                 backgroundColor: Colors.white,
-                                child: IconButton(onPressed: () {
-                                  Favoriteservice().toggle_favorite(bursary);
+                                child: IconButton(onPressed: ()async{
+                                 await Favoriteservice().toggle_favorite(bursary);
+                                  setState((){});
                                 },
                                     icon: Icon(
                                       Icons.favorite_border_outlined,

@@ -40,9 +40,13 @@ class Documentdetailsservice {
             'fee_structure',
             documents.fee_structure!.path));
       }
-      if (documents.fee_structure != null) {
+      if (documents.death_certificate_father != null) {
         request.files.add(await http.MultipartFile.fromPath(
-            'approval_letter', documents.approval_letter!.path));
+            'death_certificate_father', documents.death_certificate_father!.path));
+      }
+      if(documents.death_certificate_mother != null){
+        request.files.add(await http.MultipartFile.fromPath(
+            'death_certificate_mother', documents.death_certificate_mother!.path));
       }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
@@ -116,9 +120,13 @@ class Documentdetailsservice {
             'fee_structure',
             documents.fee_structure!.path));
       }
-      if (documents.approval_letter != null) {
+      if (documents.death_certificate_father != null) {
         request.files.add(await http.MultipartFile.fromPath(
-            'approval_letter', documents.approval_letter!.path));
+            'death_certificate_father', documents.death_certificate_father!.path));
+      }
+      if(documents.death_certificate_mother != null){
+        request.files.add(await http.MultipartFile.fromPath(
+            'death_certificate_mother', documents.death_certificate_mother!.path));
       }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);

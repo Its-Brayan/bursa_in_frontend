@@ -21,4 +21,24 @@ class Favoriteservice {
       print("Error toggling favourites ${response.body}");
     }
   }
+  Future<List<dynamic>> fetch_favorite_bursaries()async{
+    final response = await ApiService.AuthorizedRequest(
+        (token) => http.get(
+          Uri.parse("$baseurl/my_favorites/"),
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer $token"
+          }
+        ),
+    );
+
+    if(response.statusCode == 200){
+     final List<dynamic> data = jsonDecode(response.body);
+     print(data);
+     return data;
+    }else{
+      print("Failed to fetch favorite bursaries");
+      return [];
+    }
+  }
 }

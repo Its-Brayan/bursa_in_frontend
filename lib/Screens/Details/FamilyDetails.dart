@@ -15,7 +15,7 @@ class _FamilydetailsState extends State<Familydetails> {
   List<String> answers = [
     "Only Father",
     "Only Mother",
-    "Both",
+    "Yes",
     "No"
   ];
   List<String> feespayer = [
@@ -166,13 +166,7 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value){
-                      if(value == null || value.isEmpty){
-                        return "This field is required";
-                      }
-                      return null;
-                    },
+
                     decoration: InputDecoration(
                       hintText:"Are both parents alive?*",
                       border: OutlineInputBorder(
@@ -194,13 +188,7 @@ super.dispose();
                     height: 10,
                   ),
                   DropdownButtonFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value){
-                        if(value == null || value.isEmpty){
-                          return "This field is required";
-                        }
-                        return null;
-                      },
+
                     decoration: InputDecoration(
                       hintText: "Who has been paying fees?*",
                       border: OutlineInputBorder(

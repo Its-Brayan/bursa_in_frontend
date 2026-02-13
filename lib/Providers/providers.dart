@@ -3,6 +3,7 @@ import 'package:bursary_inn/Models/DetailsPage/EducationDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/FamilyDetails.dart';
 import 'package:bursary_inn/Models/DetailsPage/PersonalDetails.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
+import 'package:bursary_inn/Services/BursaryService/FavoriteService.dart';
 import 'package:bursary_inn/Services/BursaryService/FetchAppliedBursaries.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -352,9 +353,16 @@ class BursaryProvider with ChangeNotifier{
     notifyListeners();
     return _all_bursaries;
   }
+  List<dynamic> _favourite_bursaries = [];
+  List<dynamic> get favorite_bursaries => _favourite_bursaries;
   Future<List<dynamic>> get_applied_bursaries() async{
     _applied_bursaries = await FetchAppliedBursaries().fetch_applied_bursaries();
     notifyListeners();
     return _applied_bursaries;
+  }
+  Future<List<dynamic>> get_favorite_bursaries()async{
+   _favourite_bursaries = await Favoriteservice().fetch_favorite_bursaries();
+   notifyListeners();
+   return _favourite_bursaries;
   }
 }
