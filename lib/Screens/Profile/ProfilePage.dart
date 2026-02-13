@@ -282,7 +282,9 @@ void initState(){
                         borderRadius: BorderRadius.circular(5.0),
                       )
                     ),),
-                    ElevatedButton.icon(onPressed: (){}, label: Text("Favourites",
+                    ElevatedButton.icon(onPressed: (){
+                      Navigator.pushNamed(context, '/my_favorites');
+                    }, label: Text("Favourites",
                       style: TextStyle(
                         color: Colors.white,
                       ),),

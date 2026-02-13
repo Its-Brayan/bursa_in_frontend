@@ -10,6 +10,7 @@ import 'package:bursary_inn/Screens/Explore/BursaryDetailsPage.dart';
 import 'package:bursary_inn/Screens/Explore/ExplorePage.dart';
 import 'package:bursary_inn/Screens/HomeScreen/Home.dart';
 import 'package:bursary_inn/Screens/Notification/NotificationPage.dart';
+import 'package:bursary_inn/Screens/Profile/FavoriteBursaries.dart';
 import 'package:bursary_inn/Screens/Profile/HelpPage.dart';
 import 'package:bursary_inn/Screens/Profile/ProfilePage.dart';
 import 'package:bursary_inn/Screens/Profile/SettingsPage.dart';
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
           "/settings":(context) => Settingspage(),
           "/profile":(context) => Profilepage(),
           "/studentdetails":(context) => UpdateDetails(),
+          "/my_favorites":(context) => Favoritebursaries(),
 
         },
         title: 'Flutter Demo',
