@@ -133,6 +133,8 @@ Future<bool> create_personal_details(PersonalDetails person) async{
       return true;
     }else{
       final error = responsedata['error'];
+      _errorMessage = error['national_id_number'][0];
+      print(error);
       notifyListeners();
       return false;
     }
@@ -141,8 +143,12 @@ Future<bool> create_personal_details(PersonalDetails person) async{
     notifyListeners();
     return false;
   }
-
 }
+
+  void clear_error_message(){
+    _errorMessage = null;
+    notifyListeners();
+  }
 Future<bool> create_education_details(EducationDetails education) async{
   _errorMessage = null;
   notifyListeners();

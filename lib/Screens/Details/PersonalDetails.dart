@@ -53,6 +53,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
         return;
       }
       final personal = Provider.of<DetailsPageProvider>(context,listen: false);
+      personal.clear_error_message();
       await personal.get_student_personal_details();
       final personalprovider = personal.current_personal_details;
       if(personalprovider != null){
@@ -98,18 +99,29 @@ class _PersonaldetailsState extends State<Personaldetails> {
                 key: _formKey,
                   child: Column(
                 children: [
-                  TextFormField(
-                     decoration: InputDecoration(
-                       labelText: "Name",
-                       hintText: "John Doe",
-                       border: OutlineInputBorder(
-                         borderRadius: BorderRadius.circular(5),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 5.0, 0, 0),
+                    child: TextFormField(
+                       decoration: InputDecoration(
+                         labelText: "Full Name",
+                         hintText: "John Doe",
+                         border: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(5),
+                         ),
                        ),
-                     ),
-                    controller: nameController,
+                      controller: nameController,
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "This field is required";
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: registrationController,
                     decoration: InputDecoration(
                       labelText: "Registration Number",
@@ -118,17 +130,31 @@ class _PersonaldetailsState extends State<Personaldetails> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 20),
                   TextFormField(
                     controller: idController,
                     decoration: InputDecoration(
+                      errorText: detailprovider.errorMessage,
                       labelText: "ID Number",
                       hintText: "112223344",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   SizedBox(height: 20),
                   TextFormField(
@@ -146,9 +172,17 @@ class _PersonaldetailsState extends State<Personaldetails> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     initialValue: selectedGender,
                     items:Genders.map((gender){
                       return DropdownMenuItem(
@@ -170,6 +204,13 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     initialValue: SelectedCounty,
                     items: counties.map((county){
                       return DropdownMenuItem(
@@ -196,6 +237,13 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     initialValue: SelectedConstituency,
                     items: constituencies.map((c){
                       return DropdownMenuItem(
@@ -219,6 +267,13 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     initialValue: SelectedWard,
                     items: wards.map((w){
                       return DropdownMenuItem(
@@ -248,6 +303,23 @@ class _PersonaldetailsState extends State<Personaldetails> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(30.0),
           child: ElevatedButton(onPressed: ()async{
+            if(nameController.text.isEmpty || registrationController.text.isEmpty ||
+            idController.text.isEmpty || courseController.text.isEmpty || selectedGender == null
+            || SelectedCounty == null || SelectedConstituency == null || SelectedWard == null){
+              ElegantNotification.error(
+                width: 360,
+                height: 100,
+                isDismissable: true,
+                stackedOptions: StackedOptions(
+                    key: 'top',
+                    type: StackedType.same,
+                    itemOffset: const Offset(-5, -5)
+                ),
+                description: Text("Please fill all the fields"),
+                title: Text("Error"),
+              ).show(context);
+              return;
+            }
             startload();
             final person = PersonalDetails(
               full_name: nameController.text,
@@ -284,7 +356,9 @@ class _PersonaldetailsState extends State<Personaldetails> {
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: Colors.blue.shade200,
+                color:(nameController.text.isEmpty || registrationController.text.isEmpty ||
+                    idController.text.isEmpty || courseController.text.isEmpty || selectedGender == null
+                    || SelectedCounty == null || SelectedConstituency == null || SelectedWard == null) ? Colors.grey : Colors.blue.shade200,
               ),
               borderRadius: BorderRadius.circular(5),
             )
@@ -298,7 +372,9 @@ class _PersonaldetailsState extends State<Personaldetails> {
                 )
            : Text(detailprovider.current_personal_details != null ? 'Update' : "Submit",
           style: TextStyle(
-            color: Colors.blue.shade200
+            color:(nameController.text.isEmpty || registrationController.text.isEmpty ||
+                idController.text.isEmpty || courseController.text.isEmpty || selectedGender == null
+                || SelectedCounty == null || SelectedConstituency == null || SelectedWard == null) ? Colors.grey : Colors.blue.shade200
           ),),),
         ),
     );
