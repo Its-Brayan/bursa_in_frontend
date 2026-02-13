@@ -43,6 +43,10 @@ class _EducationdetailsState extends State<Educationdetails> {
   @override
   void initState(){
     super.initState();
+    void refresh() => setState(() {});
+    name_of_institution_controller.addListener(refresh);
+    institution_tel_number_controller.addListener(refresh);
+    institution_postal_address_controller.addListener(refresh);
     WidgetsBinding.instance.addPostFrameCallback((_)async {
       final education = Provider.of<DetailsPageProvider>(
           context, listen: false);
@@ -88,9 +92,16 @@ class _EducationdetailsState extends State<Educationdetails> {
               child: Column(
                 children: [
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     controller: name_of_institution_controller,
                     decoration: InputDecoration(
-                        labelText: "Name of Institution",
+                        labelText: "Name of Institution*",
                         hintText: "Kenyatta University",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -99,8 +110,15 @@ class _EducationdetailsState extends State<Educationdetails> {
                   ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "This field is required";
+                        }
+                        return null;
+                      },
                     decoration: InputDecoration(
-                      labelText: "Course",
+                      labelText: "Course*",
                       hintText: "Undergraduate",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -118,8 +136,15 @@ class _EducationdetailsState extends State<Educationdetails> {
                   }),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "This field is required";
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(
-                          labelText: "Year",
+                          labelText: "Year*",
                           hintText: "Year of Study",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -137,8 +162,15 @@ class _EducationdetailsState extends State<Educationdetails> {
                   }),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "This field is required";
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(
-                          labelText: "Year of completion",
+                          labelText: "Year of completion*",
                           hintText: "Expecte year of completion",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -156,9 +188,16 @@ class _EducationdetailsState extends State<Educationdetails> {
                   }),
                   SizedBox(height: 10),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     controller: institution_postal_address_controller,
                     decoration: InputDecoration(
-                        labelText: "Institution postal address",
+                        labelText: "Institution postal address*",
                         hintText: " 62157-00200",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -167,9 +206,16 @@ class _EducationdetailsState extends State<Educationdetails> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     controller: institution_tel_number_controller,
                     decoration: InputDecoration(
-                        labelText: "Institution Tel number",
+                        labelText: "Institution Tel number*",
                         hintText: "11223344",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -189,12 +235,19 @@ class _EducationdetailsState extends State<Educationdetails> {
           style: ElevatedButton.styleFrom(
            shape: RoundedRectangleBorder(
              side: BorderSide(
-               color: Colors.blue.shade200,
+               color:(name_of_institution_controller.text.isEmpty || chosencourse == null ||
+                   chosen_year == null || chosen_year_of_completion == null ||
+                   institution_postal_address_controller.text.isEmpty || institution_tel_number_controller.text.isEmpty) ? Colors.grey : Colors.blue.shade200,
              ),
              borderRadius: BorderRadius.circular(5.0),
            )
           ),
             onPressed: ()async{
+            if(name_of_institution_controller.text.isEmpty || chosencourse == null ||
+            chosen_year == null || chosen_year_of_completion == null ||
+            institution_postal_address_controller.text.isEmpty || institution_tel_number_controller.text.isEmpty){
+              return;
+            }
             startload();
             final education = EducationDetails(
               name_of_institution: name_of_institution_controller.text,
@@ -234,7 +287,9 @@ class _EducationdetailsState extends State<Educationdetails> {
         )
         : Text(_educationprovider.current_education_details != null ? 'Update' : 'Submit',
         style: TextStyle(
-          color: Colors.blue.shade200,
+          color:(name_of_institution_controller.text.isEmpty || chosencourse == null ||
+              chosen_year == null || chosen_year_of_completion == null ||
+              institution_postal_address_controller.text.isEmpty || institution_tel_number_controller.text.isEmpty) ? Colors.grey : Colors.blue.shade200,
         ),)),
       ),
     );
