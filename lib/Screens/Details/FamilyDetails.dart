@@ -13,7 +13,9 @@ class Familydetails extends StatefulWidget {
 
 class _FamilydetailsState extends State<Familydetails> {
   List<String> answers = [
-    "Yes",
+    "Only Father",
+    "Only Mother",
+    "Both",
     "No"
   ];
   List<String> feespayer = [
@@ -48,6 +50,10 @@ class _FamilydetailsState extends State<Familydetails> {
 @override
 void initState(){
   super.initState();
+  void refresh() => setState(() {});
+  estimated_annual_family_income_Controller.addListener(refresh);
+  principal_source_Controller.addListener(refresh);
+  amount_spent_education_fees_Controller.addListener(refresh);
   WidgetsBinding.instance.addPostFrameCallback((_)async{
     final family = Provider.of<DetailsPageProvider>(context,listen: false);
     await family.get_student_family_details();
@@ -113,7 +119,7 @@ super.dispose();
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Personal Details",
+                  Text("Family Details",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500
@@ -160,8 +166,15 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                      hintText:"Are both parents alive?",
+                      hintText:"Are both parents alive?*",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       )
@@ -181,8 +194,15 @@ super.dispose();
                     height: 10,
                   ),
                   DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "This field is required";
+                        }
+                        return null;
+                      },
                     decoration: InputDecoration(
-                      hintText: "Who has been paying fees",
+                      hintText: "Who has been paying fees?*",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       )
@@ -203,6 +223,7 @@ super.dispose();
                     fontSize: 20,
                   ),),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: number_of_siblings_Controller,
                     decoration: InputDecoration(
                         labelText: "How many siblings do you have?",
@@ -213,6 +234,7 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: number_of_siblings_working_Controller,
                     decoration: InputDecoration(
                         labelText: "How many of your siblings are working?",
@@ -223,6 +245,7 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: number_of_siblings_in_business_Controller,
                     decoration: InputDecoration(
                         labelText: "How many of your siblings are in business?",
@@ -233,6 +256,7 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: number_o_fsiblings_in_college_Controller,
                     decoration: InputDecoration(
                         labelText: "How many of your siblings are in University/college",
@@ -243,6 +267,7 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: number_of_siblings_in_secondary_Controller,
                     decoration: InputDecoration(
                         labelText: "How many of your siblings are in Secondary school?",
@@ -259,9 +284,17 @@ super.dispose();
                     ),
                   ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
                     controller: estimated_annual_family_income_Controller,
                     decoration: InputDecoration(
-                        labelText: "Estimated annual income for the family?",
+                        labelText: "Estimated annual income for the family?*",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         )
@@ -269,9 +302,16 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field  is required";
+                      }
+                      return null;
+                    },
                     controller: principal_source_Controller,
                     decoration: InputDecoration(
-                        labelText: "Principal Source?",
+                        labelText: "Principal Source?*",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         )
@@ -289,9 +329,17 @@ super.dispose();
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null ||value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
                     controller: amount_spent_education_fees_Controller,
                     decoration: InputDecoration(
-                        labelText: "Amount spent in education fees",
+                        labelText: "Amount spent in education fees*",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         )
@@ -310,12 +358,15 @@ super.dispose();
             style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    color: Colors.blue.shade200,
+                    color:(selectedanswer == null || selectedfeespayer == null || estimated_annual_family_income_Controller.text.isEmpty || principal_source_Controller.text.isEmpty || amount_spent_education_fees_Controller.text.isEmpty ) ? Colors.grey : Colors.blue.shade200,
                   ),
                   borderRadius: BorderRadius.circular(5.0),
                 )
             ),
             onPressed: ()async{
+              if(selectedanswer == null || selectedfeespayer == null || estimated_annual_family_income_Controller.text.isEmpty || principal_source_Controller.text.isEmpty || amount_spent_education_fees_Controller.text.isEmpty ){
+                return;
+              }
               startload();
               final family = FamilyDetails(
                 fathers_name: fathers_name_Controller.text,
@@ -363,7 +414,7 @@ super.dispose();
         )
         :Text(familyprovider.current_family_details != null ? 'Update':'Submit',
           style: TextStyle(
-            color: Colors.blue.shade200,
+            color:(selectedanswer == null || selectedfeespayer == null || estimated_annual_family_income_Controller.text.isEmpty || principal_source_Controller.text.isEmpty || amount_spent_education_fees_Controller.text.isEmpty ) ? Colors.grey : Colors.blue.shade200,
           ),)),
       ),
     );
