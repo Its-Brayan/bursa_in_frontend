@@ -4,7 +4,7 @@ import 'package:bursary_inn/Models/DetailsPage/EducationDetails.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
 
 class Educationdetailsservice {
-  final baseUrl = "http://10.33.27.1:8000/api/v1/applications";
+  final baseUrl = "http://192.168.10.153:8000/api/v1/applications";
 
   Future<Map<String,dynamic>> create_education_details(EducationDetails education)async{
     final response = await ApiService.AuthorizedRequest(
@@ -48,6 +48,7 @@ class Educationdetailsservice {
       print(data);
       return EducationDetails.fromJson(data);
     }
+    return null;
   }
   Future<Map<String,dynamic>> update_education_details(EducationDetails education) async{
     final response = await ApiService.AuthorizedRequest(

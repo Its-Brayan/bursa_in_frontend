@@ -4,11 +4,10 @@ import 'package:bursary_inn/Services/ApiService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:google_sign_in/google_sign_in.dart';
 class UserService {
   final _storage = FlutterSecureStorage();
-  final baseURL = "http://10.33.27.1:8000/api/v1/users";
-  final baseURl2 = "http://10.33.27.1:8000/api/v1/applications";
+  final baseURL = "http://192.168.10.153:8000/api/v1/users";
+  final baseURl2 = "http://192.168.10.153:8000/api/v1/applications";
  /* final GoogleSignIn _googleSignin = GoogleSignIn.standard(
     scopes:<String> ['email',
       'https://www.googleapis.com/auth/userinfo.profile',]

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:bursary_inn/Models/DetailsPage/PersonalDetails.dart';
 import 'package:bursary_inn/Services/ApiService.dart';
 class Personaldetailsservice {
-  final baseURL = "http://10.33.27.1:8000/api/v1/applications";
+  final baseURL = "http://192.168.10.153:8000/api/v1/applications";
   Future<Map<String,dynamic>> create_personal_details(PersonalDetails person) async{
     final response = await ApiService.AuthorizedRequest(
         (token) =>
@@ -49,10 +49,11 @@ class Personaldetailsservice {
     }else{
       print("Failed to fetch student personal details");
     }
+    return null;
   }
   Future<Map<String,dynamic>> update_personal_details(PersonalDetails student) async{
     final response = await ApiService.AuthorizedRequest(
-        (token) => http.put(
+        (token) => http.patch(
           Uri.parse("$baseURL/update/personal-details/"),
           headers: {
             "Content-Type":"application/json",
@@ -69,7 +70,7 @@ class Personaldetailsservice {
         'data':data,
       };
     }else{
-      print("Failed to update student details");
+      print(response.body);
        return {
          'success':false,
          'error':response.body

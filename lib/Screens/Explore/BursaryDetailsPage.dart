@@ -22,7 +22,7 @@ void initState(){
   fetch_bursary_details();
 }
 Future<void> fetch_bursary_details() async{
-  final baseURL = "http://10.33.27.1:8000/api/v1/programs";
+  final baseURL = "http://192.168.10.153:8000/api/v1/programs";
   final response = await ApiService.AuthorizedRequest(
       (token) => http.get(
         Uri.parse("$baseURL/bursarydetail/${widget.bursaryId}/"),
@@ -289,17 +289,17 @@ Future<void> fetch_bursary_details() async{
               applyBlurEffect: true,
             );
           }
-        }, child: Text("Apply Now",
-        style: TextStyle(
-          color: Colors.white
-        ),
-        ),
+        },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4.0),
             )
-          ),
+          ), child: Text("Apply Now",
+        style: TextStyle(
+          color: Colors.white
+        ),
+        ),
         ),
       ),
       

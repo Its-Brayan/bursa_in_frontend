@@ -1,3 +1,5 @@
+import 'package:bursary_inn/Screens/SettingsSubPages/PrivacyPolicy.dart';
+import 'package:bursary_inn/Screens/SettingsSubPages/TermsandCondition.dart';
 import 'package:flutter/material.dart';
 
 class Settingspage extends StatefulWidget {
@@ -53,6 +55,10 @@ class _SettingspageState extends State<Settingspage> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: ListTile(
+                  onTap: (){
+                    Navigator.push(context, 
+                    MaterialPageRoute(builder: (context) => TermsandCondition()));
+                  },
                   leading: Icon(Icons.article_outlined),
                   title: Text("Terms & Conditions"),
                 ),
@@ -63,6 +69,12 @@ class _SettingspageState extends State<Settingspage> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: ListTile(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Privacypolicy()),
+                    );
+                  },
                   leading: Icon(Icons.lock_outline),
                   title: Text("Privacy Policy"),
                 ),

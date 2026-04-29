@@ -5,7 +5,7 @@ import 'package:bursary_inn/Models/DetailsPage/DocumentDetails.dart';
 import 'package:http/http.dart' as http;
 
 class Documentdetailsservice {
-  final baseUrl = "http://10.33.27.1:8000/api/v1/applications";
+  final baseUrl = "http://192.168.10.153:8000/api/v1/applications";
   
   Future<Map<String,dynamic>> create_document_details(DocumentDetails documents)async{
     final response = await ApiService.AuthorizedRequest((token) async {
@@ -40,9 +40,13 @@ class Documentdetailsservice {
             'fee_structure',
             documents.fee_structure!.path));
       }
-      if (documents.fee_structure != null) {
+      if (documents.death_certificate_father != null) {
         request.files.add(await http.MultipartFile.fromPath(
-            'approval_letter', documents.approval_letter!.path));
+            'death_certificate_father', documents.death_certificate_father!.path));
+      }
+      if(documents.death_certificate_mother != null){
+        request.files.add(await http.MultipartFile.fromPath(
+        'death_certificate_mother', documents.death_certificate_mother!.path));
       }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
@@ -82,6 +86,7 @@ class Documentdetailsservice {
       return DocumentDetails.fromJson(data);
 
     }
+    return null;
   }
   Future<Map<String,dynamic>> update_document_details(DocumentDetails documents)async {
     final response = await ApiService.AuthorizedRequest((token) async {
@@ -116,9 +121,13 @@ class Documentdetailsservice {
             'fee_structure',
             documents.fee_structure!.path));
       }
-      if (documents.approval_letter != null) {
+      if (documents.death_certificate_father != null) {
         request.files.add(await http.MultipartFile.fromPath(
-            'approval_letter', documents.approval_letter!.path));
+            'death_certificate_father', documents.death_certificate_father!.path));
+      }
+      if(documents.death_certificate_mother != null){
+        request.files.add(await http.MultipartFile.fromPath(
+        'death_certificate_mother', documents.death_certificate_mother!.path));
       }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);

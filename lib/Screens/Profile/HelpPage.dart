@@ -1,3 +1,5 @@
+import 'package:bursary_inn/Screens/SettingsSubPages/FAQs.dart';
+import 'package:bursary_inn/Screens/SettingsSubPages/TermsandCondition.dart';
 import 'package:flutter/material.dart';
 class Helppage extends StatefulWidget {
   const Helppage({super.key});
@@ -29,6 +31,10 @@ class _HelppageState extends State<Helppage> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: ListTile(
+                    onTap: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FAQs()));
+                    },
                     leading: Icon(Icons.notifications_none),
                     title: Text("FAQ's"),
 
@@ -40,22 +46,16 @@ class _HelppageState extends State<Helppage> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: ListTile(
+                    onTap: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TermsandCondition()));
+                    },
                     leading: Icon(Icons.star_border_purple500_sharp),
                     title: Text("Legal Terms & Conditions"),
 
                   ),
                 ),
-                Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  child: ListTile(
-                    leading: Icon(Icons.article_outlined),
-                    title: Text("Send Feedback"),
 
-                  ),
-                ),
                 SizedBox(height: 11),
                 Text("Need More Help?",
                 style: TextStyle(

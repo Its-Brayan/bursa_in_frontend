@@ -76,7 +76,7 @@ class _EducationdetailsState extends State<Educationdetails> {
 
   @override
   Widget build(BuildContext context) {
-    final _educationprovider = Provider.of<DetailsPageProvider>(context);
+    final educationprovider = Provider.of<DetailsPageProvider>(context);
     return Scaffold(
      appBar: AppBar(
        title: Text("Education Details"),
@@ -257,9 +257,9 @@ class _EducationdetailsState extends State<Educationdetails> {
               institution_postal_address: institution_postal_address_controller.text,
               institution_tel_number: institution_tel_number_controller.text,
             );
-            final success = _educationprovider.current_education_details != null ?
-                await _educationprovider.update_education_details(education) :
-            await _educationprovider.create_education_details(education);
+            final success = educationprovider.current_education_details != null ?
+                await educationprovider.update_education_details(education) :
+            await educationprovider.create_education_details(education);
             if(!success){
               print("Failed creating education details");
               return;
@@ -285,7 +285,7 @@ class _EducationdetailsState extends State<Educationdetails> {
             color: Colors.white,
           ),
         )
-        : Text(_educationprovider.current_education_details != null ? 'Update' : 'Submit',
+        : Text(educationprovider.current_education_details != null ? 'Update' : 'Submit',
         style: TextStyle(
           color:(name_of_institution_controller.text.isEmpty || chosencourse == null ||
               chosen_year == null || chosen_year_of_completion == null ||

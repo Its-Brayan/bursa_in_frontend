@@ -6,7 +6,6 @@ import 'package:bursary_inn/Screens/Details/DocumentDetails.dart';
 import 'package:bursary_inn/Screens/Details/EducationDetails.dart';
 import 'package:bursary_inn/Screens/Details/FamilyDetails.dart';
 import 'package:bursary_inn/Screens/Details/PersonalDetails.dart';
-import 'package:bursary_inn/Screens/Explore/BursaryDetailsPage.dart';
 import 'package:bursary_inn/Screens/Explore/ExplorePage.dart';
 import 'package:bursary_inn/Screens/HomeScreen/Home.dart';
 import 'package:bursary_inn/Screens/Notification/NotificationPage.dart';

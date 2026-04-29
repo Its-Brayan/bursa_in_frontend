@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'dart:io';
 class DocumentDetails {
  final File? id_document;
@@ -6,7 +5,8 @@ class DocumentDetails {
   final File? student_transcript;
   final File? admission_letter;
  final File? fee_structure;
-  final File? approval_letter;
+  final File? death_certificate_father;
+  final File? death_certificate_mother;
 
  // Backend URLs (used when fetching)
  String? idDocumentUrl;
@@ -14,12 +14,13 @@ class DocumentDetails {
  String? studentTranscriptUrl;
  String? admissionLetterUrl;
  String? feeStructureUrl;
- String? approvalLetterUrl;
+ String? deathCertificateFatherUrl;
+ String? deathCertificateMotherUrl;
 
  DocumentDetails({this.id_document,this.school_id,this.student_transcript,this.admission_letter,
-  this.fee_structure,this.approval_letter,this.idDocumentUrl,this.schoolIdUrl,this.studentTranscriptUrl,
- this.admissionLetterUrl,this.feeStructureUrl,this.approvalLetterUrl});
-static const String baseUrl = "http://10.33.27.1:8000/";
+  this.fee_structure,this.death_certificate_father,this.death_certificate_mother,this.idDocumentUrl,this.schoolIdUrl,this.studentTranscriptUrl,
+ this.admissionLetterUrl,this.feeStructureUrl,this.deathCertificateFatherUrl,this.deathCertificateMotherUrl});
+static const String baseUrl = "http://192.168.10.153:8000/";
 
   // Map<String,dynamic> toJson(){
   //   return{
@@ -38,7 +39,8 @@ factory DocumentDetails.fromJson(Map<String,dynamic>json){
     studentTranscriptUrl: json['student_transcript'] != null ? baseUrl + json['student_transcript'] : null,
     admissionLetterUrl: json['admission_letter'] != null ? baseUrl + json['admission_letter'] : null,
     feeStructureUrl: json['fee_structure'] != null ? baseUrl + json['fee_structure'] : null,
-    approvalLetterUrl: json['approval_letter'] != null ? baseUrl + json['approval_letter'] : null,
+    deathCertificateFatherUrl: json['death_certificate_father'] != null ? baseUrl + json['death_certificate_father'] : null,
+    deathCertificateMotherUrl: json['death_certificate_mother'] != null ? baseUrl + json['death_certificate_mother'] : null,
   );
 }
 }

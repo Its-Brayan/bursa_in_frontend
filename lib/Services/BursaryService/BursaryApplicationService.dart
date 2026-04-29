@@ -4,9 +4,9 @@ import 'package:bursary_inn/Services/ApiService.dart';
 import 'package:bursary_inn/Models/BursaryModel/BursaryDetail.dart';
 
 class BursaryApplicationService {
-  final baseUrl = "http://10.33.27.1:8000/api/v1/programs";
+  final baseUrl = "http://192.168.10.153:8000/api/v1/programs";
 
-  Future<bool> apply_for_bursary(int bursary_id) async{
+  Future<bool> apply_for_bursary(int bursaryId) async{
     final response = await ApiService.AuthorizedRequest(
         (token) => http.post(
           Uri.parse(
@@ -17,7 +17,7 @@ class BursaryApplicationService {
             "Authorization":"Bearer $token"
           },
           body: jsonEncode({
-            'bursary': bursary_id,
+            'bursary': bursaryId,
 
           })
         )

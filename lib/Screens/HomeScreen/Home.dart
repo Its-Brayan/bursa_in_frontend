@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:bursary_inn/Services/BursaryService/BursaryApplicationService.dart';
 import 'package:toastification/toastification.dart';
+import 'package:bursary_inn/Services/UserService.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,10 +22,19 @@ class _HomeState extends State<Home> {
   @override
   void initState(){
     super.initState();
+    loaduser();
     WidgetsBinding.instance.addPostFrameCallback((_){
       Provider.of<BursaryProvider>(context,listen: false).get_all_bursaries();
     }
     );
+  }
+
+  Map<String,dynamic>? _student_data;
+  Future<void> loaduser() async{
+    final userdata = await UserService().get_student_profile();
+    setState(() {
+      _student_data = userdata;
+    });
   }
   String format_date(String datestring){
     try{
@@ -34,6 +44,7 @@ class _HomeState extends State<Home> {
        return datestring;
     }
   }
+  @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
@@ -64,12 +75,12 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           SizedBox(height: 10.0),
-                          Text("Ritik Merha",
+                          Text("${_student_data?['full_name']}",
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),),
-                          Text("Ritikmesh123@gmail.com",
+                          Text("${_student_data?['email']}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black,
@@ -168,27 +179,6 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10),
-                   Row(
-                     mainAxisSize: MainAxisSize.min,
-                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: 'Search Bursaries',
-                            suffixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.blueAccent
-                              ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 SizedBox(height: 12),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -317,7 +307,7 @@ class _HomeState extends State<Home> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text("${format_date(bursary.bursary_deadline!)}",
+                                    child: Text(format_date(bursary.bursary_deadline!),
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.blue.shade400,

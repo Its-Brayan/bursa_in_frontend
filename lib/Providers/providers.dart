@@ -37,7 +37,7 @@ class UserProvider with ChangeNotifier{
         notifyListeners();
         return true;
       } else {
-       final _error = responsedata['error'];
+       final error = responsedata['error'];
        // if(_error is Map && _error.isNotEmpty) {
        // final messages = _error.entries.map((entries){
        //   final value = entries.value;
@@ -48,12 +48,12 @@ class UserProvider with ChangeNotifier{
        //   }
        // }).join('\n');
        // _errorMessage = messages;
-       if(_error is Map && _error.containsKey('email')){
-         _emailError = _error['email'][0].toString();
+       if(error is Map && error.containsKey('email')){
+         _emailError = error['email'][0].toString();
        }
-       if(_error is Map && _error.containsKey('phone_number')){
+       if(error is Map && error.containsKey('phone_number')){
 
-         _phoneError = _error['phone_number'][0].toString();
+         _phoneError = error['phone_number'][0].toString();
        }
       }
       notifyListeners();
@@ -81,8 +81,8 @@ class UserProvider with ChangeNotifier{
         return true;
       }
       else{
-        final _error = responsedata['error'];
-        _errorMessage = _error['detail'];
+        final error = responsedata['error'];
+        _errorMessage = error['detail'];
         notifyListeners();
         return false;
       }
@@ -234,7 +234,7 @@ Future<void> get_student_personal_details()async{
     print("Successfully fetched personal details");
     notifyListeners();
   }catch(e){
-    print("Failed to fetch personal details ${e}");
+    print("Failed to fetch personal details $e");
   }
 }
 Future<void> get_student_education_details()async{
@@ -242,7 +242,7 @@ Future<void> get_student_education_details()async{
     _current_education_details = await Educationdetailsservice().get_education_details();
     notifyListeners();
   }catch(e){
-    print("Failed to fetch education details ${e}");
+    print("Failed to fetch education details $e");
   }
 }
 Future<void> get_student_family_details()async{
@@ -250,7 +250,7 @@ Future<void> get_student_family_details()async{
     _current_family_details = await Familydetailsservice().get_family_details();
     notifyListeners();
   }catch(e){
-    print("Failed to fetch family details ${e}");
+    print("Failed to fetch family details $e");
   }
 }
 Future<void> get_student_document_uploads() async{
@@ -356,5 +356,7 @@ class BursaryProvider with ChangeNotifier{
     _applied_bursaries = await FetchAppliedBursaries().fetch_applied_bursaries();
     notifyListeners();
     return _applied_bursaries;
+
   }
+
 }
