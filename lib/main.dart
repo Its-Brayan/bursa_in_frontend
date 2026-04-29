@@ -13,6 +13,7 @@ import 'package:bursary_inn/Screens/Profile/HelpPage.dart';
 import 'package:bursary_inn/Screens/Profile/ProfilePage.dart';
 import 'package:bursary_inn/Screens/Profile/SettingsPage.dart';
 import 'package:bursary_inn/Screens/Profile/UpdateDetails.dart';
+import 'package:bursary_inn/Services/BursaryService/FavoriteService.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Screens/Authentication/Login.dart';
 import 'package:bursary_inn/Screens/Authentication/Singup.dart';
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => DetailsPageProvider()),
-        ChangeNotifierProvider(create: (context) => BursaryProvider())
+        ChangeNotifierProvider(create: (context) => BursaryProvider()),
+        ChangeNotifierProvider(create: (context) => Favoriteservice())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

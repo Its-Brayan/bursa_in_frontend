@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:bursary_inn/Services/BursaryService/BursaryApplicationService.dart';
 import 'package:toastification/toastification.dart';
 import 'package:bursary_inn/Services/UserService.dart';
-
+import 'package:bursary_inn/Services/BursaryService/FavoriteService.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -180,92 +180,92 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                 SizedBox(height: 12),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-
-                    children: [
-                      Card(
-                        color: Colors.blueAccent,
-                       child: Wrap(
-                         spacing: 0.5,
-                         children: [
-                           Padding(
-                             padding: const EdgeInsets.all(10.0),
-                             child: Column(
-                               children: [
-                                   Text("Explore Your \n Potential!",
-                                 style: TextStyle(
-                                   fontWeight: FontWeight.w900,
-                                   fontSize: 20,
-                                   color: Colors.white,
-                                 ),),
-                                 SizedBox(height: 10),
-                                 Text("Time is precious,\nsave it",
-                                 style: TextStyle(
-                                   color: Colors.white70,
-                                 ),),
-                                 SizedBox(height: 15),
-                                 ElevatedButton(onPressed: (){},
-                                 style: ElevatedButton.styleFrom(
-                                   shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(10.0),
-                                   )
-                                 ), child:Text("Check Eligibility",style: TextStyle(
-                                   color: Colors.blueAccent,
-                                 ),),)
-                               ],
-                             ),
-                           ),
-                           SizedBox(
-                             height: 150,
-                               width: 160,
-                               child: Image.asset("Assets/paper4.png"))
-                         ],
-                       ),
-                      ),
-                  Card(
-                    color: Colors.blueAccent,
-                    child: Wrap(
-                      spacing: 0.5,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              Text("Explore Your \n Potential!",
-                                style: TextStyle(
+                 Consumer<BursaryProvider>(
+                    builder:(context,BursaryProvider,child){
+                                  final bursaries = BursaryProvider.all_bursaries;
+                                  final now = DateTime.now();
+                                  final today = DateTime(now.year, now.month, now.day);
+                                  final upcoming = bursaries.where((bursary){
+                                  final parsed = DateTime.parse(bursary.bursary_deadline!);
+                                  final deadline = DateTime(parsed.year,parsed.month,parsed.day);
+                                  return deadline.isAfter(now) || deadline.isAtSameMomentAs(today);
+                                  }).toList()
+                                  ..sort((a,b){
+                                  final dateA = DateTime.parse(a.bursary_deadline!);
+                                  final dateB = DateTime.parse(b.bursary_deadline!);
+                                  return dateA.compareTo(dateB);
+                                  });
+                                  return SizedBox(
+                                  height: 200,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                  itemCount: upcoming.length,
+                                  itemBuilder: (context,index) {
+                                  final bursary = upcoming[index];
+                                  return Card(
+                                  color: Colors.blueAccent,
+                                  child: Wrap(
+                                  spacing: 0.5,
+                                  children: [
+                                  Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                  children: [
+                                  Text("Explore Your \n Potential!",
+                                  style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 20,
                                   color: Colors.white,
-                                ),),
-                              SizedBox(height: 10),
-                              Text("Time is precious,\nsave it",
-                                style: TextStyle(
+                                  ),),
+                                  SizedBox(height: 10),
+                                  Text("Time is precious,\nsave it",
+                                  style: TextStyle(
                                   color: Colors.white70,
-                                ),),
-                              SizedBox(height: 15),
-                              ElevatedButton(onPressed: (){},
-                                style: ElevatedButton.styleFrom(
+                                  ),),
+                                  SizedBox(height: 10),
+                                  Text(bursary.bursary_name!,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),),
+                                  SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                    child: ElevatedButton(onPressed: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:(context) => Bursarydetailspage(bursaryId: bursary.id!),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(10.0),
                                     )
-                                ), child:Text("Check Eligibility",style: TextStyle(
-                                color: Colors.blueAccent,
-                              ),),)
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                            height: 160,
-                            width: 160,
-                            child: Image.asset("Assets/paper4.png"))
-                      ],
-                    ),
+                                    ), child:Text("Check Eligibility",style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    ),),),
+                                  )
+                                  ],
+                                  ),
+                                  ),
+                                  SizedBox(
+                                  height: 150,
+                                  width: 160,
+                                  child: Image.asset("Assets/paper4.png"))
+                                  ],
+                                  ),
+                                  );
+                                  }
+
+                                  )
+                                  );
+
+
+                                  }
                   ),
-                    ],
-                  ),
-                ),
                   SizedBox(height: 5),
                  Card(
 
@@ -275,12 +275,6 @@ class _HomeState extends State<Home> {
                        fontSize: 18,
                        fontWeight: FontWeight.w900,
                      ),),
-                     trailing: TextButton(onPressed: (){}, child: Text("View All",
-                     style: TextStyle(
-                       color: Colors.blueAccent,
-                     ),
-                     ),
-                     ),
                      shape: RoundedRectangleBorder(
                        borderRadius: BorderRadius.circular(2.0),
                      ),
@@ -291,13 +285,25 @@ class _HomeState extends State<Home> {
                   Consumer<BursaryProvider>(
                     builder: (context,BursaryProvider,child) {
                       final bursaries = BursaryProvider.all_bursaries;
-
+                      final now = DateTime.now();
+                      final today = DateTime(now.year,now.month,now.day);
+                      final upcoming = bursaries.where((bursary){
+                        final parsed = DateTime.parse(bursary.bursary_deadline!);
+                        final deadline = DateTime(parsed.year,parsed.month,parsed.day);
+                        
+                        return deadline.isAfter(now) || deadline.isAtSameMomentAs(today);
+                      }).toList()
+                       ..sort((a,b){
+                        final dateA = DateTime.parse(a.bursary_deadline!);
+                        final dateB = DateTime.parse(b.bursary_deadline!);
+                        return dateA.compareTo(dateB);
+                      });
                       return SizedBox(
                         height: 200,
                         child: ListView.builder(
-                          itemCount: bursaries.length,
+                          itemCount: upcoming.length,
                           itemBuilder: (context,index) {
-                            final bursary = bursaries[index];
+                            final bursary = upcoming[index];
                             return Card(
                               child: ListTile(
                                 leading: Container(
@@ -355,8 +361,8 @@ class _HomeState extends State<Home> {
                       color: Colors.blueAccent,
                     ),) ),
                   ),
-                  Consumer<BursaryProvider>(
-                    builder: (context,BursaryProvider,child) {
+                  Consumer2<BursaryProvider,Favoriteservice>(
+                    builder: (context,BursaryProvider,favService,child) {
                       final bursaries = BursaryProvider.all_bursaries;
                       return SizedBox(
                         height: 340,
@@ -387,11 +393,14 @@ class _HomeState extends State<Home> {
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w900,
                                                 ),),
-                                              IconButton(onPressed: () {},
+                                              IconButton(onPressed: () async{
+                                             await favService.toggle_favorite(bursary);
+
+                                              },
                                                   icon: Icon(
                                                     Icons
                                                         .favorite_border_outlined,
-                                                    color: Colors.grey.shade400,))
+                                                    color: bursary.isFavorite ? Colors.red : Colors.grey,))
                                             ],
                                           ),
                                         ),

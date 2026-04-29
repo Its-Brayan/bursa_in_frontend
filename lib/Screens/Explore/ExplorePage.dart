@@ -38,8 +38,8 @@ class _ExplorepageState extends State<Explorepage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Consumer<BursaryProvider>(
-          builder: (context,BursaryProvider,child) {
+        child: Consumer2<BursaryProvider,Favoriteservice>(
+          builder: (context,BursaryProvider,favService,child) {
             final bursaries = BursaryProvider.all_bursaries;
             final filteredBursaries = bursaries.where((bursary){
               final name = bursary.bursary_name?.toLowerCase() ?? "";
@@ -134,8 +134,8 @@ class _ExplorepageState extends State<Explorepage> {
                                     padding: const EdgeInsets.all(5.0),
                                     child: CircleAvatar(
                                         backgroundColor: Colors.white,
-                                        child: IconButton(onPressed: () {
-                                          Favoriteservice().toggle_favorite(bursary);
+                                        child: IconButton(onPressed: () async{
+                                        await favService.toggle_favorite(bursary);
                                         },
                                             icon: Icon(
                                               Icons.favorite_border_outlined,
