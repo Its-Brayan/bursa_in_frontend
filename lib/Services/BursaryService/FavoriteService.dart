@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 class Favoriteservice extends ChangeNotifier {
 
-  final baseurl = "http://192.168.10.153:8000/api/v1/programs";
+  final baseurl = "http://192.168.58.153:8000/api/v1/programs";
   Future<void> toggle_favorite(BursaryDetail bursary)async {
     final previous = bursary.isFavorite;
     bursary.isFavorite = !bursary.isFavorite;

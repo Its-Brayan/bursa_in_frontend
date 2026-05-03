@@ -52,17 +52,6 @@ class Aftersplash extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 10),
-            Card(
-              elevation: 4,
-              child: ListTile(leading:Image.asset("Assets/google_logo.png",
-              width: 50,
-              height: 50),
-
-                title: Text("Continue with Google"),
-                tileColor: Colors.grey.shade100,
-              ),
-            ),
             SizedBox(height: 20),
             Wrap(
               spacing: 3,

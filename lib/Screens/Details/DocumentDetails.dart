@@ -146,7 +146,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
                        padding: const EdgeInsets.all(8.0),
                        child: Column(
                          children: [
-                           Text("Student\n Photograph",
+                           Text("National ID",
                            style: TextStyle(
                              fontWeight: FontWeight.w800,
                              fontSize: 15,
@@ -203,7 +203,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Text("School \n ID",
+                            Text("School ID",
                               style: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 15,

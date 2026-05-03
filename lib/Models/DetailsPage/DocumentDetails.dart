@@ -20,7 +20,7 @@ class DocumentDetails {
  DocumentDetails({this.id_document,this.school_id,this.student_transcript,this.admission_letter,
   this.fee_structure,this.death_certificate_father,this.death_certificate_mother,this.idDocumentUrl,this.schoolIdUrl,this.studentTranscriptUrl,
  this.admissionLetterUrl,this.feeStructureUrl,this.deathCertificateFatherUrl,this.deathCertificateMotherUrl});
-static const String baseUrl = "http://192.168.10.153:8000/";
+static const String baseUrl = "http://192.168.58.153:8000/";
 
   // Map<String,dynamic> toJson(){
   //   return{

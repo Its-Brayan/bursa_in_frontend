@@ -6,8 +6,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 class UserService {
   final _storage = FlutterSecureStorage();
-  final baseURL = "http://192.168.10.153:8000/api/v1/users";
-  final baseURl2 = "http://192.168.10.153:8000/api/v1/applications";
+  final baseURL = "http://192.168.58.153:8000/api/v1/users";
+  final baseURl2 = "http://192.168.58.153:8000/api/v1/applications";
  /* final GoogleSignIn _googleSignin = GoogleSignIn.standard(
     scopes:<String> ['email',
       'https://www.googleapis.com/auth/userinfo.profile',]
@@ -134,5 +134,55 @@ class UserService {
       return {};
     }
   }
-
+  Future<void> sendOTP(String email) async {
+    await http.post(
+      Uri.parse("${baseURL}/forgot_password/"),
+      body: jsonEncode({
+        "email": email
+      }),
+      headers: {
+        "Content-Type":"application/json"
+      }
+    );
+  }
+  Future<bool> verify_otp({required String email,required String otp}) async{
+  final response = await http.post(
+    Uri.parse("$baseURL/verify_otp/"),
+    body: jsonEncode({
+      "email": email,
+      "otp": otp,
+    }),
+    headers: {
+      "Content-Type":"application/json"
+    }
+  );
+  if(response.statusCode == 200){
+    return true;
+  }else{
+    return false;
+  }
+  }
+  Future<bool> reset_password({required String email, required String otp, required String password})async{
+    final response = await http.post(
+      Uri.parse("$baseURL/reset_password/"),
+      body: jsonEncode(
+          {
+            'email': email,
+            'otp': otp,
+            'password':password
+          }
+      ),
+      headers: {
+        "Content-Type":"application/json"
+      }
+    );
+    final data = jsonDecode(response.body);
+    if(response.statusCode == 200){
+      print(data);
+      return true;
+    }else{
+      print(data);
+      return false;
+    }
+  }
 }

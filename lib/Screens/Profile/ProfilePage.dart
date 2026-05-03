@@ -1,5 +1,6 @@
 import 'package:bursary_inn/Providers/providers.dart';
 import 'package:bursary_inn/Screens/Activity/ActivityPage.dart';
+import 'package:bursary_inn/Screens/Profile/FavoritesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:provider/provider.dart';
@@ -282,7 +283,10 @@ void initState(){
                         borderRadius: BorderRadius.circular(5.0),
                       )
                     ),),
-                    ElevatedButton.icon(onPressed: (){}, label: Text("Favourites",
+                    ElevatedButton.icon(onPressed: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Favoritespage()));
+                    }, label: Text("Favourites",
                       style: TextStyle(
                         color: Colors.white,
                       ),),

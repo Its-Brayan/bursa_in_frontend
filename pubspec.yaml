@@ -50,6 +50,9 @@ dependencies:
   intl: ^0.20.2
   toastification: ^3.0.3
   google_sign_in: ^7.2.0
+  adaptive_dialog: ^2.8.0
+  url_launcher: ^6.3.2
+  verification_code_field: ^1.2.4
 #  full_picker: ^2.1.5
 
 dev_dependencies:

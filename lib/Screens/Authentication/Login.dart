@@ -1,3 +1,4 @@
+import 'package:bursary_inn/Screens/Authentication/EmailScreen.dart';
 import 'package:bursary_inn/Services/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:bursary_inn/Providers/providers.dart';
@@ -195,7 +196,10 @@ class _LoginState extends State<Login> {
                       Row(
                         children: [
                           Spacer(),
-                          TextButton(onPressed: (){}, child:Text("Forgot Password?",
+                          TextButton(onPressed: (){
+                            Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => EmailScreen()));
+                          }, child:Text("Forgot Password?",
                             style: TextStyle(
                                 color: Colors.blue
                             ),)
@@ -208,30 +212,6 @@ class _LoginState extends State<Login> {
                       ),
                       ),
                       SizedBox(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Card(
-                          elevation: 4,
-                          child: ListTile(
-                            onTap: (){
-
-                            },
-                            tileColor: Colors.grey.shade200,
-                            leading: Image.asset("Assets/google_logo.png",
-                              width: 50,
-                              height: 50,
-                            ),
-                            title: Text("Continue with Google",
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0)
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height:20),
                       Wrap(
                         spacing: 5,
                         children: [

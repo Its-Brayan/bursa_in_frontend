@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
         routes: {
           //Authentication routes
           '/congrats':(context) => Congratulations(),
-          '/otp':(context) => OTP(),
           '/aftersplash':(context) => Aftersplash(),
           '/login':(context) => Login(),
           '/signup':(context) => Signup(),

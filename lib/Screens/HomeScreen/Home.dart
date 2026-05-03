@@ -294,8 +294,8 @@ class _HomeState extends State<Home> {
                         final upcoming = bursaries.where((bursary){
                           final parsed = DateTime.parse(bursary.bursary_deadline!);
                           final deadline = DateTime(parsed.year,parsed.month,parsed.day);
-
-                          return deadline.isAfter(now) || deadline.isAtSameMomentAs(today);
+                          final end = today.add(Duration(days: 30));
+                          return !deadline.isBefore(now) && deadline.isBefore(end);
                         }).toList()
                          ..sort((a,b){
                           final dateA = DateTime.parse(a.bursary_deadline!);
@@ -368,13 +368,20 @@ class _HomeState extends State<Home> {
                     Consumer2<BursaryProvider,Favoriteservice>(
                       builder: (context,BursaryProvider,favService,child) {
                         final bursaries = BursaryProvider.all_bursaries;
+                        final now = DateTime.now();
+                        final today = DateTime(now.year,now.month,now.day);
+                        final end = today.add(Duration(days: 30));
+                         final trending_bursaries = bursaries.where((bursary){
+                           final deadline = DateTime.parse(bursary.bursary_deadline!);
+                           return !deadline.isBefore(now) || deadline.isAtSameMomentAs(now);
+                         }).toList();
                         return SizedBox(
                           height: 340,
                           child: ListView.builder(
-                            itemCount: bursaries.length,
+                            itemCount: trending_bursaries.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context,index) {
-                              final bursary = bursaries[index];
+                              final bursary = trending_bursaries[index];
                               return
                                 Card(
                                     child: Container(

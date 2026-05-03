@@ -55,8 +55,7 @@ class _NotificationpageState extends State<Notificationpage> {
                   builder:(context,BursaryProvider,child) {
                     final bursaries = BursaryProvider.applied_bursaries;
 
-                   return SizedBox(
-                     height: 500,
+                   return Expanded(
                      child: ListView.builder(
                      itemCount: bursaries.length,
                          itemBuilder: (context,index) {
@@ -69,7 +68,7 @@ class _NotificationpageState extends State<Notificationpage> {
                              child: ListTile(
                                leading: Image.asset("Assets/need_of.jpeg"),
                                title: Text(
-                                 "${bursary['bursary_name']!} \n ${bursary['admin_message']}",
+                                 "${bursary['bursary_name']!} \n ${bursary['admin_message'] ?? "Status:Pending"}",
                                  style: TextStyle(
                                    fontWeight: FontWeight.bold,
                                  ),),
@@ -104,57 +103,52 @@ class _NotificationpageState extends State<Notificationpage> {
                   color: Colors.white24,
                   child: Column(
                     children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        color: Colors.white,
-                        child: ListTile(
-                          leading: Image.asset("Assets/need_of.jpeg"),
-                          title: Text("Your documents are verified for Kasarani NGCDF bursary",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),),
-                          subtitle: Text("6 Hours ago",
-                            style: TextStyle(
-                              color: Colors.grey.shade500,
-                            ),),
-                          trailing:Container(
-                            width: 5,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              shape: BoxShape.circle,
+                      Consumer<BursaryProvider>(
+                        builder: (context,BursaryProvider,child) {
+                          final bursaries = BursaryProvider.applied_bursaries;
+                          final filtered_bursaries = bursaries.where((bursary){
+                            return bursary['is_read'] == false;
+                          }).toList();
+                         return Expanded(
+                            child: ListView.builder(
+                              itemCount: filtered_bursaries.length,
+                             itemBuilder: (context,index) {
+                               final bursary = filtered_bursaries[index];
+                               return Card(
+                                 shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.circular(5.0),
+                                 ),
+                                 color: Colors.white,
+                                 child: ListTile(
+                                   onTap: (){
+                                     BursaryProvider.mark_as_read(bursary['id']);
+                                   },
+                                   leading: Image.asset("Assets/need_of.jpeg"),
+                                   title: Text(
+                                     "${bursary['bursary_name']!} \n ${bursary['admin_message'] ?? "Status:Pending"}",
+                                     style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                     ),),
+                                   subtitle: Text(bursary['updated_date'],
+                                     style: TextStyle(
+                                       color: Colors.grey.shade500,
+                                     ),),
+                                   trailing: Container(
+                                     width: 5,
+                                     height: 5,
+                                     decoration: BoxDecoration(
+                                       color: Colors.blueAccent,
+                                       shape: BoxShape.circle,
+                                     ),
+                                   ),
+                                 ),
+                               );
+                             }
                             ),
-                          ),
-                        ),
+                          );
+                        }
                       ),
 
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        color: Colors.white,
-                        child: ListTile(
-                          leading: Image.asset("Assets/need_of.jpeg"),
-                          title: Text("Your documents are verified for Kasarani NGCDF bursary",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),),
-                          subtitle: Text("6 Hours ago",
-                            style: TextStyle(
-                              color: Colors.grey.shade500,
-                            ),),
-                          trailing:Container(
-                            width: 5,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                      ),
 
 
                     ],

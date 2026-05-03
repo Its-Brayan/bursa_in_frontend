@@ -14,7 +14,7 @@ import 'package:bursary_inn/Services/DetailsServices/EducationDetailsService.dar
 import 'package:bursary_inn/Services/DetailsServices/DocumentDetailsService.dart';
 import 'package:bursary_inn/Models/BursaryModel/BursaryDetail.dart';
 import 'package:bursary_inn/Services/BursaryService/AllAvailableService.dart';
-
+import 'package:http/http.dart' as http;
 class UserProvider with ChangeNotifier{
   final UserService _userService = UserService();
   String? _phoneError;
@@ -359,5 +359,19 @@ class BursaryProvider with ChangeNotifier{
 
   }
 
-
+void mark_as_read(int id){
+    // final response = await ApiService.AuthorizedRequest(
+    //     (token) => http.patch(
+    //       Uri.parse("http://192.168.58.153:8000/api/v1/programs/mark_as_read/"),
+    //       headers: {
+    //         "Content-Type"
+    //       }
+    //     )
+    // )
+    final index = _applied_bursaries.indexWhere((b) => b['id'] == id);
+    if(index != -1){
+      _applied_bursaries[index]['is_read'] = true;
+      notifyListeners();
+    }
+}
 }

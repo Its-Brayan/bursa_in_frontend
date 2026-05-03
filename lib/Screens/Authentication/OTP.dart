@@ -1,7 +1,13 @@
+import 'package:bursary_inn/Screens/Authentication/NewPasswordScreen.dart';
+import 'package:bursary_inn/Services/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:toastification/toastification.dart';
+import 'package:verification_code_field/verification_code_field.dart';
+
 class OTP extends StatefulWidget {
-  const OTP({super.key});
+  final String email;
+  const OTP({super.key,required this.email});
 
   @override
   State<OTP> createState() => _OTPState();
@@ -26,6 +32,8 @@ class _OTPState extends State<OTP> {
     focusNode.dispose();
     super.dispose();
   }
+  String otpcode = "";
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
@@ -61,51 +69,61 @@ class _OTPState extends State<OTP> {
               ),
               ),
             ),
-            Center(child: Text("Enter the Otp sent to +254712345678"),
+            Center(child: Text("Enter the Otp sent to ${widget.email}"),
             ),
             SizedBox(height: 40),
-            Pinput(
+        VerificationCodeField(
+          onChanged: (value){
+            otpcode = value;
+          },
+          tripleSeparated: true,
+          codeDigit: CodeDigit.six,
+          enabled: true,
+          border: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue, width: 1.5),
+          ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.green, width: 1.5),
+          ),
+          textStyle:
+          const TextStyle(fontSize: 20, color: Colors.green),
+        ),
 
-              focusNode: focusNode,
-              defaultPinTheme: defaultPinTheme,
-              separatorBuilder: (index) => const SizedBox(width: 8),
-              validator: (value) {
-                return value == '2222' ? null : 'Pin is incorrect';
-              },
-              cursor: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 9),
-                    width: 22,
-                    height: 1,
-                    color: focusedBorderColor,
-                  ),
-                ],
-              ),
-              focusedPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: focusedBorderColor),
-                ),
-              ),
-              submittedPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  color: fillColor,
-                  borderRadius: BorderRadius.circular(19),
-                  border: Border.all(color: focusedBorderColor),
-                ),
-              ),
-              errorPinTheme: defaultPinTheme.copyBorderWith(
-                border: Border.all(color: Colors.redAccent),
-              ),
-            ),
             SizedBox(height: 25),
 
              SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(onPressed: (){
-                  Navigator.pushNamed(context, "/congrats");
+                child: ElevatedButton(onPressed: ()async{
+                  if(otpcode.length < 6){
+                    toastification.show(
+                      description: Text("Enter complete OTP"),
+                      type: ToastificationType.error,
+                      style: ToastificationStyle.flat,
+                      autoCloseDuration: Duration(seconds: 3),
+                    );
+                    return;
+                  }
+                  final success = await UserService().verify_otp(email: widget.email,
+                      otp: otpcode);
+                  if(success){
+                   toastification.show(
+                     context: context,
+                     style: ToastificationStyle.flat,
+                     type: ToastificationType.success,
+                     description: Text("OTP verified"),
+                     autoCloseDuration: Duration(seconds: 3),
+                   );
+                   Navigator.push(context, MaterialPageRoute(builder: (_) => Newpasswordscreen(email: widget.email, otp: otpcode)));
+                  }else{
+                    toastification.show(
+                      context: context,
+                      style: ToastificationStyle.flat,
+                      type: ToastificationType.error,
+                      description:Text("Invalid OTP"),
+                      autoCloseDuration: Duration(seconds: 3),
+                    );
+                  }
+                  
                 },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
@@ -124,7 +142,17 @@ class _OTPState extends State<OTP> {
               children: [
                 Spacer(),
 
-        TextButton(onPressed: (){}, child: Text("Resend OTP",
+        TextButton(onPressed: ()async{
+          await UserService().sendOTP(widget.email);
+          toastification.show(
+            context: context,
+            type: ToastificationType.success,
+            style: ToastificationStyle.flat,
+            title: Text("Success"),
+            description: Text("OTP resent"),
+            autoCloseDuration: Duration(seconds: 3),
+          );
+        }, child: Text("Resend OTP",
         style: TextStyle(
           color: Colors.blue,
           fontWeight: FontWeight.w700,
@@ -137,4 +165,5 @@ class _OTPState extends State<OTP> {
       )),
     );
   }
+
 }

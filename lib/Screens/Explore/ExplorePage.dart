@@ -45,7 +45,16 @@ class _ExplorepageState extends State<Explorepage> {
               final name = bursary.bursary_name?.toLowerCase() ?? "";
               return name.contains(_query.toLowerCase());
             }).toList();
-            if (filteredBursaries.isEmpty) {
+
+            final currentbursaries = filteredBursaries.where((bursary){
+              final now = DateTime.now();
+             final deadline = DateTime.parse(bursary.bursary_deadline!);
+             return deadline.isAfter(now) ||
+                 (deadline.year == now.year) &&
+                     (deadline.month == now.month) &&
+                     (deadline.day == now.day);
+            }).toList();
+            if (currentbursaries.isEmpty) {
               return ListView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
@@ -116,9 +125,9 @@ class _ExplorepageState extends State<Explorepage> {
                   Expanded(
                     child: ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
-                      itemCount: filteredBursaries.length,
+                      itemCount: currentbursaries.length,
                       itemBuilder: (context,index){
-                      final bursary = filteredBursaries[index];
+                      final bursary = currentbursaries[index];
                       return Card(
                         child: SizedBox(
                           width: 350,

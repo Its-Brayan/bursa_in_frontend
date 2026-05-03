@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:bursary_inn/Services/ApiService.dart';
 
 class FetchAppliedBursaries {
-  final baseURL = "http://192.168.10.153:8000/api/v1/programs";
+  final baseURL = "http://192.168.58.153:8000/api/v1/programs";
   Future<List<dynamic>> fetch_applied_bursaries() async{
     final response = await ApiService.AuthorizedRequest(
         (token) => http.get(
