@@ -22,7 +22,7 @@ void initState(){
   fetch_bursary_details();
 }
 Future<void> fetch_bursary_details() async{
-  final baseURL = "http://192.168.58.153:8000/api/v1/programs";
+  final baseURL = "https://bursa-in-backend.onrender.com/api/v1/programs";
   final response = await ApiService.AuthorizedRequest(
       (token) => http.get(
         Uri.parse("$baseURL/bursarydetail/${widget.bursaryId}/"),

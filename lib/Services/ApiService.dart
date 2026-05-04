@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 class ApiService{
-  static final _baseUrl = "http://192.168.58.153:8000/api/v1/users";
+  static final _baseUrl = "https://bursa-in-backend.onrender.com/api/v1/users";
   static const _storage = FlutterSecureStorage();
 
   static Future<void> save_tokens(String access,String refresh)async{

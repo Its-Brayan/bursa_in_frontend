@@ -5,7 +5,7 @@ import 'package:bursary_inn/Models/DetailsPage/DocumentDetails.dart';
 import 'package:http/http.dart' as http;
 
 class Documentdetailsservice {
-  final baseUrl = "http://192.168.58.153:8000/api/v1/applications";
+  final baseUrl = "https://bursa-in-backend.onrender.com/api/v1/applications";
   
   Future<Map<String,dynamic>> create_document_details(DocumentDetails documents)async{
     final response = await ApiService.AuthorizedRequest((token) async {

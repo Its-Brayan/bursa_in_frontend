@@ -359,19 +359,31 @@ class BursaryProvider with ChangeNotifier{
 
   }
 
-void mark_as_read(int id){
-    // final response = await ApiService.AuthorizedRequest(
-    //     (token) => http.patch(
-    //       Uri.parse("http://192.168.58.153:8000/api/v1/programs/mark_as_read/"),
-    //       headers: {
-    //         "Content-Type"
-    //       }
-    //     )
-    // )
-    final index = _applied_bursaries.indexWhere((b) => b['id'] == id);
-    if(index != -1){
-      _applied_bursaries[index]['is_read'] = true;
-      notifyListeners();
+void mark_as_read(int id) async{
+    try {
+      await ApiService.AuthorizedRequest(
+            (token) =>
+            http.patch(
+              Uri.parse(
+                  "https://bursa-in-backend.onrender.com/api/v1/programs/mark_as_read/$id/"),
+              headers: {
+                "Content-Type":"application/json",
+                "Authorization":"Bearer $token"
+              }
+            ),
+      );
+
+      final index = _applied_bursaries.indexWhere((b) => b['id'] == id);
+      if (index != -1) {
+        _applied_bursaries[index]['is_read'] = true;
+        notifyListeners();
+      }
+    }catch(e){
+      print(e);
     }
+}
+int get unreadCount{
+    return _applied_bursaries.where((b) => b['is_read'] == false).length;
+
 }
 }

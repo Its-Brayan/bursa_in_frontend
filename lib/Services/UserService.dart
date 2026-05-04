@@ -6,8 +6,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 class UserService {
   final _storage = FlutterSecureStorage();
-  final baseURL = "http://192.168.58.153:8000/api/v1/users";
-  final baseURl2 = "http://192.168.58.153:8000/api/v1/applications";
+  final baseURL = "https://bursa-in-backend.onrender.com/api/v1/users";
+  final baseURl2 = "https://bursa-in-backend.onrender.com/api/v1/applications";
  /* final GoogleSignIn _googleSignin = GoogleSignIn.standard(
     scopes:<String> ['email',
       'https://www.googleapis.com/auth/userinfo.profile',]

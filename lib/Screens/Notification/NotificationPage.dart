@@ -68,7 +68,9 @@ class _NotificationpageState extends State<Notificationpage> {
                              child: ListTile(
                                leading: Image.asset("Assets/need_of.jpeg"),
                                title: Text(
-                                 "${bursary['bursary_name']!} \n ${bursary['admin_message'] ?? "Status:Pending"}",
+                                 "${bursary['bursary_name']!} \n ${bursary['admin_message'] != null && bursary['admin_message'].toString().trim().isNotEmpty
+                                     ? bursary['admin_message']
+                                     : "Status: ${bursary['status_choices']}"}",
                                  style: TextStyle(
                                    fontWeight: FontWeight.bold,
                                  ),),
@@ -76,14 +78,14 @@ class _NotificationpageState extends State<Notificationpage> {
                                  style: TextStyle(
                                    color: Colors.grey.shade500,
                                  ),),
-                               trailing: Container(
+                               trailing: bursary['is_read'] == false ? Container(
                                  width: 5,
                                  height: 5,
                                  decoration: BoxDecoration(
                                    color: Colors.blueAccent,
                                    shape: BoxShape.circle,
                                  ),
-                               ),
+                               ) : null,
                              ),
                            );
                          }
@@ -109,12 +111,20 @@ class _NotificationpageState extends State<Notificationpage> {
                           final filtered_bursaries = bursaries.where((bursary){
                             return bursary['is_read'] == false;
                           }).toList();
-                         return Expanded(
-                            child: ListView.builder(
+                         return filtered_bursaries.isEmpty ? Expanded(
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               Text("No unread Messages")
+                             ],
+                           ),
+                         ) : Expanded(
+                            child:  ListView.builder(
                               itemCount: filtered_bursaries.length,
                              itemBuilder: (context,index) {
                                final bursary = filtered_bursaries[index];
-                               return Card(
+                               return  Card(
                                  shape: RoundedRectangleBorder(
                                    borderRadius: BorderRadius.circular(5.0),
                                  ),
@@ -125,7 +135,10 @@ class _NotificationpageState extends State<Notificationpage> {
                                    },
                                    leading: Image.asset("Assets/need_of.jpeg"),
                                    title: Text(
-                                     "${bursary['bursary_name']!} \n ${bursary['admin_message'] ?? "Status:Pending"}",
+
+                                     "${bursary['bursary_name']!} \n ${bursary['admin_message'] != null && bursary['admin_message'].toString().trim().isNotEmpty
+                                         ? bursary['admin_message']
+                                         : "Status: ${bursary['status_choices']}"}",
                                      style: TextStyle(
                                        fontWeight: FontWeight.bold,
                                      ),),
@@ -133,14 +146,14 @@ class _NotificationpageState extends State<Notificationpage> {
                                      style: TextStyle(
                                        color: Colors.grey.shade500,
                                      ),),
-                                   trailing: Container(
+                                   trailing:bursary['is_read'] == false ? Container(
                                      width: 5,
                                      height: 5,
                                      decoration: BoxDecoration(
                                        color: Colors.blueAccent,
                                        shape: BoxShape.circle,
                                      ),
-                                   ),
+                                   ) : null,
                                  ),
                                );
                              }

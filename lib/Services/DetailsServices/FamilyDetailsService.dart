@@ -4,7 +4,7 @@ import 'package:bursary_inn/Services/ApiService.dart';
 import 'package:bursary_inn/Models/DetailsPage/FamilyDetails.dart';
 
 class Familydetailsservice {
-  final baseUrl = "http://192.168.58.153:8000/api/v1/applications";
+  final baseUrl = "https://bursa-in-backend.onrender.com/api/v1/applications";
   
   Future<Map<String,dynamic>> create_family_details(FamilyDetails family) async{
     final response = await ApiService.AuthorizedRequest(
