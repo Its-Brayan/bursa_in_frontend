@@ -185,7 +185,11 @@ void initState(){
           color: Colors.grey.shade50,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Column(
+            child: _student_data == null ? Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            ) : Column(
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(120.0),

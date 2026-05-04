@@ -242,13 +242,12 @@ class _EducationdetailsState extends State<Educationdetails> {
              borderRadius: BorderRadius.circular(5.0),
            )
           ),
-            onPressed: ()async{
+            onPressed: isLoading ? null : ()async{
             if(name_of_institution_controller.text.isEmpty || chosencourse == null ||
             chosen_year == null || chosen_year_of_completion == null ||
             institution_postal_address_controller.text.isEmpty || institution_tel_number_controller.text.isEmpty){
               return;
             }
-            startload();
             final education = EducationDetails(
               name_of_institution: name_of_institution_controller.text,
               course_level: chosencourse,
@@ -257,9 +256,15 @@ class _EducationdetailsState extends State<Educationdetails> {
               institution_postal_address: institution_postal_address_controller.text,
               institution_tel_number: institution_tel_number_controller.text,
             );
+            setState(() {
+              isLoading = true;
+            });
             final success = educationprovider.current_education_details != null ?
                 await educationprovider.update_education_details(education) :
             await educationprovider.create_education_details(education);
+            setState(() {
+              isLoading = false;
+            });
             if(!success){
               print("Failed creating education details");
               return;
@@ -293,14 +298,5 @@ class _EducationdetailsState extends State<Educationdetails> {
         ),)),
       ),
     );
-  }
-  startload()async{
-    setState(() {
-      isLoading = true;
-    });
-    Future.delayed(Duration(seconds: 3));
-    setState(() {
-      isLoading = false;
-    });
   }
 }

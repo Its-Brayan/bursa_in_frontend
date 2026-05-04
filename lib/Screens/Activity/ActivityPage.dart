@@ -40,7 +40,9 @@ class _ActivitypageState extends State<Activitypage> {
           onRefresh: () async{
             await BursaryProvider.get_applied_bursaries();
           },
-          child: ListView.builder(
+          child: appliedBursaries.isEmpty ? Center(
+            child: CircularProgressIndicator(color: Colors.blue),
+          ) : ListView.builder(
             itemCount: appliedBursaries.length,
             itemBuilder: (context,index) {
               final appliedBursary = appliedBursaries[index];

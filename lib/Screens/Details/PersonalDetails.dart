@@ -302,7 +302,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
       )),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(30.0),
-          child: ElevatedButton(onPressed: ()async{
+          child: ElevatedButton(onPressed: isLoading ? null : ()async{
             if(nameController.text.isEmpty || registrationController.text.isEmpty ||
             idController.text.isEmpty || courseController.text.isEmpty || selectedGender == null
             || SelectedCounty == null || SelectedConstituency == null || SelectedWard == null){
@@ -320,7 +320,6 @@ class _PersonaldetailsState extends State<Personaldetails> {
               ).show(context);
               return;
             }
-            startload();
             final person = PersonalDetails(
               full_name: nameController.text,
               registration_number: registrationController.text,
@@ -331,9 +330,15 @@ class _PersonaldetailsState extends State<Personaldetails> {
               constituency:SelectedConstituency,
               ward: SelectedWard,
             );
+            setState(() {
+              isLoading = true;
+            });
             final success = detailprovider.current_personal_details != null ?
-                await DetailsPageProvider().update_student_personal_details(person) :
+                await detailprovider.update_student_personal_details(person) :
             await detailprovider.create_personal_details(person);
+            setState(() {
+              isLoading = false;
+            });
             if(!success){
               print("Failed registering personal details");
               return;
@@ -379,13 +384,5 @@ class _PersonaldetailsState extends State<Personaldetails> {
         ),
     );
   }
-  startload() async{
-    setState(() {
-      isLoading = true;
-    });
-    await Future.delayed(Duration(seconds: 3));
-    setState(() {
-      isLoading = false;
-    });
-  }
+
 }

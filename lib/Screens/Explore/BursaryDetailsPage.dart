@@ -49,7 +49,10 @@ Future<void> fetch_bursary_details() async{
         title: Text("Bursary Details"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body:Bursary == null ?
+      Center(child: CircularProgressIndicator(
+        color: Colors.blue,
+      )) : SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

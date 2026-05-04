@@ -363,11 +363,11 @@ super.dispose();
                   borderRadius: BorderRadius.circular(5.0),
                 )
             ),
-            onPressed: ()async{
+            onPressed: isLoading ? null : ()async{
               if(selectedanswer == null || selectedfeespayer == null || estimated_annual_family_income_Controller.text.isEmpty || principal_source_Controller.text.isEmpty || amount_spent_education_fees_Controller.text.isEmpty ){
                 return;
               }
-              startload();
+
               final family = FamilyDetails(
                 fathers_name: fathers_name_Controller.text,
                 fathers_occupation: fathers_occupation_Controller.text,
@@ -385,8 +385,14 @@ super.dispose();
                 other_income_sources: other_sources_Controller.text,
                 amount_spent_on_fees: amount_spent_education_fees_Controller.text,
               );
+              setState(() {
+                isLoading = true;
+              });
               final success = familyprovider.current_family_details != null ?
                   await familyprovider.update_family_details(family) : await familyprovider.create_family_details(family);
+              setState(() {
+                isLoading = false;
+              });
               if(!success){
                 print("Failed registering family details");
                 return;
@@ -419,13 +425,5 @@ super.dispose();
       ),
     );
   }
-  startload()async{
-    setState(() {
-      isLoading = true;
-    });
-    await Future.delayed(Duration(seconds: 3));
-    setState(() {
-      isLoading = false;
-    });
-  }
+
 }

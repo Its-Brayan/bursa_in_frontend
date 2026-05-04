@@ -59,17 +59,19 @@ class _DocumentdetailsState extends State<Documentdetails> {
     showDialog(
         context: context,
         builder: (context) => Dialog(
-          child: Column(
-            children: [
-              Image(image: image,fit: BoxFit.contain,
-              ),
-              TextButton(onPressed: (){
-                Navigator.pop(context);
-              }, child: Text("Close",
-              style: TextStyle(
-                color: Colors.blue.shade200,
-              ),))
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Image(image: image,fit: BoxFit.contain,
+                ),
+                TextButton(onPressed: (){
+                  Navigator.pop(context);
+                }, child: Text("Close",
+                style: TextStyle(
+                  color: Colors.blue.shade200,
+                ),))
+              ],
+            ),
           ),
         ));
   }
@@ -574,8 +576,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
       )),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(22.0),
-        child: ElevatedButton(onPressed: ()async{
-          startload();
+        child: ElevatedButton(onPressed: isLoading ? null : ()async{
         final documents = DocumentDetails(
           id_document:  selected_id_document is FileImage
               ? File((selected_id_document! as FileImage).file.path)
@@ -599,9 +600,15 @@ class _DocumentdetailsState extends State<Documentdetails> {
             ? File((selected_death_certificate_mother! as FileImage). file.path) :
               null,
         );
+        setState(() {
+          isLoading = true;
+        });
         final success = documentprovider.current_document_details != null ?
             await documentprovider.update_document_details(documents) :
         await documentprovider.create_documents_details(documents);
+        setState(() {
+          isLoading = false;
+        });
         if(!success){
           print("failed to upload document details");
           return;
