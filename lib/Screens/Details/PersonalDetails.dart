@@ -28,6 +28,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
   String? SelectedCounty;
   String? SelectedConstituency;
   String? SelectedWard;
+  bool isFetching = true;
    final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController registrationController = TextEditingController();
@@ -68,6 +69,9 @@ class _PersonaldetailsState extends State<Personaldetails> {
           SelectedWard = personalprovider.ward ?? "";
         });
       }
+      setState(() {
+        isFetching = false;
+      });
     });
   }
   @override
@@ -90,7 +94,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
         title: Text("Personal Details"),
         centerTitle: true,
       ),
-      body:SafeArea(child: Padding(
+      body:isFetching? Center(child: CircularProgressIndicator(color: Colors.blue,)) :  SafeArea(child: Padding(
         padding: const EdgeInsets.all(25.0),
         child: SingleChildScrollView(
           child: Column(

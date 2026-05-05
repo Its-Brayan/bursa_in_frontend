@@ -54,6 +54,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
   ImageProvider? selected_death_certificate_father;
   ImageProvider? selected_death_certificate_mother;
   bool isLoading = false;
+  bool isFetching = true;
 
   void _previewimage(ImageProvider image){
     showDialog(
@@ -83,8 +84,9 @@ class _DocumentdetailsState extends State<Documentdetails> {
       await documents.get_student_document_uploads();
       final documentprovider = documents.current_document_details;
 
-        setState(() {
+
           if(documentprovider != null) {
+            setState(() {
             selected_id_document =
             documentprovider.idDocumentUrl != null ? NetworkImage(
                 documentprovider.idDocumentUrl!) : null;
@@ -106,13 +108,14 @@ class _DocumentdetailsState extends State<Documentdetails> {
             selected_death_certificate_mother =
                 documentprovider.deathCertificateMotherUrl != null ? NetworkImage(
                   documentprovider.deathCertificateMotherUrl!) : null;
-
-
+            });
           }
+          setState(() {
+            isFetching = false;
+          });
+
         });
 
-
-    });
   }
   @override
   Widget build(BuildContext context) {
@@ -122,7 +125,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
        title: Text("Document Details"),
        centerTitle: true,
      ),
-      body: SafeArea(child: SingleChildScrollView(
+      body:isFetching ? Center(child: CircularProgressIndicator(color: Colors.blue)) : SafeArea(child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(13.0),
           child: Column(

@@ -413,7 +413,7 @@ class _HomeState extends State<Home> {
                         final end = today.add(Duration(days: 30));
                          final trending_bursaries = bursaries.where((bursary){
                            final deadline = DateTime.parse(bursary.bursary_deadline!);
-                           return !deadline.isBefore(now) || deadline.isAtSameMomentAs(now);
+                           return deadline.year == now.year && deadline.month == now.month;
                          }).toList();
                         return SizedBox(
                           height: 340,

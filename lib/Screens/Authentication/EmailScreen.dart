@@ -58,11 +58,13 @@ class _EmailScreenState extends State<EmailScreen> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               SizedBox(height: 10),
-              ElevatedButton(onPressed: ()async{
+              ElevatedButton(onPressed:isLoading  ? null : ()async{
                 if(emailController.text.isEmpty){
                   return;
                 }
-                startload();
+                setState(() {
+                  isLoading = true;
+                });
                 await UserService().sendOTP(emailController.text);
                 toastification.show(
                   context: context,
@@ -72,8 +74,18 @@ class _EmailScreenState extends State<EmailScreen> {
                   alignment: Alignment.topRight,
                   description: Text("OTP sent to your Mail!"),
                 );
+                setState(() {
+                  isLoading = false;
+                });
                 Navigator.push(context, MaterialPageRoute(builder: (_) => OTP(email: emailController.text)));
-              }, child: Text("Send OTP",
+              }, child:isLoading ?
+              SizedBox(
+                width: 30,
+                height: 30,
+                child: CircularProgressIndicator(
+                  color: Colors.blue.shade200,
+                ),
+              ) : Text("Send OTP",
               style: TextStyle(
                 color: Colors.white,
               ),),
@@ -91,13 +103,5 @@ class _EmailScreenState extends State<EmailScreen> {
     );
   }
 
-  startload()async{
-    setState(() {
-      isLoading = true;
-    });
-    await Future.delayed(Duration(seconds: 5));
-    setState(() {
-      isLoading = false;
-    });
-  }
+
 }

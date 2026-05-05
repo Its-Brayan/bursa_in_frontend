@@ -53,6 +53,7 @@ class _AllDetailsState extends State<AllDetails> {
                 Text("Please check all the details carefully"),
                 SizedBox(height: 15),
                 ListTile(
+
                   minTileHeight: 50,
                   title: Text("Personal details",
                   style: TextStyle(
@@ -66,7 +67,7 @@ class _AllDetailsState extends State<AllDetails> {
                       }
                       else {
                         await Navigator.pushNamed(context, "/personaldetails");
-                        Provider.of<DetailsPageProvider>(context,listen: false).check_completed_student_detail(context);
+                       await Provider.of<DetailsPageProvider>(context,listen: false).check_completed_student_detail(context);
                       }
                     },
                       child: Icon((sections['personal_filled'] ?? false) ? Icons.check_circle : Icons.keyboard_arrow_right,color: (sections['personal_filled'] ?? false) ? Colors.white : Colors.blue,)),

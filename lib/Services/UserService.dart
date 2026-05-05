@@ -135,7 +135,7 @@ class UserService {
     }
   }
   Future<void> sendOTP(String email) async {
-    await http.post(
+   final response = await http.post(
       Uri.parse("${baseURL}/forgot_password/"),
       body: jsonEncode({
         "email": email
@@ -144,6 +144,7 @@ class UserService {
         "Content-Type":"application/json"
       }
     );
+   print(jsonDecode(response.body));
   }
   Future<bool> verify_otp({required String email,required String otp}) async{
   final response = await http.post(

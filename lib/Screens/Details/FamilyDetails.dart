@@ -47,6 +47,7 @@ class _FamilydetailsState extends State<Familydetails> {
 
   final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
+  bool isFetching = true;
 @override
 void initState(){
   super.initState();
@@ -59,6 +60,9 @@ void initState(){
     await family.get_student_family_details();
     final familyprovider = family.current_family_details;
     if(familyprovider != null){
+      setState(() {
+
+
       fathers_name_Controller.text = familyprovider.fathers_name ?? "";
       fathers_occupation_Controller.text = familyprovider.fathers_occupation ?? "";
       mothers_name_Controller.text = familyprovider.mothers_name ?? "";
@@ -74,8 +78,13 @@ void initState(){
       principal_source_Controller.text = familyprovider.source_of_income ?? "";
       other_sources_Controller.text = familyprovider.other_income_sources ?? "";
       amount_spent_education_fees_Controller.text = familyprovider.amount_spent_on_fees ?? "";
+      });
     }
+    setState(() {
+      isFetching = false;
+    });
   });
+
 }
 
   @override
@@ -108,7 +117,7 @@ super.dispose();
       title: Text("Family Details"),
       centerTitle: true,
     ),
-      body: Padding(
+      body: isFetching ? Center(child: CircularProgressIndicator(color: Colors.blue)) : Padding(
         padding: const EdgeInsets.all(20.0),
         child: SafeArea(child: SingleChildScrollView(
           child: Column(

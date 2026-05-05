@@ -40,6 +40,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                 Text("Please check all the details carefully"),
                 SizedBox(height: 15),
                 ListTile(
+                  onTap: (){
+                    Navigator.pushNamed(context, "/personaldetails");
+                  },
                   minTileHeight: 50,
                   title: Text("Personal details",
                     style: TextStyle(
@@ -59,6 +62,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                 ),
                 SizedBox(height: 15),
                 ListTile(
+                  onTap: (){
+                    Navigator.pushNamed(context, "/familydetails");
+                  },
                     minTileHeight: 50,
                     title: Text("Family details",
                       style: TextStyle(
@@ -75,6 +81,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                 ),
                 SizedBox(height: 15),
                 ListTile(
+                  onTap: (){
+                    Navigator.pushNamed(context, '/educationdetails');
+                  },
                     minTileHeight: 50,
                     title: Text("Education details",
                       style: TextStyle(
@@ -91,6 +100,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                 ),
                 SizedBox(height: 15),
                 ListTile(
+                  onTap: (){
+                    Navigator.pushNamed(context, "/documentdetails");
+                  },
                     minTileHeight: 50,
                     title: Text("Document details",
                       style: TextStyle(

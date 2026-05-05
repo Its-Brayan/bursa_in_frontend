@@ -39,7 +39,7 @@ class _EducationdetailsState extends State<Educationdetails> {
   TextEditingController name_of_institution_controller = TextEditingController();
   TextEditingController institution_postal_address_controller = TextEditingController();
   TextEditingController institution_tel_number_controller = TextEditingController();
-
+  bool isFetching = true;
   @override
   void initState(){
     super.initState();
@@ -53,6 +53,7 @@ class _EducationdetailsState extends State<Educationdetails> {
       await education.get_student_education_details();
       final educationprovider = education.current_education_details;
       if (educationprovider != null) {
+        setState(() {
         name_of_institution_controller.text =
             educationprovider.name_of_institution ?? "";
         chosencourse = educationprovider.course_level ?? "";
@@ -62,7 +63,11 @@ class _EducationdetailsState extends State<Educationdetails> {
             educationprovider.institution_postal_address ?? "";
         institution_tel_number_controller.text =
             educationprovider.institution_tel_number ?? "";
+        });
       }
+      setState(() {
+        isFetching = false;
+      });
     });
 
   }
@@ -82,7 +87,7 @@ class _EducationdetailsState extends State<Educationdetails> {
        title: Text("Education Details"),
        centerTitle: true,
      ),
-      body: SafeArea(child: SingleChildScrollView(
+      body: isFetching ? Center(child: CircularProgressIndicator(color: Colors.blue)) : SafeArea(child: SingleChildScrollView(
         child: Column(
           children:[
             Form(
