@@ -181,7 +181,7 @@ class _ExplorepageState extends State<Explorepage> {
                                   Text(bursary.bursary_amount!, style: TextStyle(
                                     color: Colors.grey.shade500,
                                   ),),
-                                  Text("Kenyan Students", style: TextStyle(
+                                  Text("${bursary.level_of_study}", style: TextStyle(
                                     color: Colors.grey.shade500,
                                   ),),
                                 ],

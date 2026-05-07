@@ -110,7 +110,7 @@ class _HomeState extends State<Home> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(120.0),
-                              child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoODdpE2Tmv84gHri4Udqlt3-WndiRZ68xEg&s",
+                              child: Image.asset("Assets/person1.png",
                               width: 70,
                               height: 70,
                               ),
@@ -238,7 +238,7 @@ class _HomeState extends State<Home> {
                                     });
                                     return SizedBox(
                                     height: 200,
-                                    child: ListView.builder(
+                                    child: upcoming.isEmpty? Center(child: Text("No uploaded bursaries yet"),) : ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                     itemCount: upcoming.length,
                                     itemBuilder: (context,index) {
@@ -335,7 +335,7 @@ class _HomeState extends State<Home> {
                           final parsed = DateTime.parse(bursary.bursary_deadline!);
                           final deadline = DateTime(parsed.year,parsed.month,parsed.day);
                           final end = today.add(Duration(days: 30));
-                          return !deadline.isBefore(now) && deadline.isBefore(end);
+                          return !deadline.isBefore(today) && deadline.isBefore(end);
                         }).toList()
                          ..sort((a,b){
                           final dateA = DateTime.parse(a.bursary_deadline!);
@@ -344,7 +344,7 @@ class _HomeState extends State<Home> {
                         });
                         return SizedBox(
                           height: 200,
-                          child: ListView.builder(
+                          child: upcoming.isEmpty ? Center(child: Text("No uploaded Bursaries yet"),): ListView.builder(
                             itemCount: upcoming.length,
                             itemBuilder: (context,index) {
                               final bursary = upcoming[index];
@@ -370,8 +370,8 @@ class _HomeState extends State<Home> {
                                   trailing: IconButton(onPressed: () {
                                   Navigator.push(
                                       context,
-                                  MaterialPageRoute(
-                                      builder:(context) => Bursarydetailspage(bursaryId: bursary.id!),
+                                    MaterialPageRoute(
+                                    builder:(context) => Bursarydetailspage(bursaryId: bursary.id!),
                                   ),
                                   );
                                   },
@@ -413,11 +413,12 @@ class _HomeState extends State<Home> {
                         final end = today.add(Duration(days: 30));
                          final trending_bursaries = bursaries.where((bursary){
                            final deadline = DateTime.parse(bursary.bursary_deadline!);
-                           return deadline.year == now.year && deadline.month == now.month;
+                           return deadline.year == now.year && deadline.month == now.month&&
+                           !deadline.isBefore(DateTime(now.year,now.month,now.day));
                          }).toList();
                         return SizedBox(
                           height: 340,
-                          child: ListView.builder(
+                          child: trending_bursaries.isEmpty ? Center(child: Text("No uploaded bursaries yet"),) : ListView.builder(
                             itemCount: trending_bursaries.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context,index) {
@@ -476,7 +477,7 @@ class _HomeState extends State<Home> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(left: 6),
-                                              child: Text("Kenyan Students with ID",
+                                              child: Text("${bursary.level_of_study} students",
                                                 style: TextStyle(
                                                   color: Colors.grey.shade500,
                                                 ),),
@@ -645,12 +646,14 @@ class _HomeState extends State<Home> {
                       builder: (context,BursaryProvider,child) {
                         final bursaries = BursaryProvider.all_bursaries;
                         final recommended = bursaries.where((bursary){
+                          final now = DateTime.now();
+                          final today = DateTime(now.year,now.month,now.day);
                           final recommended2 = bursary.isFavorite == true;
                           return recommended2;
                         }).toList();
                         return SizedBox(
                         height: 180,
-                          child: ListView.builder(
+                          child: recommended.isEmpty ? Center(child: Text("No uploaded bursaries yet"),): ListView.builder(
                             itemCount: recommended.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context,index) {
@@ -689,6 +692,20 @@ class _HomeState extends State<Home> {
                                                     color: Colors.grey.shade500,
                                                   ),),
                                                 Text(bursary.bursary_amount!,
+                                                  style: TextStyle(
+                                                    color: Colors.grey.shade500,
+                                                  ),),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: [
+                                                Text("Eligibility",
+                                                  style: TextStyle(
+                                                    color: Colors.grey.shade500,
+                                                  ),),
+                                                Text(bursary.level_of_study!,
                                                   style: TextStyle(
                                                     color: Colors.grey.shade500,
                                                   ),),

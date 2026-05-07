@@ -80,7 +80,7 @@ void initState(){
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(120.0),
-                          child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoODdpE2Tmv84gHri4Udqlt3-WndiRZ68xEg&s",
+                          child: Image.asset("Assets/person1.png",
                             width: 70,
                             height: 70,
                           ),
@@ -193,7 +193,7 @@ void initState(){
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(120.0),
-                  child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoODdpE2Tmv84gHri4Udqlt3-WndiRZ68xEg&s",
+                  child: Image.asset("Assets/person1.png",
                   width: 100,
                   height: 100,),
                 ),

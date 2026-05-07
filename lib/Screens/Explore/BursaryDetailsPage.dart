@@ -70,6 +70,12 @@ Future<void> fetch_bursary_details() async{
                       fontSize: 20,
                       fontWeight: FontWeight.bold
                     ),),
+                    Text("${Bursary?.level_of_study} Students",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold
+                      ),),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Bursary will be awarded to students who have filled all the details and uploaded necessary documents",

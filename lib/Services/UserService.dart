@@ -145,6 +145,9 @@ class UserService {
       }
     );
    print(jsonDecode(response.body));
+   if(response.statusCode != 200){
+     throw Exception("Email Does not exist");
+   }
   }
   Future<bool> verify_otp({required String email,required String otp}) async{
   final response = await http.post(

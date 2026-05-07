@@ -14,6 +14,7 @@ class _NewpasswordscreenState extends State<Newpasswordscreen> {
   final TextEditingController passwordController = TextEditingController();
 
   bool hidepsw = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +73,17 @@ class _NewpasswordscreenState extends State<Newpasswordscreen> {
               SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                });
                 final success = await UserService().reset_password(
                   email: widget.email,
                   otp: widget.otp,
                   password: passwordController.text,
                 );
-
+                setState(() {
+                  isLoading = false;
+                });
                 if (success) {
                   toastification.show(
                     context: context,
@@ -92,7 +98,13 @@ class _NewpasswordscreenState extends State<Newpasswordscreen> {
                   return;
                 }
               },
-              child: Text("Reset Password",style:TextStyle(color: Colors.white),),
+              child: isLoading ?  SizedBox(
+                width: 30,
+                height: 30,
+                child: CircularProgressIndicator(
+                  color: Colors.blue.shade200,
+                ),
+              ) : Text("Reset Password",style:TextStyle(color: Colors.white),),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50.0),
                 backgroundColor: passwordController.text.isEmpty ? Colors.grey : Colors.blue,

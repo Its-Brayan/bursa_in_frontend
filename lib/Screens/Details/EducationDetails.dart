@@ -14,7 +14,7 @@ class Educationdetails extends StatefulWidget {
 class _EducationdetailsState extends State<Educationdetails> {
   bool isLoading = false;
   List<String> courses = [
-    "Undegraduate",
+    "Undergraduate",
     "Postgraduate",
     "Diploma",
     "Certificate"

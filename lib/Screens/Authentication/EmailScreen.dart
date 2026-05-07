@@ -58,27 +58,48 @@ class _EmailScreenState extends State<EmailScreen> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               SizedBox(height: 10),
-              ElevatedButton(onPressed:isLoading  ? null : ()async{
-                if(emailController.text.isEmpty){
+              ElevatedButton(onPressed:isLoading  ? null : ()async {
+                if (!_formKey.currentState!.validate()) {
                   return;
                 }
                 setState(() {
                   isLoading = true;
                 });
-                await UserService().sendOTP(emailController.text);
-                toastification.show(
-                  context: context,
-                  type: ToastificationType.success,
-                  style: ToastificationStyle.flat,
-                  autoCloseDuration: Duration(seconds: 3),
-                  alignment: Alignment.topRight,
-                  description: Text("OTP sent to your Mail!"),
-                );
-                setState(() {
-                  isLoading = false;
-                });
-                Navigator.push(context, MaterialPageRoute(builder: (_) => OTP(email: emailController.text)));
-              }, child:isLoading ?
+                try {
+                  if (!mounted) {
+                    return;
+                  }
+                  await UserService().sendOTP(emailController.text);
+                  toastification.show(
+                    context: context,
+                    type: ToastificationType.success,
+                    style: ToastificationStyle.flat,
+                    autoCloseDuration: Duration(seconds: 3),
+                    alignment: Alignment.topRight,
+                    description: Text("OTP sent to your Mail!"),
+                  );
+                  setState(() {
+                    isLoading = false;
+                  });
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (_) => OTP(email: emailController.text)));
+                }
+                catch (e) {
+                  if (!mounted) return;
+                  toastification.show(
+                    context: context,
+                    type: ToastificationType.error,
+                    description: Text("Email does not exist"),
+                    autoCloseDuration: Duration(seconds: 3),
+                  );
+                } finally {
+                  if (mounted) {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  };
+                }
+              },child:isLoading ?
               SizedBox(
                 width: 30,
                 height: 30,
