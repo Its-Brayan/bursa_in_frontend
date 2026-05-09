@@ -94,8 +94,9 @@ class _DocumentdetailsState extends State<Documentdetails> {
             selected_school_id =
             documentprovider.schoolIdUrl != null ? NetworkImage(
                 documentprovider.schoolIdUrl!) : null;
-                selected_voters_card != null ? NetworkImage(
-                  documentprovider.votersCardUrl!) : null;
+            selected_voters_card = 
+            documentprovider.votersCardUrl != null ? NetworkImage(
+              documentprovider.votersCardUrl!) : null;
             selected_admission_letter =
             documentprovider.admissionLetterUrl != null ? NetworkImage(
                 documentprovider.admissionLetterUrl!) : null;
@@ -651,7 +652,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
           school_id: selected_school_id is FileImage
               ? File((selected_school_id! as FileImage).file.path)
               : null,
-              voters_card: selected_voters_card is FileImage
+          voters_card: selected_voters_card is FileImage
               ? File((selected_voters_card! as FileImage).file.path) : null,
           student_transcript:selected_student_transcript is FileImage
               ? File((selected_student_transcript! as FileImage).file.path)
@@ -704,7 +705,14 @@ class _DocumentdetailsState extends State<Documentdetails> {
             shape:RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(4.0)
             )
-          ), child: Text(documentprovider.current_document_details != null ? 'Update' :'Submit',
+          ), child: isLoading ?
+                SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: CircularProgressIndicator(
+                    color: Colors.blue.shade200,
+                  ),
+                ) : Text(documentprovider.current_document_details != null ? 'Update' :'Submit',
         style: TextStyle(
           color: Colors.blue,
         ),
