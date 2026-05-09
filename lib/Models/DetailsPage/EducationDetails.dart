@@ -1,6 +1,7 @@
 class EducationDetails {
   String? name_of_institution;
   String? course_level;
+  String? course_duration;
   String? year_of_study;
   String? year_of_completion;
   String? institution_postal_address;
@@ -9,6 +10,7 @@ class EducationDetails {
   EducationDetails({
     this.name_of_institution,
     this.course_level,
+    this.course_duration,
     this.year_of_study,
     this.year_of_completion,
     this.institution_postal_address,
@@ -19,6 +21,7 @@ class EducationDetails {
     return {
       "name_of_institution": name_of_institution,
       "course_level": course_level,
+      "course_duration":course_duration,
       "year_of_study": year_of_study,
       "year_of_completion": year_of_completion,
       "institution_postal_address": institution_postal_address,
@@ -29,6 +32,7 @@ class EducationDetails {
     return EducationDetails(
       name_of_institution: json['name_of_institution'],
       course_level: json['course_level'],
+      course_duration: json['course_duration'],
       year_of_study: json['year_of_study'],
       year_of_completion: json['year_of_completion'],
       institution_postal_address: json['institution_postal_address'],

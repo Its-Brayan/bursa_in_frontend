@@ -477,7 +477,7 @@ class _HomeState extends State<Home> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(left: 6),
-                                              child: Text("${bursary.level_of_study} students",
+                                              child: Text("Kenyan students",
                                                 style: TextStyle(
                                                   color: Colors.grey.shade500,
                                                 ),),
@@ -697,20 +697,20 @@ class _HomeState extends State<Home> {
                                                   ),),
                                               ],
                                             ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text("Eligibility",
-                                                  style: TextStyle(
-                                                    color: Colors.grey.shade500,
-                                                  ),),
-                                                Text(bursary.level_of_study!,
-                                                  style: TextStyle(
-                                                    color: Colors.grey.shade500,
-                                                  ),),
-                                              ],
-                                            ),
+                                            // Row(
+                                            //   mainAxisAlignment: MainAxisAlignment
+                                            //       .spaceBetween,
+                                            //   children: [
+                                            //     Text("Eligibility",
+                                            //       style: TextStyle(
+                                            //         color: Colors.grey.shade500,
+                                            //       ),),
+                                            //     Text(bursary.level_of_study!,
+                                            //       style: TextStyle(
+                                            //         color: Colors.grey.shade500,
+                                            //       ),),
+                                            //   ],
+                                            // ),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment
                                                   .spaceBetween,

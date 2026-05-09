@@ -53,6 +53,14 @@ class Documentdetailsservice {
         request.files.add(await http.MultipartFile.fromPath(
         'death_certificate_mother', documents.death_certificate_mother!.path));
       }
+      if(documents.verify_applicant_disability != null){
+        request.files.add(await http.MultipartFile.fromPath(
+          'verify_applicant_disability', documents.verify_applicant_disability!.path));
+      }
+      if(documents.verify_parent_or_guardian_disability != null){
+        request.files.add(await http.MultipartFile.fromPath(
+          'verify_parent_or_guardian_disability', documents.verify_parent_or_guardian_disability!.path));
+      }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
       return response;
@@ -138,6 +146,14 @@ class Documentdetailsservice {
       if(documents.death_certificate_mother != null){
         request.files.add(await http.MultipartFile.fromPath(
         'death_certificate_mother', documents.death_certificate_mother!.path));
+      }
+      if(documents.verify_applicant_disability != null){
+        request.files.add(await http.MultipartFile.fromPath(
+          'verify_applicant_disability', documents.verify_applicant_disability!.path));
+      }
+      if(documents.verify_parent_or_guardian_disability != null){
+        request.files.add(await http.MultipartFile.fromPath(
+          'verify_parent_or_guardian_disability', documents.verify_parent_or_guardian_disability!.path));
       }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);

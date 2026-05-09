@@ -54,6 +54,8 @@ class _DocumentdetailsState extends State<Documentdetails> {
   ImageProvider? selected_fee_structure;
   ImageProvider? selected_death_certificate_father;
   ImageProvider? selected_death_certificate_mother;
+  ImageProvider? selected_verify_applicant_disability;
+  ImageProvider? selected_verify_parent_or_guardian_disability;
   bool isLoading = false;
   bool isFetching = true;
 
@@ -91,27 +93,41 @@ class _DocumentdetailsState extends State<Documentdetails> {
             selected_id_document =
             documentprovider.idDocumentUrl != null ? NetworkImage(
                 documentprovider.idDocumentUrl!) : null;
+
             selected_school_id =
             documentprovider.schoolIdUrl != null ? NetworkImage(
                 documentprovider.schoolIdUrl!) : null;
+
             selected_voters_card = 
             documentprovider.votersCardUrl != null ? NetworkImage(
               documentprovider.votersCardUrl!) : null;
+
             selected_admission_letter =
             documentprovider.admissionLetterUrl != null ? NetworkImage(
                 documentprovider.admissionLetterUrl!) : null;
+
             selected_student_transcript =
             documentprovider.studentTranscriptUrl != null ? NetworkImage(
                 documentprovider.studentTranscriptUrl!) : null;
+
             selected_fee_structure =
             documentprovider.feeStructureUrl != null ? NetworkImage(
                 documentprovider.feeStructureUrl!) : null;
+
             selected_death_certificate_father =
             documentprovider.deathCertificateFatherUrl != null ? NetworkImage(
                 documentprovider.deathCertificateFatherUrl!) : null;
+
             selected_death_certificate_mother =
                 documentprovider.deathCertificateMotherUrl != null ? NetworkImage(
                   documentprovider.deathCertificateMotherUrl!) : null;
+
+           selected_verify_applicant_disability = documentprovider.verifyApplicantDisabilityUrl != null ? NetworkImage(
+              documentprovider.verifyApplicantDisabilityUrl!
+            ) : null;
+            selected_verify_parent_or_guardian_disability = documentprovider.verifyParentOrGuardianDisabilityUrl != null ? NetworkImage(
+              documentprovider.verifyParentOrGuardianDisabilityUrl!
+             ):null;
             });
           }
           setState(() {
@@ -203,7 +219,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
                        ),
                       ),
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width: 10),
                     SizedBox(
                       height:130,
                       width: 150,
@@ -261,7 +277,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
                         ),
                       ),
                     ),
-                     SizedBox(width: 20),
+                     SizedBox(width: 10),
                     SizedBox(
                       height:130,
                       width: 150,
@@ -522,121 +538,239 @@ class _DocumentdetailsState extends State<Documentdetails> {
               ),
               ),
               SizedBox(height: 10),
-              Row(
-                children: [
-                  SizedBox(
-                    height:155,
-                    width: 150,
-                    child: Card(
-                      color: Colors.white70,
-                      elevation: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text("Death Certificate(Father)",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
-                              ),),
-                            SizedBox(height: 10.0),
-                            SizedBox(
-                              width: 85,
-                              height: 30,
-                              child: Card(
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4.0)
-                                ),
-                                child: selected_death_certificate_father != null ?
-                                    GestureDetector(
-                                      onTap: ()=>_previewimage(selected_death_certificate_father!),
-                                        child: Image(image: selected_death_certificate_father!,fit: BoxFit.cover))
-                                    :Icon(Icons.image,size: 50,color: Colors.grey),
-                              ),
-                            ),
-                            SizedBox(height: 1),
-                            ElevatedButton.icon(onPressed: ()async{
-                              File? picked = await _openImageFile();
-                              if(picked != null) {
-                                setState(() {
-                                  selected_death_certificate_father = FileImage(picked);
-                                });
-                              }
-                            }, icon: Icon(Icons.add,
-                              color: Colors.white,),
-                              label: Text("Upload",
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      height:155,
+                      width: 150,
+                      child: Card(
+                        color: Colors.white70,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text("Death Certificate(Father)",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
                                 ),),
-                              style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(50, 30),
-                                  backgroundColor: Colors.blue.shade200,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0)
-                                  )
-                              ),)
-                          ],
+                              SizedBox(height: 10.0),
+                              SizedBox(
+                                width: 85,
+                                height: 30,
+                                child: Card(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(4.0)
+                                  ),
+                                  child: selected_death_certificate_father != null ?
+                                      GestureDetector(
+                                        onTap: ()=>_previewimage(selected_death_certificate_father!),
+                                          child: Image(image: selected_death_certificate_father!,fit: BoxFit.cover))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey),
+                                ),
+                              ),
+                              SizedBox(height: 1),
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked = await _openImageFile();
+                                if(picked != null) {
+                                  setState(() {
+                                    selected_death_certificate_father = FileImage(picked);
+                                  });
+                                }
+                              }, icon: Icon(Icons.add,
+                                color: Colors.white,),
+                                label: Text("Upload",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(50, 30),
+                                    backgroundColor: Colors.blue.shade200,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    )
+                                ),)
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height:155,
-                    width: 150,
-                    child: Card(
-                      color: Colors.white70,
-                      elevation: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text("Death Certificate(Mother)",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
-                              ),),
-                            SizedBox(height: 10.0),
-                            SizedBox(
-                              width: 85,
-                              height: 30,
-                              child: Card(
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4.0)
-                                ),
-                                child: selected_death_certificate_mother != null ?
-                                GestureDetector(
-                                    onTap: ()=>_previewimage(selected_death_certificate_mother!),
-                                    child: Image(image: selected_death_certificate_mother!,fit: BoxFit.cover))
-                                    :Icon(Icons.image,size: 50,color: Colors.grey),
-                              ),
-                            ),
-                            SizedBox(height: 1),
-                            ElevatedButton.icon(onPressed: ()async{
-                              File? picked = await _openImageFile();
-                              if(picked != null) {
-                                setState(() {
-                                  selected_death_certificate_mother = FileImage(picked);
-                                });
-                              }
-                            }, icon: Icon(Icons.add,
-                              color: Colors.white,),
-                              label: Text("Upload",
+                    SizedBox(width: 12),
+                    SizedBox(
+                      height:155,
+                      width: 150,
+                      child: Card(
+                        color: Colors.white70,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text("Death Certificate(Mother)",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
                                 ),),
-                              style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(50, 30),
-                                  backgroundColor: Colors.blue.shade200,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0)
-                                  )
-                              ),)
-                          ],
+                              SizedBox(height: 10.0),
+                              SizedBox(
+                                width: 85,
+                                height: 30,
+                                child: Card(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(4.0)
+                                  ),
+                                  child: selected_death_certificate_mother != null ?
+                                  GestureDetector(
+                                      onTap: ()=>_previewimage(selected_death_certificate_mother!),
+                                      child: Image(image: selected_death_certificate_mother!,fit: BoxFit.cover))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey),
+                                ),
+                              ),
+                              SizedBox(height: 1),
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked = await _openImageFile();
+                                if(picked != null) {
+                                  setState(() {
+                                    selected_death_certificate_mother = FileImage(picked);
+                                  });
+                                }
+                              }, icon: Icon(Icons.add,
+                                color: Colors.white,),
+                                label: Text("Upload",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(50, 30),
+                                    backgroundColor: Colors.blue.shade200,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    )
+                                ),)
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(width: 12),
+                    SizedBox(
+                      height:155,
+                      width: 150,
+                      child: Card(
+                        color: Colors.white70,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text("Disability Certifcate\n Applicant",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                ),),
+                              SizedBox(height: 10.0),
+                              SizedBox(
+                                width: 85,
+                                height: 30,
+                                child: Card(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(4.0)
+                                  ),
+                                  child: selected_verify_applicant_disability != null ?
+                                      GestureDetector(
+                                        onTap: ()=>_previewimage(selected_verify_applicant_disability!),
+                                          child: Image(image: selected_verify_applicant_disability!,fit: BoxFit.cover))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey),
+                                ),
+                              ),
+                              SizedBox(height: 1),
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked = await _openImageFile();
+                                if(picked != null) {
+                                  setState(() {
+                                    selected_verify_applicant_disability = FileImage(picked);
+                                  });
+                                }
+                              }, icon: Icon(Icons.add,
+                                color: Colors.white,),
+                                label: Text("Upload",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(50, 30),
+                                    backgroundColor: Colors.blue.shade200,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    )
+                                ),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    SizedBox(
+                      height:155,
+                      width: 150,
+                      child: Card(
+                        color: Colors.white70,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text("Disability Certificate \n Parent/Guardian",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                ),),
+                              SizedBox(height: 10.0),
+                              SizedBox(
+                                width: 85,
+                                height: 30,
+                                child: Card(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(4.0)
+                                  ),
+                                  child: selected_verify_parent_or_guardian_disability != null ?
+                                      GestureDetector(
+                                        onTap: ()=>_previewimage(selected_verify_parent_or_guardian_disability!),
+                                          child: Image(image: selected_verify_parent_or_guardian_disability!,fit: BoxFit.cover))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey),
+                                ),
+                              ),
+                              SizedBox(height: 1),
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked = await _openImageFile();
+                                if(picked != null) {
+                                  setState(() {
+                                    selected_verify_parent_or_guardian_disability = FileImage(picked);
+                                  });
+                                }
+                              }, icon: Icon(Icons.add,
+                                color: Colors.white,),
+                                label: Text("Upload",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(50, 30),
+                                    backgroundColor: Colors.blue.shade200,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    )
+                                ),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -669,6 +803,10 @@ class _DocumentdetailsState extends State<Documentdetails> {
           death_certificate_mother: selected_death_certificate_mother is FileImage
             ? File((selected_death_certificate_mother! as FileImage). file.path) :
               null,
+            verify_applicant_disability: selected_verify_applicant_disability is FileImage 
+            ? File((selected_verify_applicant_disability! as FileImage).file.path) : null,
+            verify_parent_or_guardian_disability: selected_verify_parent_or_guardian_disability is FileImage
+            ? File((selected_verify_parent_or_guardian_disability! as FileImage).file.path) : null,
         );
         setState(() {
           isLoading = true;

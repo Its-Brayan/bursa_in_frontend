@@ -18,7 +18,17 @@ class _PersonaldetailsState extends State<Personaldetails> {
     "Female",
     "Prefer not to say"
   ];
+  List<String> Disability_options = [
+    "Yes",
+    "No"
+  ];
+  List<String> received_bursary_options = [
+    "Yes",
+    "No"
+  ];
   String? selectedGender;
+  String? selectedDisability;
+  String? selectedReceivedBursaryOption;
   String? selectedCourse;
   bool isLoading = false;
   Map<String,dynamic>? Areadata;
@@ -35,6 +45,9 @@ class _PersonaldetailsState extends State<Personaldetails> {
   TextEditingController idController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController courseController = TextEditingController();
+  // TextEditingController disabilityController = TextEditingController();
+  TextEditingController disabilitydetailsController = TextEditingController();
+  TextEditingController receivedBursarydetailsController = TextEditingController();
   TextEditingController countyController = TextEditingController();
   TextEditingController constituencyController = TextEditingController();
   TextEditingController wardController = TextEditingController();
@@ -50,6 +63,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
       });
     });
     WidgetsBinding.instance.addPostFrameCallback((_)async{
+      
       if(!mounted){
         return;
       }
@@ -64,6 +78,10 @@ class _PersonaldetailsState extends State<Personaldetails> {
           idController.text = personalprovider.national_id_number ?? "";
           selectedGender = personalprovider.student_gender ?? "";
           courseController.text =  personalprovider.course_of_study ?? "";
+          selectedDisability = personalprovider.Disability ?? " ";
+          disabilitydetailsController.text = personalprovider.disability_details ?? " ";
+          selectedReceivedBursaryOption = personalprovider.received_bursary ?? " ";
+          receivedBursarydetailsController.text = personalprovider.received_bursary_details ?? " ";
           SelectedCounty = personalprovider.county ?? "";
           SelectedConstituency = personalprovider.constituency ?? "";
           SelectedWard = personalprovider.ward ?? "";
@@ -80,6 +98,8 @@ class _PersonaldetailsState extends State<Personaldetails> {
     registrationController.dispose();
     idController.dispose();
     genderController.dispose();
+    receivedBursarydetailsController.dispose();
+    disabilitydetailsController.dispose();
     countyController.dispose();
     countyController.dispose();
     constituencyController.dispose();
@@ -89,6 +109,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
   @override
   Widget build(BuildContext context) {
     final detailprovider = Provider.of<DetailsPageProvider>(context);
+    final bool isExisting = detailprovider.current_personal_details != null;
     return Scaffold(
       appBar: AppBar(
         title: Text("Personal Details"),
@@ -106,6 +127,8 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 5.0, 0, 0),
                     child: TextFormField(
+              
+                      readOnly: isExisting,
                        decoration: InputDecoration(
                          labelText: "Full Name",
                          hintText: "John Doe",
@@ -125,10 +148,11 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    readOnly: isExisting,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: registrationController,
                     decoration: InputDecoration(
-                      labelText: "Registration Number",
+                      labelText: "School Registration Number/Admission number",
                       hintText: "112223344",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -143,6 +167,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    readOnly: isExisting,
                     controller: idController,
                     decoration: InputDecoration(
                       errorText: detailprovider.errorMessage,
@@ -207,6 +232,104 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     ),
                   ),
                   SizedBox(height: 20),
+                   DropdownButtonFormField<String>(
+                  
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
+                    initialValue: selectedDisability,
+                    items:Disability_options.map((disability){
+                      return DropdownMenuItem(
+                    value: disability,
+                    child: Text(disability));
+                    }).toList(),
+                    onChanged: detailprovider.current_document_details != null ? null 
+                    : (value){
+                      setState(() {
+                        selectedDisability = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                  
+                      labelText: "Do you have any Disability?",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                   TextFormField(
+                    readOnly: isExisting,
+                    controller: disabilitydetailsController,
+                    validator: (value){
+                        if (selectedDisability == "Yes" &&
+                        (value == null || value.isEmpty)) {
+                      return 'Please fill disability details';
+                    }
+                    return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Disability Details",
+                      hintText: "If yes please specify",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                  ),
+                   SizedBox(height: 20),
+                   DropdownButtonFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
+                    initialValue: selectedReceivedBursaryOption,
+                    items:received_bursary_options.map((received){
+                      return DropdownMenuItem(
+                        value: received,
+                          child: Text(received));
+                    }).toList(),
+                    onChanged: (value){
+                      setState(() {
+                        selectedReceivedBursaryOption = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Have you ever received Bursary from NGCDF?",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                   SizedBox(height: 20),
+                   TextFormField(
+                    controller: receivedBursarydetailsController,
+                    validator: (value){
+                      if (selectedReceivedBursaryOption == "Yes" &&
+                          (value == null || value.isEmpty)) {
+                              return 'Please fill required detail';
+                            }
+                              return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Ever Recieved Bursary before?",
+                      hintText: "If yes please specify the amount and when you received it",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                  ),
+               
+                    
+                  SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value){
@@ -222,7 +345,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                           child: Text(county)
                       );
                     }).toList(),
-                    onChanged: (value){
+                    onChanged:detailprovider.current_personal_details != null ? null : (value){
                       setState(() {
                         SelectedCounty = value;
                         SelectedConstituency = null;
@@ -254,7 +377,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                           value: c,
                           child: Text(c));
                     }).toList(),
-                    onChanged: (value){
+                    onChanged:detailprovider.current_personal_details != null ? null : (value){
                       setState(() {
                         SelectedConstituency = value;
                         SelectedWard = null;
@@ -263,7 +386,6 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     },
                     decoration: InputDecoration(
                       labelText: "Constituency",
-                      hintText: "Kasarani",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -284,14 +406,13 @@ class _PersonaldetailsState extends State<Personaldetails> {
                         value: w,
                           child: Text(w));
                     }).toList(),
-                    onChanged: (value){
+                    onChanged: detailprovider.current_personal_details != null ? null : (value){
                       setState(() {
                         SelectedWard = value;
                       });
                     },
                     decoration: InputDecoration(
                       labelText: "Ward",
-                      hintText: "Clay City",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -307,9 +428,8 @@ class _PersonaldetailsState extends State<Personaldetails> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(30.0),
           child: ElevatedButton(onPressed: isLoading ? null : ()async{
-            if(nameController.text.isEmpty || registrationController.text.isEmpty ||
-            idController.text.isEmpty || courseController.text.isEmpty || selectedGender == null
-            || SelectedCounty == null || SelectedConstituency == null || SelectedWard == null){
+            final isValid = _formKey.currentState?.validate() ?? false;
+            if(!isValid){
               ElegantNotification.error(
                 width: 360,
                 height: 100,
@@ -319,7 +439,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
                     type: StackedType.same,
                     itemOffset: const Offset(-5, -5)
                 ),
-                description: Text("Please fill all the fields"),
+                description: Text("Please fill all the required fields"),
                 title: Text("Error"),
               ).show(context);
               return;
@@ -330,6 +450,10 @@ class _PersonaldetailsState extends State<Personaldetails> {
               national_id_number: idController.text,
               course_of_study: courseController.text,
               student_gender: selectedGender,
+              Disability: selectedDisability,
+              disability_details: disabilitydetailsController.text,
+              received_bursary: selectedReceivedBursaryOption,
+              received_bursary_details: receivedBursarydetailsController.text,
               county: SelectedCounty,
               constituency:SelectedConstituency,
               ward: SelectedWard,
@@ -347,6 +471,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
               print("Failed registering personal details");
               return;
             }else{
+
               ElegantNotification.success(
                 width: 360,
                   height: 100,
@@ -367,7 +492,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
               side: BorderSide(
                 color:(nameController.text.isEmpty || registrationController.text.isEmpty ||
                     idController.text.isEmpty || courseController.text.isEmpty || selectedGender == null
-                    || SelectedCounty == null || SelectedConstituency == null || SelectedWard == null) ? Colors.grey : Colors.blue.shade200,
+                    || selectedDisability == null || selectedReceivedBursaryOption == null ||  SelectedCounty == null || SelectedConstituency == null || SelectedWard == null) ? Colors.grey : Colors.blue.shade200,
               ),
               borderRadius: BorderRadius.circular(5),
             )
@@ -383,7 +508,7 @@ class _PersonaldetailsState extends State<Personaldetails> {
           style: TextStyle(
             color:(nameController.text.isEmpty || registrationController.text.isEmpty ||
                 idController.text.isEmpty || courseController.text.isEmpty || selectedGender == null
-                || SelectedCounty == null || SelectedConstituency == null || SelectedWard == null) ? Colors.grey : Colors.blue.shade200
+                ||selectedDisability == null || selectedReceivedBursaryOption == null ||  SelectedCounty == null || SelectedConstituency == null || SelectedWard == null) ? Colors.grey : Colors.blue.shade200
           ),),),
         ),
     );

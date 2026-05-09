@@ -8,6 +8,8 @@ class DocumentDetails {
  final File? fee_structure;
   final File? death_certificate_father;
   final File? death_certificate_mother;
+  final File? verify_applicant_disability;
+  final File? verify_parent_or_guardian_disability;
 
  // Backend URLs (used when fetching)
  String? idDocumentUrl;
@@ -18,10 +20,12 @@ class DocumentDetails {
  String? feeStructureUrl;
  String? deathCertificateFatherUrl;
  String? deathCertificateMotherUrl;
+ String? verifyApplicantDisabilityUrl;
+ String? verifyParentOrGuardianDisabilityUrl;
 
  DocumentDetails({this.id_document,this.school_id,this.voters_card,this.student_transcript,this.admission_letter,
-  this.fee_structure,this.death_certificate_father,this.death_certificate_mother,this.idDocumentUrl,this.schoolIdUrl,this.votersCardUrl,this.studentTranscriptUrl,
- this.admissionLetterUrl,this.feeStructureUrl,this.deathCertificateFatherUrl,this.deathCertificateMotherUrl});
+  this.fee_structure,this.death_certificate_father,this.death_certificate_mother,this.verify_applicant_disability,this.verify_parent_or_guardian_disability,this.idDocumentUrl,this.schoolIdUrl,this.votersCardUrl,this.studentTranscriptUrl,
+ this.admissionLetterUrl,this.feeStructureUrl,this.deathCertificateFatherUrl,this.deathCertificateMotherUrl,this.verifyApplicantDisabilityUrl,this.verifyParentOrGuardianDisabilityUrl});
 static const String baseUrl = "https://bursa-in-backend.onrender.com/";
 
   // Map<String,dynamic> toJson(){
@@ -58,6 +62,8 @@ factory DocumentDetails.fromJson(Map<String, dynamic> json) {
     feeStructureUrl: parseUrl(json['fee_structure']),
     deathCertificateFatherUrl: parseUrl(json['death_certificate_father']),
     deathCertificateMotherUrl: parseUrl(json['death_certificate_mother']),
+    verifyApplicantDisabilityUrl: parseUrl(json['verify_applicant_disability']),
+    verifyParentOrGuardianDisabilityUrl: parseUrl(json['verify_parent_or_guardian_disability'])
   );
 }
 }

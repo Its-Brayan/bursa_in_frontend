@@ -39,6 +39,7 @@ class _EducationdetailsState extends State<Educationdetails> {
   TextEditingController name_of_institution_controller = TextEditingController();
   TextEditingController institution_postal_address_controller = TextEditingController();
   TextEditingController institution_tel_number_controller = TextEditingController();
+  TextEditingController course_duration_controller = TextEditingController();
   bool isFetching = true;
   @override
   void initState(){
@@ -59,6 +60,7 @@ class _EducationdetailsState extends State<Educationdetails> {
         chosencourse = educationprovider.course_level ?? "";
         chosen_year = educationprovider.year_of_study ?? "";
         chosen_year_of_completion = educationprovider.year_of_completion ?? "";
+        course_duration_controller.text = educationprovider.course_duration ?? "";
         institution_postal_address_controller.text =
             educationprovider.institution_postal_address ?? "";
         institution_tel_number_controller.text =
@@ -77,6 +79,7 @@ class _EducationdetailsState extends State<Educationdetails> {
     name_of_institution_controller.dispose();
     institution_tel_number_controller.dispose();
     institution_postal_address_controller.dispose();
+    course_duration_controller.dispose();
   }
 
   @override
@@ -97,6 +100,7 @@ class _EducationdetailsState extends State<Educationdetails> {
               child: Column(
                 children: [
                   TextFormField(
+                    readOnly: educationprovider.current_education_details != null,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value){
                       if(value == null || value.isEmpty){
@@ -114,7 +118,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  DropdownButtonFormField(
+                  DropdownButtonFormField<String>(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value){
                         if(value == null || value.isEmpty){
@@ -123,7 +127,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                         return null;
                       },
                     decoration: InputDecoration(
-                      labelText: "Course*",
+                      labelText: "Course Level*",
                       hintText: "Undergraduate",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -134,7 +138,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                         return DropdownMenuItem(
                             value: course,
                             child: Text(course));
-                      }).toList(), onChanged: (value){
+                      }).toList(), onChanged: educationprovider.current_education_details != null ? null : (value){
                         setState(() {
                           chosencourse = value;
                         });
@@ -165,6 +169,25 @@ class _EducationdetailsState extends State<Educationdetails> {
                       chosen_year = value;
                     });
                   }),
+                  SizedBox(height: 20),
+                      TextFormField(
+                        readOnly: educationprovider.current_education_details != null,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "This field is required";
+                      }
+                      return null;
+                    },
+                    controller: course_duration_controller,
+                    decoration: InputDecoration(
+                        labelText: "Course Duration*",
+                        hintText: "2 years",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        )
+                    ),
+                  ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -193,6 +216,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                   }),
                   SizedBox(height: 10),
                   TextFormField(
+                    readOnly: educationprovider.current_education_details != null,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value){
                       if(value == null || value.isEmpty){
@@ -211,6 +235,7 @@ class _EducationdetailsState extends State<Educationdetails> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    readOnly: educationprovider.current_education_details != null,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value){
                       if(value == null || value.isEmpty){
@@ -248,15 +273,27 @@ class _EducationdetailsState extends State<Educationdetails> {
            )
           ),
             onPressed: isLoading ? null : ()async{
-            if(name_of_institution_controller.text.isEmpty || chosencourse == null ||
-            chosen_year == null || chosen_year_of_completion == null ||
-            institution_postal_address_controller.text.isEmpty || institution_tel_number_controller.text.isEmpty){
+              final isValid = _formKey.currentState?.validate() ?? false;
+            if(!isValid){
+               ElegantNotification.error(
+                width: 360,
+                height: 100,
+                isDismissable: true,
+                stackedOptions: StackedOptions(
+                    key: 'top',
+                    type: StackedType.same,
+                    itemOffset: const Offset(-5, -5)
+                ),
+                description: Text("Please fill all the required fields"),
+                title: Text("Error"),
+              ).show(context);
               return;
             }
             final education = EducationDetails(
               name_of_institution: name_of_institution_controller.text,
               course_level: chosencourse,
               year_of_study: chosen_year,
+              course_duration: course_duration_controller.text,
               year_of_completion: chosen_year_of_completion,
               institution_postal_address: institution_postal_address_controller.text,
               institution_tel_number: institution_tel_number_controller.text,
