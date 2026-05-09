@@ -46,13 +46,13 @@ class Aftersplash extends StatelessWidget {
                   ),
                 ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 12),
             Text("OR",
               style: TextStyle(
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 12),
             Wrap(
               spacing: 3,
               children: [

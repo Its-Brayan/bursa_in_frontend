@@ -22,7 +22,7 @@ class Congratulations extends StatelessWidget {
          ),
          ),
          SizedBox(height: 10),
-         Text("Almost there, just a few more steps\n to Reach your dream scholarship",
+         Text("Almost there, just a few more steps\n to apply your first Bursary!",
          style: TextStyle(
            fontWeight: FontWeight.w700,
          ),)
@@ -34,7 +34,7 @@ class Congratulations extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(35.0),
           child: ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/alldetails');
+            Navigator.pushNamed(context, '/home');
           },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(

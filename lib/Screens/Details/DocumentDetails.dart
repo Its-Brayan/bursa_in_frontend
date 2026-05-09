@@ -48,6 +48,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
   }
   ImageProvider? selected_id_document;
   ImageProvider? selected_school_id;
+  ImageProvider? selected_voters_card;
   ImageProvider? selected_student_transcript;
   ImageProvider? selected_admission_letter;
   ImageProvider? selected_fee_structure;
@@ -93,6 +94,8 @@ class _DocumentdetailsState extends State<Documentdetails> {
             selected_school_id =
             documentprovider.schoolIdUrl != null ? NetworkImage(
                 documentprovider.schoolIdUrl!) : null;
+                selected_voters_card != null ? NetworkImage(
+                  documentprovider.votersCardUrl!) : null;
             selected_admission_letter =
             documentprovider.admissionLetterUrl != null ? NetworkImage(
                 documentprovider.admissionLetterUrl!) : null;
@@ -138,124 +141,185 @@ class _DocumentdetailsState extends State<Documentdetails> {
                 fontWeight: FontWeight.bold,
               ),),
               SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height:155,
-                    width: 150,
-                    child: Card(
-                      color: Colors.white70,
-                      elevation: 2,
-                     child: Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Column(
-                         children: [
-                           Text("National ID",
-                           style: TextStyle(
-                             fontWeight: FontWeight.w800,
-                             fontSize: 15,
-                           ),),
-                           SizedBox(height: 10.0),
-                           SizedBox(
-                             width: 85,
-                             height: 30,
-                             child: Card(
-                               shape: OutlineInputBorder(
-                                 borderRadius: BorderRadius.circular(4.0)
-                               ),
-                                child: selected_id_document != null ?
-                                    GestureDetector(
-                                      onTap:()=>_previewimage(selected_id_document!),
-                                        child: Image(image: selected_id_document!,fit: BoxFit.cover,))
-                                    :Icon(Icons.image,size: 50, color: Colors.grey,)
-                             ),
-                           ),
-                           SizedBox(height: 1),
-                           ElevatedButton.icon(onPressed: ()async{
-                           File? picked= await _openImageFile();
-                           if(picked != null){
-                             setState(() {
-                               selected_id_document = FileImage(picked);
-                             });
-                           }
-                           }, icon: Icon(Icons.add,
-                           color: Colors.white,),
-                             label: Text("Upload",
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height:130,
+                      width: 150,
+                      child: Card(
+                        color: Colors.white70,
+                        elevation: 2,
+                       child: Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child: Column(
+                           children: [
+                             Text("National ID",
                              style: TextStyle(
-                               color: Colors.white,
+                               fontWeight: FontWeight.w800,
+                               fontSize: 15,
                              ),),
-                           style: ElevatedButton.styleFrom(
-                             minimumSize: Size(50, 30),
-                             backgroundColor: Colors.blue.shade200,
-                             shape: RoundedRectangleBorder(
-                               borderRadius: BorderRadius.circular(5.0)
-                             )
-                           ),)
-                         ],
+                             SizedBox(height: 10.0),
+                             SizedBox(
+                               width: 85,
+                               height: 30,
+                               child: Card(
+                                 shape: OutlineInputBorder(
+                                   borderRadius: BorderRadius.circular(4.0)
+                                 ),
+                                  child: selected_id_document != null ?
+                                      GestureDetector(
+                                        onTap:()=>_previewimage(selected_id_document!),
+                                          child: Image(image: selected_id_document!,fit: BoxFit.cover,))
+                                      :Icon(Icons.image,size: 50, color: Colors.grey,)
+                               ),
+                             ),
+                             SizedBox(height: 1),
+                             ElevatedButton.icon(onPressed: ()async{
+                             File? picked= await _openImageFile();
+                             if(picked != null){
+                               setState(() {
+                                 selected_id_document = FileImage(picked);
+                               });
+                             }
+                             }, icon: Icon(Icons.add,
+                             color: Colors.white,),
+                               label: Text("Upload",
+                               style: TextStyle(
+                                 color: Colors.white,
+                               ),),
+                             style: ElevatedButton.styleFrom(
+                               minimumSize: Size(50, 30),
+                               backgroundColor: Colors.blue.shade200,
+                               shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.circular(5.0)
+                               )
+                             ),)
+                           ],
+                         ),
                        ),
-                     ),
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 20),
-                  SizedBox(
-                    height:155,
-                    width: 150,
-                    child: Card(
-                      color: Colors.white70,
-                      elevation: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text("School ID",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
-                              ),),
-                            SizedBox(height: 10.0),
-                            SizedBox(
-                              width: 85,
-                              height: 30,
-                              child: Card(
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4.0)
-                                ),
-                                child: selected_school_id != null ?
-                                    GestureDetector(
-                                      onTap: ()=>_previewimage(selected_school_id!),
-                                        child: Image(image: selected_school_id!,fit: BoxFit.cover,))
-                                    :Icon(Icons.image,size: 50,color: Colors.grey),
-                              ),
-                            ),
-                            SizedBox(height: 1),
-                            ElevatedButton.icon(onPressed: ()async{
-                              File? picked =await _openImageFile();
-                              if(picked!= null){
-                                setState(() {
-                                  selected_school_id = FileImage(picked);
-                                });
-
-                              }
-                            }, icon: Icon(Icons.add,
-                              color: Colors.white,),
-                              label: Text("Upload",
+                    SizedBox(width: 20),
+                    SizedBox(
+                      height:130,
+                      width: 150,
+                      child: Card(
+                        color: Colors.white70,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text("School ID",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
                                 ),),
-                              style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(50, 30),
-                                  backgroundColor: Colors.blue.shade200,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0)
-                                  )
-                              ),)
-                          ],
+                              SizedBox(height: 10.0),
+                              SizedBox(
+                                width: 85,
+                                height: 30,
+                                child: Card(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(4.0)
+                                  ),
+                                  child: selected_school_id != null ?
+                                      GestureDetector(
+                                        onTap: ()=>_previewimage(selected_school_id!),
+                                          child: Image(image: selected_school_id!,fit: BoxFit.cover,))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey),
+                                ),
+                              ),
+                              SizedBox(height: 1),
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked =await _openImageFile();
+                                if(picked!= null){
+                                  setState(() {
+                                    selected_school_id = FileImage(picked);
+                                  });
+                
+                                }
+                              }, icon: Icon(Icons.add,
+                                color: Colors.white,),
+                                label: Text("Upload",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(50, 30),
+                                    backgroundColor: Colors.blue.shade200,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    )
+                                ),)
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                     SizedBox(width: 20),
+                    SizedBox(
+                      height:130,
+                      width: 150,
+                      child: Card(
+                        color: Colors.white70,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text("Voters Card",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                ),),
+                              SizedBox(height: 10.0),
+                              SizedBox(
+                                width: 85,
+                                height: 30,
+                                child: Card(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(4.0)
+                                  ),
+                                  child: selected_voters_card != null ?
+                                      GestureDetector(
+                                        onTap: ()=>_previewimage(selected_voters_card!),
+                                          child: Image(image: selected_voters_card!,fit: BoxFit.cover,))
+                                      :Icon(Icons.image,size: 50,color: Colors.grey),
+                                ),
+                              ),
+                              SizedBox(height: 1),
+                              ElevatedButton.icon(onPressed: ()async{
+                                File? picked =await _openImageFile();
+                                if(picked!= null){
+                                  setState(() {
+                                    selected_voters_card = FileImage(picked);
+                                  });
+                
+                                }
+                              }, icon: Icon(Icons.add,
+                                color: Colors.white,),
+                                label: Text("Upload",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(50, 30),
+                                    backgroundColor: Colors.blue.shade200,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    )
+                                ),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height:20),
               Text("Proof Of Education",
@@ -587,6 +651,8 @@ class _DocumentdetailsState extends State<Documentdetails> {
           school_id: selected_school_id is FileImage
               ? File((selected_school_id! as FileImage).file.path)
               : null,
+              voters_card: selected_voters_card is FileImage
+              ? File((selected_voters_card! as FileImage).file.path) : null,
           student_transcript:selected_student_transcript is FileImage
               ? File((selected_student_transcript! as FileImage).file.path)
               : null,
@@ -647,15 +713,7 @@ class _DocumentdetailsState extends State<Documentdetails> {
       ),
     );
   }
-  startload()async{
-    setState(() {
-      isLoading = true;
-    });
-    await Future.delayed(Duration(seconds: 3));
-    setState(() {
-      isLoading = false;
-    });
-  }
+  
 }
 /// Widget that displays a text file in a dialog
 class MultipleImagesDisplay extends StatelessWidget {

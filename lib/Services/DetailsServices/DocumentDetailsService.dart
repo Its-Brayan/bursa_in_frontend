@@ -25,6 +25,11 @@ class Documentdetailsservice {
             'school_id',
             documents.school_id!.path));
       }
+      if(documents.voters_card != null){
+        request.files.add(await http.MultipartFile.fromPath(
+          'voters_card',
+          documents.voters_card!.path));
+      }
       if (documents.student_transcript != null) {
         request.files.add(await http.MultipartFile.fromPath(
             'student_transcript',
@@ -105,6 +110,11 @@ class Documentdetailsservice {
         request.files.add(await http.MultipartFile.fromPath(
             'school_id',
             documents.school_id!.path));
+      }
+      if(documents.voters_card != null){
+        request.files.add(await http.MultipartFile.fromPath(
+          'voters_card', 
+          documents.voters_card!.path));
       }
       if (documents.student_transcript != null) {
         request.files.add(await http.MultipartFile.fromPath(

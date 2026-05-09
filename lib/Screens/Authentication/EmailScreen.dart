@@ -88,6 +88,7 @@ class _EmailScreenState extends State<EmailScreen> {
                   if (!mounted) return;
                   toastification.show(
                     context: context,
+                    style: ToastificationStyle.flat,
                     type: ToastificationType.error,
                     description: Text("Email does not exist"),
                     autoCloseDuration: Duration(seconds: 3),

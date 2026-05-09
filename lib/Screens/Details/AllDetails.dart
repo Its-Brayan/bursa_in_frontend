@@ -153,7 +153,7 @@ class _AllDetailsState extends State<AllDetails> {
           child: ElevatedButton(onPressed: (){
             setState(() {
               if((sections['personal_filled'] ?? false) && (sections['family_filled'] ?? false) && (sections['education_filled'] ?? false) && (sections['documents_filled'] ?? false) == true) {
-                Navigator.pushNamed(context, "/home");
+                Navigator.pushNamed(context, "/congrats");
                 print("Navigating");
 
               }else {
