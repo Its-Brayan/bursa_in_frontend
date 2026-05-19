@@ -90,4 +90,6 @@ flutter test
 flutter clean
 ```
 
-
+## Licence
+MIT License
+© 2026 Brayan
